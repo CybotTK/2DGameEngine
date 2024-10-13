@@ -1,0 +1,17 @@
+﻿C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Microsoft\VC\v170\Microsoft.CppBuild.targets(531,5): warning MSB8028: The intermediate directory (E:\2DGameEngine\Bin\Intermediates\x64\Debug\) contains files shared from another project (Editor.vcxproj).  This can lead to incorrect clean and rebuild behavior.
+  Engine.cpp
+  Mesh.cpp
+  Window.cpp
+E:\2DGameEngine\2DGameEngine\Source\System\Window.cpp(60,53): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
+  Generating Code...
+glew32.lib(glew32.dll) : warning LNK4006: __NULL_IMPORT_DESCRIPTOR already defined in OpenGL32.lib(OPENGL32.dll); second definition ignored
+glew32s.lib(glew.obj) : warning LNK4006: glewInit already defined in glew32.lib(glew32.dll); second definition ignored
+glew32s.lib(glew.obj) : warning LNK4006: glewIsSupported already defined in glew32.lib(glew32.dll); second definition ignored
+glew32s.lib(glew.obj) : warning LNK4006: glewGetExtension already defined in glew32.lib(glew32.dll); second definition ignored
+glew32s.lib(glew.obj) : warning LNK4006: glewGetErrorString already defined in glew32.lib(glew32.dll); second definition ignored
+glew32s.lib(glew.obj) : warning LNK4006: glewGetString already defined in glew32.lib(glew32.dll); second definition ignored
+glew32s.lib(glew.obj) : warning LNK4006: wglewInit already defined in glew32.lib(glew32.dll); second definition ignored
+glew32s.lib(glew.obj) : warning LNK4006: wglewIsSupported already defined in glew32.lib(glew32.dll); second definition ignored
+glew32s.lib(glew.obj) : warning LNK4006: wglewGetExtension already defined in glew32.lib(glew32.dll); second definition ignored
+SDL2.lib(SDL2.dll) : warning LNK4006: __NULL_IMPORT_DESCRIPTOR already defined in OpenGL32.lib(OPENGL32.dll); second definition ignored
+  2DGameEngine.vcxproj -> E:\2DGameEngine\Bin\x64\Debug\2DGameEngine.lib
