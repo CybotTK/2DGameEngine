@@ -10,9 +10,14 @@ struct Vertex {
 	glm::vec2 texCoords; // Texture Coordinates (u, v)
 };
 
+struct Face {
+	unsigned int v1, v2, v3;
+};
+
 class Mesh {
 public:
 	Mesh();
+	Mesh(const Mesh& other);
 	virtual ~Mesh();
 
 	//Return the indices size
@@ -23,7 +28,7 @@ public:
 	void MakeTriangle(unsigned int v1, unsigned int v2, unsigned int v3);
 
 	std::vector<Vertex> vertices;
-	std::vector<unsigned int> indices; //for faces
+	std::vector<Face> faces; //for faces
 private:
 	//OpenGL IDs for buffers and array objects
 	GLuint VAO; // Vertex Array Object
