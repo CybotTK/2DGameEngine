@@ -1,7 +1,8 @@
 #include "System/Window.h"
 #include <iostream>
-#include <cassert>
+#include <assert.h>
 #include <GL/glew.h>
+#include "Graphics/Graphics.h"
 
 Window::Window(const std::string& title, Window::Type type) {
 	SpawnWindow(title, 800, 600, type);
@@ -23,7 +24,18 @@ Window::~Window() {
 }
 
 void Window::SetTitle(const std::string& title){
-	//Window(title);
+	SDL_SetWindowTitle(mainWindow, title.c_str());
+}
+
+void Window::UpdateViewport(){
+	auto res = GetWindowSize();
+	graphics::SetViewport(0, 0, res.x, res.y);
+}
+
+glm::ivec2 Window::GetWindowSize(){
+	int x, y;
+	SDL_GL_GetDrawableSize(mainWindow, &x, &y);
+	return glm::ivec2(x,y);
 }
 
 void Window::SwapBuffers() {
@@ -101,6 +113,13 @@ void Window::SpawnWindow(const std::string& title, int width, int height, Window
 	//Initialize GLEW
 	GLenum glewInitResult = glewInit();
 	assert(glewInitResult == GLEW_OK);
+
+	//GL stuff
+	{
+		glDisable(GL_DEPTH_TEST); // no need for depth in 2D
+		glDisable(GL_CULL_FACE); // no need for culling in 2D, no geometry is accidentally culled
+		glEnable(GL_MULTISAMPLE); // improves visual quality
+	}
 
 }
 

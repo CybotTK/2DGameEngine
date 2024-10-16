@@ -5,6 +5,7 @@
 
 #include <GL/glew.h>
 #include <SDL2/SDL.h>
+#include <glm/glm.hpp>
 
 class Window {
 public:
@@ -19,6 +20,9 @@ public:
 	virtual ~Window();
 
 	void SetTitle(const std::string& title);
+
+	void UpdateViewport();
+	glm::ivec2 GetWindowSize();
 
 	void SwapBuffers();
 

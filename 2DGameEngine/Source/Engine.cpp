@@ -5,13 +5,24 @@
 #include <GL/glew.h>
 #include <glm/glm.hpp>
 
+#include "Graphics/Mesh.h"
+#include "Graphics/Shader.h"
+#include "Graphics/Graphics.h"
+
+#include "Graphics/Shaders/BasicShaders.h"
+
 App* App::singletonInstance = nullptr;
 
 App::App() {
 	gameLoop = true;
+	
+	testPlane = Mesh::CreatePlane();
+	defaultShader = new Shader(shader::BasicVertex, shader::BasicFragment);
 }
 
 App::~App() {
+	delete testPlane;
+	delete defaultShader;
 }
 
 App* App::Get() {
@@ -33,9 +44,17 @@ bool App::IsInitialized() {
 }
 
 void App::Run() {
-	/*while (gameLoop) {
+	while (gameLoop) {
+		//window.UpdateViewport();
+		graphics::ClearBuffers(0.f, 0.5f, 1.f, 1.f);
+
+		defaultShader->Use();
+
+		testPlane->Use();
+		testPlane->Draw();
+
 		window.SwapBuffers();
 	}
-	*/
+	
 	std::cout << "hello";
 }

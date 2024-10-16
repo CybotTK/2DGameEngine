@@ -20,16 +20,28 @@ public:
 	Mesh(const Mesh& other);
 	virtual ~Mesh();
 
-	//Return the indices size
-	int Use();
+	static Mesh* CreatePlane();
+
+	void BindMeshBuffersData();
+	void Reset(bool resetData = true);
+
+	//Resets the mesh sent to the GPU and send it again
+	void Reload(); 
+
+	void Use();
 	void Draw();
 
 	void AddVertex(glm::vec2 position, glm::vec2 texCoords);
 	void MakeTriangle(unsigned int v1, unsigned int v2, unsigned int v3);
 
 	std::vector<Vertex> vertices;
-	std::vector<Face> faces; //for faces
+	std::vector<Face> faces; //for faces 3 indices are needed
+
+	size_t GetNumIndices();
+
 private:
+	bool alreadySentToGPU = false;
+
 	//OpenGL IDs for buffers and array objects
 	GLuint VAO; // Vertex Array Object
 	GLuint VBO; // Vertex Buffer Object

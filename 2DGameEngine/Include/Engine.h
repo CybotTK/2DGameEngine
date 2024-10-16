@@ -5,6 +5,10 @@
 
 #include "System/Window.h"
 
+#include "Graphics/Mesh.h"
+#include "Graphics/Shader.h"
+#include "Graphics/Graphics.h"
+
 class App {
 private:
 	App();
@@ -21,6 +25,9 @@ private:
 	static App* singletonInstance;
 	bool gameLoop;
 	Window window;
+
+	Shader* defaultShader;
+	Mesh*   testPlane;
 };
 
 #endif //ENGINE_H
