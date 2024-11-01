@@ -4,6 +4,7 @@
 #define ENGINE_H
 
 #include "System/Window.h"
+#include "System/Input.h"
 
 #include "Graphics/Mesh.h"
 #include "Graphics/Shader.h"
@@ -21,6 +22,9 @@ public:
 	static App* Get();
 	static void Destroy();
 	static bool IsInitialized();
+
+	Input input;
+
 private:
 	static App* singletonInstance;
 	bool gameLoop;

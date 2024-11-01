@@ -12,7 +12,7 @@ int main(int argc, char** argv) {
 	app->Run();
 
 	App::Destroy();
-	
+	/*
 	Window* window = new Window;
 
 	window->SpawnWindow("YEs", 800, 600, Window::CUSTOM);
@@ -38,7 +38,7 @@ int main(int argc, char** argv) {
 	}
 
 	//*(int*)0 = 0;
-	
+	*/
 	return 0;
 
 }

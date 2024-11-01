@@ -45,8 +45,12 @@ bool App::IsInitialized() {
 
 void App::Run() {
 	while (gameLoop) {
-		//window.UpdateViewport();
-		graphics::ClearBuffers(0.f, 0.5f, 1.f, 1.f);
+		input.Update();
+		if (input.GetQuitStatus()){
+			gameLoop = false;
+		}
+
+		graphics::ClearBuffers(0.f, 0.3f, 1.f, 1.f);
 
 		defaultShader->Use();
 

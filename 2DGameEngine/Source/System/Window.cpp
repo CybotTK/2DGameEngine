@@ -47,7 +47,7 @@ SDL_Window* Window::GetSDLWindow() {
 }
 
 SDL_GLContext Window::GetContext() {
-	return  SDL_GLContext();
+	return mainContext;
 }
 
 void Window::SpawnWindow(const std::string& title, int width, int height, Window::Type type) {

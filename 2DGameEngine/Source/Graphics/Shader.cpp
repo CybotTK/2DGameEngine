@@ -54,7 +54,7 @@ GLuint CreateShader(const std::string& source, GLenum shaderType) {
 	if (success == GL_FALSE) {
 		GLchar error[1024] = { 0 };
 		glGetShaderInfoLog(shader, sizeof(error), NULL, error);
-		std::cerr << "Error: Shader compilation failed!" << error << '\n';
+		std::cerr << "Error: Shader compilation failed!1" << error << '\n';
 		exit(-1); // "Error: Shader compilation failed!"
 	}
 	return shader;
@@ -82,7 +82,21 @@ void Shader::Initialize() {
 	glAttachShader(program, shaders.fragment);
 
 	GLint success = 0;
+	
+	glGetShaderiv(shaders.vertex, GL_COMPILE_STATUS, &success);
+	if (success == GL_FALSE) {
+		GLchar error[1024];
+		glGetShaderInfoLog(shaders.vertex, sizeof(error), NULL, error);
+		std::cerr << "Error compiling vertex shader:\n" << error << std::endl;
+	}
 
+	glGetShaderiv(shaders.fragment, GL_COMPILE_STATUS, &success);
+	if (success == GL_FALSE) {
+		GLchar error[1024];
+		glGetShaderInfoLog(shaders.fragment, sizeof(error), NULL, error);
+		std::cerr << "Error compiling fragment shader:\n" << error << std::endl;
+	}
+	
 	// Linking the Program
 	glLinkProgram(program);
 
@@ -91,8 +105,8 @@ void Shader::Initialize() {
 	if (success == GL_FALSE) {
 		GLchar error[1024] = { 0 };
 		glGetShaderInfoLog(program, sizeof(error), NULL, error);
-		std::cerr << "Error: Shader compilation failed!" << error << '\n';
-		exit(-1); // "Error: Shader compilation failed!"
+		std::cerr << "Error: Shader linking failed!" << error << '\n';
+		exit(-1); // "Error: Shader linking failed!"
 	}
 
 	// Validating the Program
@@ -101,7 +115,7 @@ void Shader::Initialize() {
 	if (success == GL_FALSE) {
 		GLchar error[1024] = { 0 };
 		glGetShaderInfoLog(program, sizeof(error), NULL, error);
-		std::cerr << "Error: Shader compilation failed!" << error << '\n';
-		exit(-1); // "Error: Shader compilation failed!"
+		std::cerr << "Error: Shader validation failed!" << error << '\n';
+		exit(-1); // "Error: Shader validation failed!"
 	}
 }
