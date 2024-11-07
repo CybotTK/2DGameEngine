@@ -185,6 +185,7 @@
     <ClInclude Include="Include\Graphics\Mesh.h" />
     <ClInclude Include="Include\Graphics\Shader.h" />
     <ClInclude Include="Include\Graphics\Shaders\BasicShaders.h" />
+    <ClInclude Include="Include\Graphics\Texture.h" />
     <ClInclude Include="Include\System\Input.h" />
     <ClInclude Include="Include\System\InputTypes.h" />
     <ClInclude Include="Include\System\Window.h" />
@@ -194,6 +195,7 @@
     <ClCompile Include="Source\Graphics\Graphics.cpp" />
     <ClCompile Include="Source\Graphics\Mesh.cpp" />
     <ClCompile Include="Source\Graphics\Shader.cpp" />
+    <ClCompile Include="Source\Graphics\Texture.cpp" />
     <ClCompile Include="Source\System\Input.cpp" />
     <ClCompile Include="Source\System\Window.cpp" />
   </ItemGroup>
