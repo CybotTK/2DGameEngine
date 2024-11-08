@@ -9,6 +9,7 @@
 #include "Graphics/Mesh.h"
 #include "Graphics/Shader.h"
 #include "Graphics/Graphics.h"
+#include "Graphics/Textures/ImageTexture.h"
 
 class App {
 private:

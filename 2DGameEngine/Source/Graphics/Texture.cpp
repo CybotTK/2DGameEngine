@@ -11,7 +11,7 @@ Texture::Texture(int width, int height, GLint format, GLenum pixelFormat)
 
 	GenerateOGLTexture();
 
-	glTexImage2D(GL_TEXTURE_2D, 0 , format, m_width, m_height, 0, m_channels, pixelFormat, m_data);
+	glTexImage2D(GL_TEXTURE_2D, 0 , format, m_width, m_height, 0, GL_RGBA, pixelFormat, m_data);
 }
 
 Texture::~Texture()
@@ -56,6 +56,7 @@ float Texture::GetAspectRatio()
 void Texture::GenerateOGLTexture()
 {
 	m_initialized = true;
+
 	glGenTextures(1, &m_texture);
 	glBindTexture(GL_TEXTURE_2D, m_texture);
 

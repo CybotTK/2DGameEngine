@@ -3,5 +3,7 @@ E:\2DGameEngine\2DGameEngine\Source\Graphics\Graphics.cpp;E:\2DGameEngine\Bin\In
 E:\2DGameEngine\2DGameEngine\Source\Graphics\Mesh.cpp;E:\2DGameEngine\Bin\Intermediates\x64\Debug\Mesh.obj
 E:\2DGameEngine\2DGameEngine\Source\Graphics\Shader.cpp;E:\2DGameEngine\Bin\Intermediates\x64\Debug\Shader.obj
 E:\2DGameEngine\2DGameEngine\Source\Graphics\Texture.cpp;E:\2DGameEngine\Bin\Intermediates\x64\Debug\Texture.obj
+E:\2DGameEngine\2DGameEngine\Source\Graphics\Textures\ImageTexture.cpp;E:\2DGameEngine\Bin\Intermediates\x64\Debug\ImageTexture.obj
+E:\2DGameEngine\2DGameEngine\Source\System\FileUtils.cpp;E:\2DGameEngine\Bin\Intermediates\x64\Debug\FileUtils.obj
 E:\2DGameEngine\2DGameEngine\Source\System\Input.cpp;E:\2DGameEngine\Bin\Intermediates\x64\Debug\Input.obj
 E:\2DGameEngine\2DGameEngine\Source\System\Window.cpp;E:\2DGameEngine\Bin\Intermediates\x64\Debug\Window.obj

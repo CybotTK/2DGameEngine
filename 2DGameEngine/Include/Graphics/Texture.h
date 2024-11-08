@@ -44,7 +44,6 @@ protected:
 
 	int m_width = 32;
 	int m_height = 32;
-	int m_channels = GL_RGBA;
 
 	GLenum m_textureMode = GL_TEXTURE_2D;
 };

@@ -1,15 +1,14 @@
 #include "Engine.h"
-#include "System/Window.h"
+
 #include <iostream>
+
 #include <SDL2/SDL.h>
 #include <GL/glew.h>
 #include <glm/glm.hpp>
 
-#include "Graphics/Mesh.h"
-#include "Graphics/Shader.h"
-#include "Graphics/Graphics.h"
-
 #include "Graphics/Shaders/BasicShaders.h"
+
+#include "System/FileUtils.h"
 
 App* App::singletonInstance = nullptr;
 
@@ -18,6 +17,8 @@ App::App() {
 	
 	testPlane = Mesh::CreatePlane();
 	defaultShader = new Shader(shader::BasicVertex, shader::BasicFragment);
+
+	std::cout << "Path: " << file::GetEditorPath("teste.png") << '\n';
 }
 
 App::~App() {
