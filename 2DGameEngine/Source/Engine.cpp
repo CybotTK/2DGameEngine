@@ -18,10 +18,11 @@ App::App() {
 	testPlane = Mesh::CreatePlane();
 	defaultShader = new Shader(shader::BasicVertex, shader::BasicFragment);
 
-	std::cout << "Path: " << file::GetEditorPath("teste.png") << '\n';
+	m_testImage = new ImageTexture(file::GetEditorPath("..\\Assets\\test.png"));
 }
 
 App::~App() {
+	delete m_testImage;
 	delete testPlane;
 	delete defaultShader;
 }
@@ -54,6 +55,10 @@ void App::Run() {
 		graphics::ClearBuffers(0.f, 0.3f, 1.f, 1.f);
 
 		defaultShader->Use();
+
+		//Binding a test image...
+		defaultShader->Set("testImage", 0);
+		m_testImage->Use(0);
 
 		testPlane->Use();
 		testPlane->Draw();

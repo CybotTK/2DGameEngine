@@ -33,6 +33,7 @@ private:
 
 	Shader* defaultShader;
 	Mesh*   testPlane;
+	ImageTexture* m_testImage;
 };
 
 #endif //ENGINE_H
