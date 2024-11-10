@@ -64,7 +64,7 @@ void Texture::GenerateOGLTexture()
 	{
 		// Texdture Wrap (out of bounds)
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, m_texParams.wrapX);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, m_texParams.wrapY);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, m_texParams.wrapY);
 
 		glTexParameterfv(GL_TEXTURE_2D, GL_TEXTURE_BORDER_COLOR, &m_texParams.borderColor[0]);
 
