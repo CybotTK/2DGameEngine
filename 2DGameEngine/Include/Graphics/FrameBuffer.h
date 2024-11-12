@@ -23,6 +23,8 @@ public:
 
 	void Resize(int width, int height);
 
+	glm::ivec2 GetResolution();
+
 protected:
 	void Initialize(int texCount);
 	void AddTextures(int texCount);

@@ -56,7 +56,7 @@ void App::Run() {
 
 		Render(nullptr);
 
-		window.SwapBuffers();
+		m_window.SwapBuffers();
 	}
 	
 	std::cout << "hello";
@@ -69,6 +69,9 @@ void App::Render(FrameBuffer* finalFbo)
 	//First we render the main thingy
 	{
 		m_defaultFbo->Use();
+		auto res = m_defaultFbo->GetResolution();
+		graphics::SetViewport(0, 0, res.x, res.y);
+
 		graphics::ClearBuffers(0.f, 0.3f, 1.f, 1.f);
 
 		defaultShader->Use();
@@ -83,8 +86,15 @@ void App::Render(FrameBuffer* finalFbo)
 
 	//Then we render final image
 	{
-		if (finalFbo) { finalFbo->Use(); }
-		else { FrameBuffer::UseDefault(); }
+		if (finalFbo) { 
+			finalFbo->Use(); 
+			auto res = finalFbo->GetResolution();
+			graphics::SetViewport(0, 0, res.x, res.y);
+		}
+		else { 
+			FrameBuffer::UseDefault(); //Screen
+			m_window.UpdateViewport();
+		}
 		graphics::ClearBuffers(0.f, 0.3f, 1.f, 1.f);
 
 		m_postShader->Use();

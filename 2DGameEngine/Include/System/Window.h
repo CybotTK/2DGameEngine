@@ -7,6 +7,8 @@
 #include <SDL2/SDL.h>
 #include <glm/glm.hpp>
 
+#include "Graphics/Graphics.h"
+
 class Window {
 public:
 	enum Type {
@@ -21,8 +23,8 @@ public:
 
 	void SetTitle(const std::string& title);
 
-	void UpdateViewport();
 	glm::ivec2 GetWindowSize();
+	void UpdateViewport();
 
 	void SwapBuffers();
 

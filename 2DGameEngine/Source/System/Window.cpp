@@ -2,7 +2,6 @@
 #include <iostream>
 #include <assert.h>
 #include <GL/glew.h>
-#include "Graphics/Graphics.h"
 
 Window::Window(const std::string& title, Window::Type type) {
 	SpawnWindow(title, 800, 600, type);
@@ -27,15 +26,15 @@ void Window::SetTitle(const std::string& title){
 	SDL_SetWindowTitle(mainWindow, title.c_str());
 }
 
-void Window::UpdateViewport(){
-	auto res = GetWindowSize();
-	graphics::SetViewport(0, 0, res.x, res.y);
-}
-
 glm::ivec2 Window::GetWindowSize(){
 	int x, y;
 	SDL_GL_GetDrawableSize(mainWindow, &x, &y);
 	return glm::ivec2(x,y);
+}
+
+void Window::UpdateViewport() {
+	auto res = glm::ivec2(GetWindowSize());
+	graphics::SetViewport(0, 0, res.x, res.y);
 }
 
 void Window::SwapBuffers() {

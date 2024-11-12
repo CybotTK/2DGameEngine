@@ -33,7 +33,7 @@ public:
 private:
 	static App* singletonInstance;
 	bool gameLoop;
-	Window window;
+	Window m_window;
 
 	// By default it renders to the default FBO and then to screen
 	// using the postShader

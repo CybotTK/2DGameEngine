@@ -68,6 +68,11 @@ void FrameBuffer::Resize(int width, int height)
 	AddTextures(texCount);
 }
 
+glm::ivec2 FrameBuffer::GetResolution()
+{
+	return m_resolution;
+}
+
 void FrameBuffer::Initialize(int texCount)
 {
 	assert(texCount > 0);
