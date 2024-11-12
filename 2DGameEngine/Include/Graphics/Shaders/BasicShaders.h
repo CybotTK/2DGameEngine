@@ -17,7 +17,7 @@ out VS_OUT {
 
 void main(){
 	//Passing the vertex position to the fragment shader
-	vsOut.position  = aPosition * 0.5f;
+	vsOut.position  = aPosition * 0.2;
 	vsOut.UV = aUV;
 	vsOut.UV.y = 1.0f - vsOut.UV.y; //Flipping OpenGL Y
 	
@@ -42,6 +42,46 @@ void main(){
 	gColor = texture2D(testImage, vsOut.UV);
 }
 )";
+
+//--------------------------------------------------------//
+
+static const std::string PostVertex = R"(
+#version 460 core
+
+layout(location = 0) in vec2 aPosition;
+layout(location = 1) in vec2 aUV;
+
+out VS_OUT {
+	vec2 position;
+	vec2 UV;
+} vsOut;
+
+void main(){
+	vsOut.position  = aPosition;
+	vsOut.UV = aUV;
+	
+	gl_Position.xy = vsOut.position;
+}
+)";
+
+static const std::string PostFragment = R"(
+#version 460 core
+
+layout(location = 0) out vec4 gColor;
+
+in VS_OUT{
+	vec2 position;
+	vec2 UV;
+} vsOut;
+
+uniform sampler2D renderedTexture;
+
+void main(){
+	gColor = texture2D(renderedTexture, vsOut.UV) * vec4(1, 0., 0., 1.0);
+}
+)";
+
+
 }
 
-#endif
+#endif // !BASIC_SHADERS_H

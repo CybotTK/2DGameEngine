@@ -10,6 +10,7 @@
 #include "Graphics/Shader.h"
 #include "Graphics/Graphics.h"
 #include "Graphics/Textures/ImageTexture.h"
+#include "Graphics/FrameBuffer.h"
 
 class App {
 private:
@@ -18,6 +19,9 @@ private:
 public:
 
 	void Run();
+
+	// If finalFbo = nullptr, it will render to screen
+	void Render(FrameBuffer* finalFbo = nullptr);
 
 	//Singleton related:
 	static App* Get();
@@ -31,8 +35,16 @@ private:
 	bool gameLoop;
 	Window window;
 
+	// By default it renders to the default FBO and then to screen
+	// using the postShader
+	// If I want to use the output in the editor i render it to
+	// another FBO
+	FrameBuffer* m_defaultFbo;
+	Shader* m_postShader;
+
 	Shader* defaultShader;
-	Mesh*   testPlane;
+
+	Mesh*   m_defaultPlane;
 	ImageTexture* m_testImage;
 };
 

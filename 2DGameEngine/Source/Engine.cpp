@@ -15,15 +15,17 @@ App* App::singletonInstance = nullptr;
 App::App() {
 	gameLoop = true;
 	
-	testPlane = Mesh::CreatePlane();
+	m_defaultFbo = new FrameBuffer(1280, 720, 1);
+	m_postShader = new Shader(shader::PostVertex, shader::PostFragment);
 	defaultShader = new Shader(shader::BasicVertex, shader::BasicFragment);
 
+	m_defaultPlane = Mesh::CreatePlane();
 	m_testImage = new ImageTexture(file::GetEditorPath("..\\Assets\\test.png"));
 }
 
 App::~App() {
 	delete m_testImage;
-	delete testPlane;
+	delete m_defaultPlane;
 	delete defaultShader;
 }
 
@@ -52,6 +54,21 @@ void App::Run() {
 			gameLoop = false;
 		}
 
+		Render(nullptr);
+
+		window.SwapBuffers();
+	}
+	
+	std::cout << "hello";
+}
+
+
+
+void App::Render(FrameBuffer* finalFbo)
+{
+	//First we render the main thingy
+	{
+		m_defaultFbo->Use();
 		graphics::ClearBuffers(0.f, 0.3f, 1.f, 1.f);
 
 		defaultShader->Use();
@@ -60,11 +77,22 @@ void App::Run() {
 		defaultShader->Set("testImage", 0);
 		m_testImage->Use(0);
 
-		testPlane->Use();
-		testPlane->Draw();
-
-		window.SwapBuffers();
+		m_defaultPlane->Use();
+		m_defaultPlane->Draw();
 	}
-	
-	std::cout << "hello";
+
+	//Then we render final image
+	{
+		if (finalFbo) { finalFbo->Use(); }
+		else { FrameBuffer::UseDefault(); }
+		graphics::ClearBuffers(0.f, 0.3f, 1.f, 1.f);
+
+		m_postShader->Use();
+		m_postShader->Set("renderedTexture", 0);
+
+		m_defaultFbo->UseAllTextures();
+
+		m_defaultPlane->Use();
+		m_defaultPlane->Draw();
+	}
 }

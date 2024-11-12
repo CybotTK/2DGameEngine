@@ -181,6 +181,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="Include\Engine.h" />
+    <ClInclude Include="Include\Graphics\FrameBuffer.h" />
     <ClInclude Include="Include\Graphics\Graphics.h" />
     <ClInclude Include="Include\Graphics\Mesh.h" />
     <ClInclude Include="Include\Graphics\Shader.h" />
@@ -194,6 +195,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\Engine.cpp" />
+    <ClCompile Include="Source\Graphics\FrameBuffer.cpp" />
     <ClCompile Include="Source\Graphics\Graphics.cpp" />
     <ClCompile Include="Source\Graphics\Mesh.cpp" />
     <ClCompile Include="Source\Graphics\Shader.cpp" />
