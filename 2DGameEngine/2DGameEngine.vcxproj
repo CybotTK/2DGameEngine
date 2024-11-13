@@ -180,6 +180,7 @@
     </Lib>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Include\Core\Camera.h" />
     <ClInclude Include="Include\Core\Transform.h" />
     <ClInclude Include="Include\Engine.h" />
     <ClInclude Include="Include\Graphics\FrameBuffer.h" />
@@ -195,6 +196,7 @@
     <ClInclude Include="Include\System\Window.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Source\Core\Camera.cpp" />
     <ClCompile Include="Source\Core\Transform.cpp" />
     <ClCompile Include="Source\Engine.cpp" />
     <ClCompile Include="Source\Graphics\FrameBuffer.cpp" />

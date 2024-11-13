@@ -15,11 +15,12 @@ out VS_OUT {
 	vec2 UV;
 } vsOut;
 
-uniform mat4 transform;
+uniform mat4 transform; //Model
+uniform mat4 viewProjection;
 
 void main(){
 	//Passing the vertex position to the fragment shader
-	vsOut.position  = (transform * vec4(aPosition, 0.f, 1.f)).xy;
+	vsOut.position  = (viewProjection * transform * vec4(aPosition, 0.f, 1.f)).xy;
 	vsOut.UV = aUV;
 	vsOut.UV.y = 1.0f - vsOut.UV.y; //Flipping OpenGL Y
 	
@@ -77,9 +78,11 @@ in VS_OUT{
 } vsOut;
 
 uniform sampler2D renderedTexture;
+uniform float aspect = 1.f;
 
 void main(){
-	gColor = texture2D(renderedTexture, vsOut.UV);
+	vec2 uv = vsOut.UV * vec2(aspect, 1.f);
+	gColor = texture2D(renderedTexture, uv);
 }
 )";
 

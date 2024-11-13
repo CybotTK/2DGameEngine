@@ -7,6 +7,7 @@
 #include "System/Input.h"
 
 #include "Core/Transform.h"
+#include "Core/Camera.h"
 
 #include "Graphics/Mesh.h"
 #include "Graphics/Shader.h"
@@ -32,13 +33,13 @@ public:
 
 	Input input;
 
+	Camera camera;
+
 private:
 	static App* singletonInstance;
 
 	bool gameLoop;
 	Window m_window;
-
-	Transform m_camera;
 
 	// By default it renders to the default FBO and then to screen
 	// using the postShader

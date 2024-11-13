@@ -76,6 +76,14 @@ void App::Render(FrameBuffer* finalFbo)
 
 		defaultShader->Use();
 
+		//Camera view projection...
+		{
+			camera.area = 1.f;
+			camera.rotation = 180.f;
+			float aspect = finalFbo ? finalFbo->GetAspect() : m_window.GetAspect();
+			defaultShader->Set("viewProjection", camera.GetViewProjection(aspect));
+		}
+
 		//Transform test
 		{
 			static Transform transf;
