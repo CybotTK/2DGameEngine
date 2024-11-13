@@ -15,6 +15,11 @@ out VS_OUT {
 	vec2 UV;
 } vsOut;
 
+struct Sprite{
+	vec4 color;
+	sampler2D texture;
+};
+
 uniform mat4 transform; //Model
 uniform mat4 viewProjection;
 
@@ -38,11 +43,23 @@ in VS_OUT{
 	vec2 UV;
 } vsOut;
 
-uniform sampler2D testImage;
+struct Sprite{
+	vec4 color;
+	sampler2D texture;
+	bool useTexture;
+};
+
+uniform Sprite sprite;
 
 void main(){
 	//gColor = vec4(1.f, 0.f, 0.f, 1.f);
-	gColor = texture2D(testImage, vsOut.UV);
+
+	gColor = vec4(1.f, 1.f, 1.f, 1.f);
+
+	if (sprite.useTexture == true)
+		gColor = texture2D(sprite.texture, vsOut.UV);
+	
+	gColor  *= sprite.color;	
 }
 )";
 

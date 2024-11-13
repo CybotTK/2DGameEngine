@@ -18,6 +18,8 @@ public:
 
 	void Set(const std::string& name, int value);
 	void Set(const std::string& name, float value);
+	void Set(const std::string& name, bool value);
+	void Set(const std::string& name, glm::vec4 value);
 	void Set(const std::string& name, glm::mat4 value);
 
 private:

@@ -181,6 +181,8 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="Include\Core\Camera.h" />
+    <ClInclude Include="Include\Core\GameObject.h" />
+    <ClInclude Include="Include\Core\Scene.h" />
     <ClInclude Include="Include\Core\Transform.h" />
     <ClInclude Include="Include\Engine.h" />
     <ClInclude Include="Include\Graphics\FrameBuffer.h" />
@@ -197,6 +199,8 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\Core\Camera.cpp" />
+    <ClCompile Include="Source\Core\GameObject.cpp" />
+    <ClCompile Include="Source\Core\Scene.cpp" />
     <ClCompile Include="Source\Core\Transform.cpp" />
     <ClCompile Include="Source\Engine.cpp" />
     <ClCompile Include="Source\Graphics\FrameBuffer.cpp" />

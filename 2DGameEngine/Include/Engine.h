@@ -8,6 +8,8 @@
 
 #include "Core/Transform.h"
 #include "Core/Camera.h"
+#include "Core/Scene.h"
+#include "Core/GameObject.h"
 
 #include "Graphics/Mesh.h"
 #include "Graphics/Shader.h"
@@ -26,6 +28,8 @@ public:
 	// If finalFbo = nullptr, it will render to screen
 	void Render(FrameBuffer* finalFbo = nullptr);
 
+	Scene* GetCurrentScene();
+
 	//Singleton related:
 	static App* Get();
 	static void Destroy();
@@ -33,10 +37,11 @@ public:
 
 	Input input;
 
-	Camera camera;
-
 private:
 	static App* singletonInstance;
+	
+	Scene* m_currentScene;
+	std::vector<Scene*> scenes;
 
 	bool gameLoop;
 	Window m_window;
@@ -48,7 +53,7 @@ private:
 	FrameBuffer* m_defaultFbo;
 	Shader* m_postShader;
 
-	Shader* defaultShader;
+	Shader* m_defaultShader;
 
 	Mesh*   m_defaultPlane;
 	ImageTexture* m_testImage;

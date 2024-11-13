@@ -17,16 +17,24 @@ App::App() {
 	
 	m_defaultFbo = new FrameBuffer(1280, 720, 1);
 	m_postShader = new Shader(shader::PostVertex, shader::PostFragment);
-	defaultShader = new Shader(shader::BasicVertex, shader::BasicFragment);
+	m_defaultShader = new Shader(shader::BasicVertex, shader::BasicFragment);
 
 	m_defaultPlane = Mesh::CreatePlane();
 	m_testImage = new ImageTexture(file::GetEditorPath("..\\Assets\\test.png"));
+
+	m_currentScene = new Scene();
 }
 
 App::~App() {
+	delete m_currentScene;
+
 	delete m_testImage;
 	delete m_defaultPlane;
-	delete defaultShader;
+	delete m_defaultShader;
+}
+
+Scene* App::GetCurrentScene(){
+	return nullptr;
 }
 
 App* App::Get() {
@@ -54,6 +62,8 @@ void App::Run() {
 			gameLoop = false;
 		}
 
+		m_currentScene->Update();
+
 		Render(nullptr);
 
 		m_window.SwapBuffers();
@@ -64,8 +74,7 @@ void App::Run() {
 
 
 
-void App::Render(FrameBuffer* finalFbo)
-{
+void App::Render(FrameBuffer* finalFbo) {
 	//First we render the main thingy
 	{
 		m_defaultFbo->Use();
@@ -74,33 +83,8 @@ void App::Render(FrameBuffer* finalFbo)
 
 		graphics::ClearBuffers(0.f, 0.3f, 1.f, 1.f);
 
-		defaultShader->Use();
-
-		//Camera view projection...
-		{
-			camera.area = 1.f;
-			camera.rotation = 180.f;
-			float aspect = finalFbo ? finalFbo->GetAspect() : m_window.GetAspect();
-			defaultShader->Set("viewProjection", camera.GetViewProjection(aspect));
-		}
-
-		//Transform test
-		{
-			static Transform transf;
-			transf.position = { .5f, .5f };
-			transf.scale = { 0.3f, 0.3f };
-			transf.rotation += 0.1f;
-
-			auto mat = transf.GetMatrix();
-			defaultShader->Set("transform", transf.GetMatrix());
-		}
-
-		//Binding a test image...
-		defaultShader->Set("testImage", 0);
-		m_testImage->Use(0);
-
-		m_defaultPlane->Use();
-		m_defaultPlane->Draw();
+		float aspect = finalFbo ? finalFbo->GetAspect() : m_window.GetAspect();
+		m_currentScene->Draw(m_defaultShader, aspect);
 	}
 
 	//Then we render final image
