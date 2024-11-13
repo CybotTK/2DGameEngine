@@ -73,6 +73,11 @@ glm::ivec2 FrameBuffer::GetResolution()
 	return m_resolution;
 }
 
+float FrameBuffer::GetAspect() const
+{
+	return (float)m_resolution.x / (float)m_resolution.y;
+}
+
 void FrameBuffer::Initialize(int texCount)
 {
 	assert(texCount > 0);

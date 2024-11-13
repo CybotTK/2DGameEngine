@@ -24,6 +24,7 @@ public:
 	void Resize(int width, int height);
 
 	glm::ivec2 GetResolution();
+	float GetAspect() const;
 
 protected:
 	void Initialize(int texCount);

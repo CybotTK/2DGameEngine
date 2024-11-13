@@ -26,15 +26,21 @@ void Window::SetTitle(const std::string& title){
 	SDL_SetWindowTitle(mainWindow, title.c_str());
 }
 
-glm::ivec2 Window::GetWindowSize(){
+glm::ivec2 Window::GetWindowSize() const {
 	int x, y;
 	SDL_GL_GetDrawableSize(mainWindow, &x, &y);
 	return glm::ivec2(x,y);
 }
 
-void Window::UpdateViewport() {
+void Window::UpdateViewport() const {
 	auto res = glm::ivec2(GetWindowSize());
 	graphics::SetViewport(0, 0, res.x, res.y);
+}
+
+float Window::GetAspect() const
+{
+	auto size = GetWindowSize();
+	return (float)size.x / (float)size.y;
 }
 
 void Window::SwapBuffers() {

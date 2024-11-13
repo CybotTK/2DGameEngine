@@ -23,8 +23,10 @@ public:
 
 	void SetTitle(const std::string& title);
 
-	glm::ivec2 GetWindowSize();
-	void UpdateViewport();
+	glm::ivec2 GetWindowSize() const;
+	void UpdateViewport() const;
+
+	float GetAspect() const;
 
 	void SwapBuffers();
 
