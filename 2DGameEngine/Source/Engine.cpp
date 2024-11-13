@@ -76,6 +76,17 @@ void App::Render(FrameBuffer* finalFbo)
 
 		defaultShader->Use();
 
+		//Transform test
+		{
+			static Transform transf;
+			transf.position = { .5f, .5f };
+			transf.scale = { 0.3f, 0.3f };
+			transf.rotation += 0.1f;
+
+			auto mat = transf.GetMatrix();
+			defaultShader->Set("transform", transf.GetMatrix());
+		}
+
 		//Binding a test image...
 		defaultShader->Set("testImage", 0);
 		m_testImage->Use(0);

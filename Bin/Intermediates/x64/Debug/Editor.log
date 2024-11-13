@@ -1,3 +1,2 @@
 ﻿C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Microsoft\VC\v170\Microsoft.CppBuild.targets(531,5): warning MSB8028: The intermediate directory (E:\2DGameEngine\Bin\Intermediates\x64\Debug\) contains files shared from another project (2DGameEngine.vcxproj).  This can lead to incorrect clean and rebuild behavior.
-  Editor.cpp
   Editor.vcxproj -> E:\2DGameEngine\Bin\x64\Debug\Gion Engine Editor.exe

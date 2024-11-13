@@ -17,6 +17,7 @@ public:
 	void Use();
 
 	void Set(const std::string& name, int value);
+	void Set(const std::string& name, glm::mat4 value);
 
 private:
 	GLuint GetUniformLocation(const std::string& name);

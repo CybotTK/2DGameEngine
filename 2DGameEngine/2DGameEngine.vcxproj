@@ -180,6 +180,7 @@
     </Lib>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Include\Core\Transform.h" />
     <ClInclude Include="Include\Engine.h" />
     <ClInclude Include="Include\Graphics\FrameBuffer.h" />
     <ClInclude Include="Include\Graphics\Graphics.h" />
@@ -194,6 +195,7 @@
     <ClInclude Include="Include\System\Window.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Source\Core\Transform.cpp" />
     <ClCompile Include="Source\Engine.cpp" />
     <ClCompile Include="Source\Graphics\FrameBuffer.cpp" />
     <ClCompile Include="Source\Graphics\Graphics.cpp" />

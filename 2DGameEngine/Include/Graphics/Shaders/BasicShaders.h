@@ -15,9 +15,11 @@ out VS_OUT {
 	vec2 UV;
 } vsOut;
 
+uniform mat4 transform;
+
 void main(){
 	//Passing the vertex position to the fragment shader
-	vsOut.position  = aPosition * 0.2;
+	vsOut.position  = (transform * vec4(aPosition, 0.f, 1.f)).xy;
 	vsOut.UV = aUV;
 	vsOut.UV.y = 1.0f - vsOut.UV.y; //Flipping OpenGL Y
 	
@@ -77,7 +79,7 @@ in VS_OUT{
 uniform sampler2D renderedTexture;
 
 void main(){
-	gColor = texture2D(renderedTexture, vsOut.UV) * vec4(1, 0., 0., 1.0);
+	gColor = texture2D(renderedTexture, vsOut.UV);
 }
 )";
 
