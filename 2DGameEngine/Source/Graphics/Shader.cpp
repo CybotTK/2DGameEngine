@@ -119,20 +119,20 @@ void Shader::Initialize() {
 	glLinkProgram(program);
 
 	//Check if there is Linking Error
-	glGetShaderiv(program, GL_LINK_STATUS, &success);
+	glGetProgramiv(program, GL_LINK_STATUS, &success);
 	if (success == GL_FALSE) {
 		GLchar error[1024] = { 0 };
-		glGetShaderInfoLog(program, sizeof(error), NULL, error);
+		glGetProgramInfoLog(program, sizeof(error), NULL, error);
 		std::cerr << "Error: Shader linking failed!" << error << '\n';
 		exit(-1); // "Error: Shader linking failed!"
 	}
 
 	// Validating the Program
 	glValidateProgram(program);
-	glGetShaderiv(program, GL_VALIDATE_STATUS, &success);
+	glGetProgramiv(program, GL_VALIDATE_STATUS, &success);
 	if (success == GL_FALSE) {
 		GLchar error[1024] = { 0 };
-		glGetShaderInfoLog(program, sizeof(error), NULL, error);
+		glGetProgramInfoLog(program, sizeof(error), NULL, error);
 		std::cerr << "Error: Shader validation failed!" << error << '\n';
 		exit(-1); // "Error: Shader validation failed!"
 	}
