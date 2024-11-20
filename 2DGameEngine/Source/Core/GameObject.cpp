@@ -5,6 +5,7 @@
 
 GameObject::GameObject()
 {
+	sprite.shape.Set("Plane");
 }
 
 GameObject::~GameObject()
@@ -28,11 +29,13 @@ void GameObject::Update()
 
 void GameObject::Draw(Shader* shader, Mesh* mesh)
 {
-	shader->Set("transform", GetWorldMatrix());
-
+	shader->Set("transform", GetWorldMatrix()); 
 	shader->Set("sprite.color", sprite.color);
-	shader->Set("sprite.useTexture", false);
+
+	auto tex = sprite.texture.Get();
 	shader->Set("sprite.texture", 0);
+	shader->Set("sprite.useTexture", (tex != nullptr));
+	if (tex) { tex->Use(0); }
 
 	mesh->Draw();
 

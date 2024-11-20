@@ -180,6 +180,7 @@
     </Lib>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Include\Core\Asset.h" />
     <ClInclude Include="Include\Core\Camera.h" />
     <ClInclude Include="Include\Core\GameObject.h" />
     <ClInclude Include="Include\Core\Scene.h" />
@@ -198,6 +199,7 @@
     <ClInclude Include="Include\System\Window.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Source\Core\Asset.cpp" />
     <ClCompile Include="Source\Core\Camera.cpp" />
     <ClCompile Include="Source\Core\GameObject.cpp" />
     <ClCompile Include="Source\Core\Scene.cpp" />

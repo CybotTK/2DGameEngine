@@ -21,7 +21,9 @@
 
 namespace glm
 {
-	/// @addtogroup gtx_transform
+	/// @addtogroup gtx_
+	/// 
+	/// 
 	/// @{
 
 	/// Transforms a matrix with a translation 4 * 4 matrix created from 3 scalars.

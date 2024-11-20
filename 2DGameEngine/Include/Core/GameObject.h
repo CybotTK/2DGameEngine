@@ -6,7 +6,9 @@
 
 #include <glm/glm.hpp>
 
+#include "Core/Asset.h"
 #include "Core/Transform.h"
+#include "Graphics/Textures/ImageTexture.h"
 
 class Shader;
 class Mesh;
@@ -29,7 +31,8 @@ public:
 
 	struct _Sprite {
 		glm::vec4 color = {1.f, 1.f, 1.f, 1.f};
-		size_t texture = 0;
+		AssetHandler<ImageTexture> texture;
+		AssetHandler<Mesh>		   shape;
 	} sprite;
 
 private:

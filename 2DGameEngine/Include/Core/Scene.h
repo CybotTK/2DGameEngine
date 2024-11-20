@@ -22,8 +22,6 @@ public:
 	Camera camera;
 
 	std::vector<GameObject*> objects;
-protected:
-	Mesh* m_plane; // I declare pointer cause I don't need full definition of Mesh
 };
 
 #endif // !SCENE_H

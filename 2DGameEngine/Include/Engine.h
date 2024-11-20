@@ -10,6 +10,7 @@
 #include "Core/Camera.h"
 #include "Core/Scene.h"
 #include "Core/GameObject.h"
+#include "Core/Asset.h"
 
 #include "Graphics/Mesh.h"
 #include "Graphics/Shader.h"
@@ -37,13 +38,21 @@ public:
 
 	Input input;
 
+	struct Data {
+		AssetMap<ImageTexture> images;
+		AssetMap<Mesh>		   meshes;
+
+		AssetMap<Scene>		   scenes;
+	} data;
+
 private:
+
 	static App* singletonInstance;
 	
 	Scene* m_currentScene;
 	std::vector<Scene*> scenes;
 
-	bool gameLoop;
+	bool m_gameLoop;
 	Window m_window;
 
 	// By default it renders to the default FBO and then to screen
@@ -54,9 +63,7 @@ private:
 	Shader* m_postShader;
 
 	Shader* m_defaultShader;
-
 	Mesh*   m_defaultPlane;
-	ImageTexture* m_testImage;
 };
 
 #endif //ENGINE_H
