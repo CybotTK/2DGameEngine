@@ -1,5 +1,6 @@
 #include "Core/GameObject.h"
 
+#include "Core/Layer.h"
 #include "Graphics/Shader.h"
 #include "Graphics/Mesh.h"
 
@@ -77,9 +78,43 @@ void GameObject::SetParent(GameObject* parent)
 
 	// Reset child position
 	position = { 0.f, 0.f, };
+
+	// Only root GameObjects can have a layer
+	m_layer = nullptr;
 }
 
 GameObject* GameObject::GetParent() const
 {
 	return m_parent;
+}
+
+GameObject* GameObject::GetRoot()
+{
+	if (m_parent == nullptr) {
+		return this;
+	}
+
+	return m_parent->GetRoot();
+}
+
+void GameObject::SetLayer(Layer* layer)
+{
+	if (m_layer == layer || layer == nullptr) {
+		return;
+	}
+	if (m_layer) {
+		m_layer->Remove(this);
+	}
+	m_layer = layer;
+	m_layer->objects.push_back(this);
+
+	//We can't have a child object in a different layer then its parent
+	if (m_parent) {
+		RemoveParent();
+	}
+}
+
+Layer* GameObject::GetLayer()
+{
+	return GetRoot()->m_layer;
 }

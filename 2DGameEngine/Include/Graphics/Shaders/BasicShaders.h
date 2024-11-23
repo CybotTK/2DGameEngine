@@ -49,17 +49,21 @@ struct Sprite{
 	bool useTexture;
 };
 
+struct Layer{
+	vec4 tint;
+};
+
 uniform Sprite sprite;
+uniform Layer  layer;
 
 void main(){
-	//gColor = vec4(1.f, 0.f, 0.f, 1.f);
-
 	gColor = vec4(1.f, 1.f, 1.f, 1.f);
 
 	if (sprite.useTexture == true)
 		gColor = texture2D(sprite.texture, vsOut.UV);
 	
 	gColor  *= sprite.color;	
+	gColor  *= layer.tint;	
 }
 )";
 

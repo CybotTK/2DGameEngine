@@ -10,6 +10,7 @@
 #include "Core/Transform.h"
 #include "Graphics/Textures/ImageTexture.h"
 
+class Layer;
 class Shader;
 class Mesh;
 
@@ -27,6 +28,13 @@ public:
 	void SetParent(GameObject* parent);
 	GameObject* GetParent() const;
 
+	// Returns itself if GameObject has no parent. The root parent, otherwise 
+	GameObject* GetRoot();
+
+	// Note: Only root GameObjects (with no parents) can have layers
+	void SetLayer(Layer* layer);
+	Layer* GetLayer();
+
 	std::string name = "Game Object";
 
 	struct _Sprite {
@@ -36,6 +44,8 @@ public:
 	} sprite;
 
 private:
+	Layer* m_layer = nullptr;
+
 	GameObject* m_parent;
 	std::vector<GameObject*> m_children;
 

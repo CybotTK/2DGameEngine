@@ -1,0 +1,34 @@
+#ifndef LAYER_H
+#define LAYER_H
+
+#include <string>
+#include <vector>
+
+#include <glm/glm.hpp>
+
+#include <Core/GameObject.h>
+#include <Core/Camera.h>
+
+class Shader;
+
+class Layer {
+public:
+	Layer(const std::string& layerName);
+	virtual ~Layer();
+
+	void Update();
+	void Draw(const Camera& cam, Shader* shader, float aspect);
+
+	void Add(GameObject* object);
+	void Remove(GameObject* object);
+
+	std::string name;
+
+	glm::vec4 tint = { 1.f, 1.f, 1.f, 1.f };
+	bool useCamera = true;
+
+	std::vector<GameObject*> objects;
+private:
+};
+
+#endif // !LAYER_H
