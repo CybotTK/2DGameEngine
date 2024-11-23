@@ -8,7 +8,7 @@ public:
 	Camera();
 	virtual ~Camera();
 
-	glm::mat4 GetViewProjection(float aspect = 1.f);
+	glm::mat4 GetViewProjection(float aspect = 1.f) const;
 
 	float area = 5.f;
 };

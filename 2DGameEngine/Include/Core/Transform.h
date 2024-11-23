@@ -8,7 +8,7 @@ public:
 	Transform();
 	virtual ~Transform();
 	
-	glm::mat4 GetMatrix();
+	glm::mat4 GetMatrix() const;
 
 	glm::vec2 position;
 	glm::vec2 scale = {1.f, 1.f};

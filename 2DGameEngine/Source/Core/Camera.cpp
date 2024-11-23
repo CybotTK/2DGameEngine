@@ -10,7 +10,7 @@ Camera::~Camera()
 {
 }
 
-glm::mat4 Camera::GetViewProjection(float aspect)
+glm::mat4 Camera::GetViewProjection(float aspect) const
 {
 	auto proj = glm::ortho(-area * aspect, area * aspect, -area, area, -100.f, 100.f);
 	return proj * glm::inverse(GetMatrix());
