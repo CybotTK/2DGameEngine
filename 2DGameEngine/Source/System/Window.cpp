@@ -126,5 +126,11 @@ void Window::SpawnWindow(const std::string& title, int width, int height, Window
 		glEnable(GL_MULTISAMPLE); // improves visual quality
 	}
 
+	// OpenGL Setup:
+	{
+		glEnable(GL_BLEND);
+		glBlendFunc(GL_SRC_COLOR, GL_ONE_MINUS_SRC_ALPHA);
+	}
+
 }
 
