@@ -21,6 +21,10 @@ public:
 	void UpdatePhysics();
 	void Draw(Shader* shader, float aspect);
 
+	// We call this at the end of every frame. 
+	// Use it to cleanup stuff
+	void EndUpdate();
+
 	b2World* GetBox2DWorld() const;
 
 	// It returns all the objects from all layers 

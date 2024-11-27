@@ -223,3 +223,8 @@ void GameObject::RetrieveTransformFromPhysicsWorld()
 		SetMatrix(transf.GetMatrix());
 	}
 }
+
+void GameObject::Kill()
+{
+	m_killed = true;
+}

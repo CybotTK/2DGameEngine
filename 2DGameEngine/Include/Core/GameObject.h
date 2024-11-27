@@ -50,6 +50,9 @@ public:
 	void SubmitTransformToPhysicsWorld();
 	void RetrieveTransformFromPhysicsWorld();
 
+	//Destroys the object and its children
+	void Kill();
+
 	std::string name = "Game Object";
 
 	struct _Sprite {
@@ -82,11 +85,13 @@ private:
 
 	b2Body* m_physicsBody = nullptr;
 
-	bool m_initialized = false;
-
 	GameObject* m_parent;
 	std::vector<GameObject*> m_children;
+	
 
+	bool m_initialized = false;
+	bool m_killed = false;  // True means it will be garbage collected 
+							// in the end frame
 };
 
 #endif // !GAME_OBJECT_H

@@ -116,6 +116,21 @@ void Scene::Draw(Shader* shader, float aspect)
 	}
 }
 
+void Scene::EndUpdate(){
+	auto allObjects = GetObjectsRecursively();
+
+	for (auto obj : allObjects) {
+		if (obj->m_killed) {
+			auto layer = obj->GetRoot()->GetLayer();
+
+			assert(layer);
+			layer->Remove(obj);
+
+			delete obj;
+		}
+	}
+}
+
 b2World* Scene::GetBox2DWorld() const
 {
 	return m_physicsWorld;
@@ -148,5 +163,3 @@ void Scene::SetGravity(float x, float y)
 {
 	m_physicsWorld->SetGravity(b2Vec2(x,y));
 }
-
-
