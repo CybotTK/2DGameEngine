@@ -1,6 +1,10 @@
 #include "Core/Transform.h"
 
+#define GLM_ENABLE_EXPERIMENTAL
+
 #include <glm/gtx/transform.hpp> //transform.hpp if stuff starts to not work
+#include <glm/gtx/quaternion.hpp> //transform.hpp if stuff starts to not work
+#include <glm/gtx/matrix_decompose.hpp> //transform.hpp if stuff starts to not work
 
 Transform::Transform()
 {
@@ -17,4 +21,17 @@ glm::mat4 Transform::GetMatrix() const
 	glm::mat4 scl = glm::scale(glm::vec3(scale, 1.f));
 
 	return pos * rot * scl;
+}
+
+void Transform::SetMatrix(glm::mat4 matrix)
+{
+	glm::vec3 skew, scl, pos;
+	glm::vec4 perspective;
+	glm::quat quaternion;
+
+	glm::decompose(matrix, scl, quaternion, pos, skew, perspective);
+
+	position = pos;
+	rotation = glm::eulerAngles(glm::normalize(quaternion)).z * (180.f / glm::pi<float>());
+	scale = scl;
 }
