@@ -1,6 +1,9 @@
 #include "Core/GameObject.h"
 
+#include "Engine.h"
+
 #include "Core/Layer.h"
+
 #include "Graphics/Shader.h"
 #include "Graphics/Mesh.h"
 
@@ -11,6 +14,12 @@ GameObject::GameObject()
 
 GameObject::~GameObject()
 {
+	if (m_scene && m_physicsBody) {
+		auto world = m_scene->GetBox2DWorld();
+
+		world->DestroyBody(m_physicsBody);
+	}
+
 	for (auto child : m_children)
 	{
 		delete child;
@@ -18,9 +27,64 @@ GameObject::~GameObject()
 	m_children.clear();
 }
 
+std::vector<GameObject*> GameObject::GetChildren(bool recursive)
+{
+	std::vector<GameObject*> out = m_children;
+
+	if (recursive) {
+		for (auto child : m_children) {
+			auto rec = child->GetChildren(true);
+			out.insert(out.end(), rec.begin(), rec.end());
+		}
+	}
+	return out;
+}
+
+void GameObject::Initialize(Scene* scene)
+{
+	m_initialized = true;
+
+	auto world = scene->GetBox2DWorld();
+
+	b2BodyDef bodyDef;
+	bodyDef.position.Set(position.x, position.y);
+	bodyDef.angle = glm::radians(rotation);
+	bodyDef.type = physics.type == PhysicsType::DYNAMIC ? b2_dynamicBody : b2_staticBody;
+	bodyDef.fixedRotation = physics.fixedRotation;
+	bodyDef.bullet = physics.isBullet;
+	m_physicsBody = world->CreateBody(&bodyDef);
+
+	b2PolygonShape shape;
+	shape.SetAsBox(
+		scale.x * physics.shapeScale.x, 
+		scale.y * physics.shapeScale.y
+	);
+	
+	b2FixtureDef fixture;
+	fixture.shape = &shape;
+	fixture.filter.categoryBits = physics.category;
+	fixture.filter.maskBits		= physics.mask;
+	switch (physics.type) {
+		case PhysicsType::GHOST:
+			fixture.filter.categoryBits = 0x000;
+			break;
+		case PhysicsType::STATIC:
+			fixture.density = 0.f;
+			break;
+		case PhysicsType::DYNAMIC:
+			fixture.density = 1.f;
+			break;
+	}
+	m_physicsBody->CreateFixture(&fixture);
+
+	for (auto child : m_children) {
+		child->Initialize(scene);
+	}
+}
+
 void GameObject::Update()
 {
-	rotation += 0.1f;
+	assert(m_initialized);
 
 	for (auto child : m_children)
 	{
@@ -117,4 +181,45 @@ void GameObject::SetLayer(Layer* layer)
 Layer* GameObject::GetLayer()
 {
 	return GetRoot()->m_layer;
+}
+
+bool GameObject::IsInitialized() const
+{
+	return m_initialized;
+}
+
+void GameObject::SubmitTransformToPhysicsWorld()
+{
+	Transform transf;
+	transf.SetMatrix(GetWorldMatrix());
+
+	m_physicsBody->SetTransform(
+		{ transf.position.x, transf.position.y }, 
+		glm::radians(transf.rotation)
+	);
+
+	for (auto child : m_children) {
+		child->SubmitTransformToPhysicsWorld();
+	}
+}
+
+void GameObject::RetrieveTransformFromPhysicsWorld()
+{
+	Transform transf;
+
+	auto pos = m_physicsBody->GetPosition();
+	auto rot = glm::degrees(m_physicsBody->GetAngle());
+
+	transf.position = { pos.x, pos.y };
+	transf.rotation = rot;
+
+	//Scaling does not change
+	transf.scale = scale;
+
+	if (m_parent) {
+		SetMatrix(glm::inverse(m_parent->GetWorldMatrix()) * transf.GetMatrix());
+	}
+	else {
+		SetMatrix(transf.GetMatrix());
+	}
 }

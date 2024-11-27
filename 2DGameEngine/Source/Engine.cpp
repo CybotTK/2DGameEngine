@@ -10,6 +10,7 @@
 
 #include "System/FileUtils.h"
 
+
 App* App::singletonInstance = nullptr;
 
 App::App() {
@@ -35,12 +36,15 @@ App::~App() {
 	delete m_defaultShader;
 }
 
-void App::Run() {
+void App::Initialize() {
 	data.images.Add("test.png", new ImageTexture(file::GetEditorPath("..\\Assets\\test.png")));
 
 	m_currentScene = new Scene();
 	data.scenes.Add("Main Scene", m_currentScene);
+}
 
+void App::Run() {
+	
 	while (m_gameLoop) {
 		input.Update();
 		if (input.GetQuitStatus()) {
@@ -50,8 +54,9 @@ void App::Run() {
 		if (m_currentScene) {
 			m_currentScene->Update();
 
-			Render(nullptr);
+			m_currentScene->UpdatePhysics();
 		}
+		Render(nullptr);
 
 		m_window.SwapBuffers();
 	}

@@ -18,12 +18,24 @@ public:
 	virtual ~Scene();
 
 	void Update();
+	void UpdatePhysics();
 	void Draw(Shader* shader, float aspect);
+
+	b2World* GetBox2DWorld() const;
+
+	// It returns all the objects from all layers 
+	std::vector<GameObject*> GetObjectsRecursively();
+
+	glm::vec2 GetGravity();
+	void SetGravity(glm::vec2 value);
+	void SetGravity(float x, float y);
 
 	Camera camera;
 	std::vector<Layer*> layers;
 
 	glm::vec3 background = { 0.1f, 0.5f, 0.8f };
+protected:
+	b2World* m_physicsWorld = nullptr;
 };
 
 #endif // !SCENE_H

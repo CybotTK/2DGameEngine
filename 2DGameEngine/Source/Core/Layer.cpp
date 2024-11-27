@@ -4,8 +4,9 @@
 #include "Graphics/Shader.h"
 #include "Graphics/Graphics.h"
 
-Layer::Layer(const std::string& layerName) : name(layerName)
+Layer::Layer(Scene* scene, const std::string& layerName) : name(layerName)
 {
+	m_scene = scene;
 }
 
 Layer::~Layer()
@@ -24,6 +25,9 @@ void Layer::Update()
 {
 	for (auto obj : objects)
 	{
+		if (!obj->IsInitialized()) {
+			obj->Initialize(m_scene);
+		}
 		obj->Update();
 	}
 }
@@ -65,4 +69,16 @@ void Layer::Remove(GameObject* object)
 	auto it = std::find(objects.begin(), objects.end(), object);
 	assert(it != objects.end()); // Make sure we found the GameObject
 	objects.erase(it);
+}
+
+std::vector<GameObject*> Layer::GetObjectsRecursively()
+{
+	std::vector<GameObject*> out = objects;
+
+	for (auto obj : objects) {
+		auto rec = obj->GetChildren(true);
+		out.insert(out.end(), rec.begin(), rec.end());
+	}
+
+	return out;
 }

@@ -23,7 +23,12 @@ private:
 	App();
 	virtual ~App();
 public:
+	// We don't want to initialize everything since some of the stuff 
+	// we will have will have a dependency on the App instance
+	// That will mess things up! That's why we use this
+	void Initialize();
 
+	//Main loop goes here
 	void Run();
 
 	// If finalFbo = nullptr, it will render to screen
@@ -44,11 +49,10 @@ public:
 
 		AssetMap<Scene>		   scenes;
 	} data;
-
 private:
 
 	static App* singletonInstance;
-	
+
 	Scene* m_currentScene;
 	std::vector<Scene*> scenes;
 

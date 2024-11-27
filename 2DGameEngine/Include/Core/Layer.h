@@ -10,10 +10,11 @@
 #include <Core/Camera.h>
 
 class Shader;
+class Scene;
 
 class Layer {
 public:
-	Layer(const std::string& layerName);
+	Layer(Scene* scene, const std::string& layerName);
 	virtual ~Layer();
 
 	void Update();
@@ -22,6 +23,9 @@ public:
 	void Add(GameObject* object);
 	void Remove(GameObject* object);
 
+	// It returns all the objects (and children)
+	std::vector<GameObject*> GetObjectsRecursively();
+
 	std::string name;
 
 	glm::vec4 tint = { 1.f, 1.f, 1.f, 1.f };
@@ -29,6 +33,7 @@ public:
 
 	std::vector<GameObject*> objects;
 private:
+	Scene* m_scene;
 };
 
 #endif // !LAYER_H
