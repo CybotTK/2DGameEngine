@@ -7,6 +7,8 @@
 #include "System/Input.h"
 #include "System/Timer.h"
 
+#include "Audio/AudioTrack.h"
+
 #include "Core/Transform.h"
 #include "Core/Camera.h"
 #include "Core/Scene.h"
@@ -49,6 +51,8 @@ public:
 	struct Data {
 		AssetMap<ImageTexture> images;
 		AssetMap<Mesh>		   meshes;
+
+		AssetMap<AudioTrack>   audios;
 
 		AssetMap<Scene>		   scenes;
 	} data;

@@ -1,22 +1,4 @@
-﻿  Asset.cpp
-  Camera.cpp
-  GameObject.cpp
-  Layer.cpp
-  Scene.cpp
-  Transform.cpp
-  Engine.cpp
-  FrameBuffer.cpp
-E:\2DGameEngine\2DGameEngine\Source\Graphics\FrameBuffer.cpp(68,14): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
-  Graphics.cpp
-  Mesh.cpp
-  Shader.cpp
-  Texture.cpp
-  ImageTexture.cpp
-  FileUtils.cpp
-  Input.cpp
-  Timer.cpp
-  Window.cpp
-E:\2DGameEngine\2DGameEngine\Source\System\Window.cpp(77,53): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
+﻿  Engine.cpp
 glew32.lib(glew32.dll) : warning LNK4006: __NULL_IMPORT_DESCRIPTOR already defined in OpenGL32.lib(OPENGL32.dll); second definition ignored
 glew32s.lib(glew.obj) : warning LNK4006: glewInit already defined in glew32.lib(glew32.dll); second definition ignored
 glew32s.lib(glew.obj) : warning LNK4006: glewIsSupported already defined in glew32.lib(glew32.dll); second definition ignored
@@ -27,4 +9,5 @@ glew32s.lib(glew.obj) : warning LNK4006: wglewInit already defined in glew32.lib
 glew32s.lib(glew.obj) : warning LNK4006: wglewIsSupported already defined in glew32.lib(glew32.dll); second definition ignored
 glew32s.lib(glew.obj) : warning LNK4006: wglewGetExtension already defined in glew32.lib(glew32.dll); second definition ignored
 SDL2.lib(SDL2.dll) : warning LNK4006: __NULL_IMPORT_DESCRIPTOR already defined in OpenGL32.lib(OPENGL32.dll); second definition ignored
+SDL2_mixer.lib(SDL2_mixer.dll) : warning LNK4006: __NULL_IMPORT_DESCRIPTOR already defined in OpenGL32.lib(OPENGL32.dll); second definition ignored
   2DGameEngine.vcxproj -> E:\2DGameEngine\Bin\2DGameEngine\x64\Release\2DGameEngine.lib

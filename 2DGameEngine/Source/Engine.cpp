@@ -3,6 +3,7 @@
 #include <iostream>
 
 #include <SDL2/SDL.h>
+#include <SDL2/SDL_mixer.h>
 #include <GL/glew.h>
 #include <glm/glm.hpp>
 
@@ -25,22 +26,34 @@ App::App() {
 	data.meshes.Add("Plane", Mesh::CreatePlane());
 
 	m_currentScene = nullptr;
+
+	SDL_Init(SDL_INIT_AUDIO);
+	Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048);
 }
 
 App::~App() {
 	data.images.Reset();
 	data.meshes.Reset();
+	data.audios.Reset();
 	data.scenes.Reset();
 
 	delete m_defaultPlane;
 	delete m_defaultShader;
+
+	Mix_CloseAudio();
+	SDL_Quit();
 }
 
 void App::Initialize() {
 	data.images.Add("test.png", new ImageTexture(file::GetEditorPath("..\\Assets\\test.png")));
 
+	auto audioId = data.audios.Add("Ambience", new AudioTrack(file::GetEditorPath("..\\Assets\\Ambience.wav")));
+
+	//Testing audio
+	data.audios[audioId].asset->Play();
+
 	m_currentScene = new Scene();
-	data.scenes.Add("Main Scene", m_currentScene);
+	data.scenes.Add("Main Scene", m_currentScene);	
 }
 
 void App::Run() {
