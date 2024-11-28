@@ -5,10 +5,13 @@
 #include <fstream>
 #include <streambuf>
 
+#include <iostream>
+
 #include <SDL2/SDL.h>
 
 std::string file::GetBasePath()
 {
+	std::cout << SDL_GetBasePath();
 	return SDL_GetBasePath();
 }
 
