@@ -29,7 +29,7 @@ Scene::Scene()
 		auto root1 = new GameObject();
 		root1->physics.type = GameObject::DYNAMIC;
 		root1->sprite.texture.Set("test.png");
-		root1->position = { -1.f, 0.f };
+		root1->position = { -2.f, 3.f };
 		root1->rotation = 25.f;
 
 		auto root1Child = new GameObject();
@@ -82,8 +82,7 @@ void Scene::Update()
 	}
 }
 
-void Scene::UpdatePhysics()
-{
+void Scene::UpdatePhysics(float deltaTime) {
 	auto allObjects = GetObjectsRecursively();
 
 	// First we update the transform in the physics world:
@@ -92,7 +91,7 @@ void Scene::UpdatePhysics()
 	}
 
 	// Now we step it
-	m_physicsWorld->Step(0.01, 6, 2);
+	m_physicsWorld->Step(deltaTime, 6, 2);
 
 	// We get transform back to be renderd and run in the logic step
 	for (auto obj : allObjects) {

@@ -197,6 +197,7 @@
     <ClInclude Include="Include\System\FileUtils.h" />
     <ClInclude Include="Include\System\Input.h" />
     <ClInclude Include="Include\System\InputTypes.h" />
+    <ClInclude Include="Include\System\Timer.h" />
     <ClInclude Include="Include\System\Window.h" />
   </ItemGroup>
   <ItemGroup>
@@ -215,6 +216,7 @@
     <ClCompile Include="Source\Graphics\Textures\ImageTexture.cpp" />
     <ClCompile Include="Source\System\FileUtils.cpp" />
     <ClCompile Include="Source\System\Input.cpp" />
+    <ClCompile Include="Source\System\Timer.cpp" />
     <ClCompile Include="Source\System\Window.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

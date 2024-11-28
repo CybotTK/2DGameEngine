@@ -5,6 +5,7 @@
 
 #include "System/Window.h"
 #include "System/Input.h"
+#include "System/Timer.h"
 
 #include "Core/Transform.h"
 #include "Core/Camera.h"
@@ -36,6 +37,8 @@ public:
 
 	Scene* GetCurrentScene();
 
+	float GetDeltaTime() const;
+
 	//Singleton related:
 	static App* Get();
 	static void Destroy();
@@ -50,8 +53,12 @@ public:
 		AssetMap<Scene>		   scenes;
 	} data;
 private:
+	void UpdateDeltaTime();
 
 	static App* singletonInstance;
+
+	Timer m_deltaTimer;
+	float m_deltaTime;
 
 	Scene* m_currentScene;
 	std::vector<Scene*> scenes;

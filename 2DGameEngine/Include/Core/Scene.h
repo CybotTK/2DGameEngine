@@ -18,7 +18,7 @@ public:
 	virtual ~Scene();
 
 	void Update();
-	void UpdatePhysics();
+	void UpdatePhysics(float deltaTime);
 	void Draw(Shader* shader, float aspect);
 
 	// We call this at the end of every frame. 

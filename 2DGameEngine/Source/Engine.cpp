@@ -44,8 +44,11 @@ void App::Initialize() {
 }
 
 void App::Run() {
-	
+	m_deltaTimer.Reset();
+
 	while (m_gameLoop) {
+		UpdateDeltaTime();
+
 		input.Update();
 		if (input.GetQuitStatus()) {
 			m_gameLoop = false;
@@ -54,7 +57,7 @@ void App::Run() {
 		if (m_currentScene) {
 			m_currentScene->Update();
 
-			m_currentScene->UpdatePhysics();
+			m_currentScene->UpdatePhysics(m_deltaTime);
 		}
 		Render(nullptr);
 
@@ -102,6 +105,11 @@ Scene* App::GetCurrentScene(){
 	return m_currentScene;
 }
 
+float App::GetDeltaTime() const
+{
+	return m_deltaTime;
+}
+
 App* App::Get() {
 	if (!IsInitialized()) {
 		singletonInstance = new App();
@@ -118,4 +126,14 @@ void App::Destroy() {
 
 bool App::IsInitialized() {
 	return singletonInstance != nullptr;
+}
+
+void App::UpdateDeltaTime() {
+	m_deltaTime = m_deltaTimer.Get();
+	m_deltaTimer.Reset();
+
+	if (m_deltaTime > 100.f) {
+		//Avoiding some corner cases
+		m_deltaTime = 1.f;
+	}
 }
