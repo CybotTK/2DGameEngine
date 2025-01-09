@@ -27,6 +27,7 @@ public:
 	glm::vec2 GetMouseMotion() const;
 	float GetMouseScrollY() const;
 
+	//We need this for ImGui
 	std::vector<SDL_Event> sdlEvents;
 
 private:

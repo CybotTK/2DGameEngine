@@ -33,8 +33,8 @@ public:
 	void SpawnWindow(const std::string& title, int width, int height, Window::Type type = MAXIMIZED);
 
 	//Getters for imGUI maybe
-	SDL_Window* GetSDLWindow();
-	SDL_GLContext GetContext();
+	SDL_Window* GetSDLWindow() const;
+	SDL_GLContext GetContext() const;
 
 private:
 

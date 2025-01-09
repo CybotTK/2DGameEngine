@@ -49,8 +49,8 @@ void App::Initialize() {
 
 	auto audioId = data.audios.Add("Ambience", new AudioTrack(file::GetEditorPath("..\\Assets\\Ambience.wav")));
 
-	//Testing audio
-	data.audios[audioId].asset->Play();
+	//Testing audio -- It works
+	//data.audios[audioId].asset->Play();
 
 	m_currentScene = new Scene();
 	data.scenes.Add("Main Scene", m_currentScene);	
@@ -67,12 +67,19 @@ void App::Run() {
 			m_gameLoop = false;
 		}
 
-		if (m_currentScene) {
+		if (m_currentScene && m_runGameLogic) {
 			m_currentScene->Update();
-
 			m_currentScene->UpdatePhysics(m_deltaTime);
 		}
-		Render(nullptr);
+
+		if (m_editorUI) {
+			m_editorUI->Update();
+			FrameBuffer::UseDefault();
+			m_editorUI->Draw();
+		}
+		else {
+			Render(nullptr);
+		}
 
 		m_window.SwapBuffers();
 	}
@@ -114,13 +121,35 @@ void App::Render(FrameBuffer* finalFbo) {
 	}
 }
 
-Scene* App::GetCurrentScene(){
+Scene* App::GetCurrentScene() {
 	return m_currentScene;
 }
 
-float App::GetDeltaTime() const
-{
+float App::GetDeltaTime() const {
 	return m_deltaTime;
+}
+
+void App::AddEditorUI(EditorUI* ui) {
+	assert(ui);
+
+	m_editorUI = ui;
+	DisableGameLogic();
+}
+
+bool App::HasEditorUI() const {
+	return m_editorUI != nullptr;
+}
+
+bool App::IsGameLogicEnabled() const {
+	return m_runGameLogic;
+}
+
+void App::EnableGameLogic() {
+	m_runGameLogic = true;
+}
+
+void App::DisableGameLogic() {
+	m_runGameLogic = false;
 }
 
 App* App::Get() {

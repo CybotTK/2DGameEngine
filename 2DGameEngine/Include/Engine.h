@@ -21,6 +21,8 @@
 #include "Graphics/Textures/ImageTexture.h"
 #include "Graphics/FrameBuffer.h"
 
+#include "Editor/EditorUI.h"
+
 class App {
 private:
 	App();
@@ -41,12 +43,20 @@ public:
 
 	float GetDeltaTime() const;
 
+	void AddEditorUI(EditorUI* ui);
+	bool HasEditorUI() const;
+	bool IsGameLogicEnabled() const;
+
+	void EnableGameLogic();
+	void DisableGameLogic();
+
 	//Singleton related:
 	static App* Get();
 	static void Destroy();
 	static bool IsInitialized();
 
 	Input input;
+	Window m_window;
 
 	struct Data {
 		AssetMap<ImageTexture> images;
@@ -62,13 +72,15 @@ private:
 	static App* singletonInstance;
 
 	Timer m_deltaTimer;
-	float m_deltaTime;
+	float m_deltaTime = 0.f;
 
 	Scene* m_currentScene;
 	std::vector<Scene*> scenes;
 
+	EditorUI* m_editorUI = nullptr;
+	bool m_runGameLogic = true;
+
 	bool m_gameLoop;
-	Window m_window;
 
 	// By default it renders to the default FBO and then to screen
 	// using the postShader

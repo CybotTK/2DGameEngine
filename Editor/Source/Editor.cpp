@@ -6,6 +6,8 @@
 int main(int argc, char** argv) {
 	auto app = App::Get();
 
+	app->AddEditorUI(new EditorUI);
+
 	app->Initialize();
 	app->Run();
 

@@ -47,11 +47,11 @@ void Window::SwapBuffers() {
 	SDL_GL_SwapWindow(mainWindow); //Swap the buffers, showing the rendered content
 }
 
-SDL_Window* Window::GetSDLWindow() {
+SDL_Window* Window::GetSDLWindow() const {
 	return mainWindow;
 }
 
-SDL_GLContext Window::GetContext() {
+SDL_GLContext Window::GetContext() const {
 	return mainContext;
 }
 
