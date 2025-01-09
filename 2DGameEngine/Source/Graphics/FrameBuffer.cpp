@@ -78,6 +78,11 @@ float FrameBuffer::GetAspect() const
 	return (float)m_resolution.x / (float)m_resolution.y;
 }
 
+Texture* FrameBuffer::GetTexture(int index)
+{
+	return m_textures[index];
+}
+
 void FrameBuffer::Initialize(int texCount)
 {
 	assert(texCount > 0);

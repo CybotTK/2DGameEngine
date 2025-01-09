@@ -1,8 +1,7 @@
 #ifndef EDITOR_UI_H
 #define EDITOR_UI_H
 
-#include "System/Window.h"
-#include "System/Input.h"
+#include "Graphics/FrameBuffer.h"
 
 class EditorUI {
 public:
@@ -12,6 +11,7 @@ public:
 	void Update();
 	void Draw();
 
+	FrameBuffer viewport;
 protected:
 	void RenderBegin();
 	void Render();

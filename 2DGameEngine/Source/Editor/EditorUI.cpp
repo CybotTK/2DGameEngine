@@ -6,7 +6,7 @@
 
 #include "Engine.h"
 
-EditorUI::EditorUI() {
+EditorUI::EditorUI() : viewport(1280, 720, 1){
 	auto app = App::Get();
 
 	//ImGui initialization
@@ -51,6 +51,11 @@ void EditorUI::Update() {
 }
 
 void EditorUI::Draw() {
+	auto app = App::Get();
+
+	FrameBuffer::UseDefault(); //Screen
+	app->m_window.UpdateViewport();
+
 	RenderBegin();
 	Render();
 	RenderEnd();
@@ -105,9 +110,28 @@ void EditorUI::RenderEnd() {
 }
 
 void EditorUI::DrawTabs() {
+	auto app = App::Get();
+
 	ImGui::Begin("Testing tabs");
 
-	ImGui::Text("Hello, world!");
+	ImGui::Text("Viewport Test");
+
+	bool gameLogic = app->IsGameLogicEnabled();
+	ImGui::Checkbox("Run Logic", &gameLogic);
+
+	if (gameLogic) {
+		app->EnableGameLogic();
+	}
+	else {
+		app->DisableGameLogic();
+	}
+
+	ImGui::Image(
+		viewport.GetTexture(0)->GetTextureID(),
+		{ 1280.f, 720.f },			// Size
+		{ 0.f, 1.f }, { 1.f, 0.f }, // UV0, UV1
+		{ 1.f, 1.f, 1.f, 1.f }		// Tint
+	);
 
 	ImGui::End();
 }

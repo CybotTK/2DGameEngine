@@ -73,8 +73,9 @@ void App::Run() {
 		}
 
 		if (m_editorUI) {
+			Render(&m_editorUI->viewport);
+
 			m_editorUI->Update();
-			FrameBuffer::UseDefault();
 			m_editorUI->Draw();
 		}
 		else {
@@ -130,7 +131,9 @@ float App::GetDeltaTime() const {
 }
 
 void App::AddEditorUI(EditorUI* ui) {
-	assert(ui);
+	if (m_editorUI) {
+		delete m_editorUI;
+	}
 
 	m_editorUI = ui;
 	DisableGameLogic();

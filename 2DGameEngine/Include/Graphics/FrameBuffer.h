@@ -26,6 +26,7 @@ public:
 	glm::ivec2 GetResolution();
 	float GetAspect() const;
 
+	Texture* GetTexture(int index);
 protected:
 	void Initialize(int texCount);
 	void AddTextures(int texCount);
