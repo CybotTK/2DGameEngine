@@ -12,7 +12,7 @@
 class FrameBuffer {
 public:
 	FrameBuffer();
-	FrameBuffer(int width, int height, int texCount);
+	FrameBuffer(int width, int height, int texCount = 1);
 	virtual ~FrameBuffer();
 
 	void Use();

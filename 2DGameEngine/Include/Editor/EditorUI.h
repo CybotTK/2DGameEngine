@@ -1,6 +1,7 @@
 #ifndef EDITOR_UI_H
 #define EDITOR_UI_H
 
+#include "Editor/EditorTab.h"
 #include "Graphics/FrameBuffer.h"
 
 class EditorUI {
@@ -12,6 +13,7 @@ public:
 	void Draw();
 
 	FrameBuffer viewport;
+	std::vector<EditorTab*> tabs;
 protected:
 	void RenderBegin();
 	void Render();

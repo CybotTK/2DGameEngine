@@ -6,7 +6,7 @@
 
 #include "Engine.h"
 
-EditorUI::EditorUI() : viewport(1280, 720, 1){
+EditorUI::EditorUI() : viewport(1280, 720){
 	auto app = App::Get();
 
 	//ImGui initialization
@@ -30,13 +30,19 @@ EditorUI::EditorUI() : viewport(1280, 720, 1){
 	// Fonts:
 	io.Fonts->AddFontDefault();
 
-	// ImGui needs a VAO in order to work
-	glGenVertexArrays(1, &m_vao);
+	// Testing:
+	tabs.push_back(new EditorTab("Tab 1"));
+	tabs.push_back(new EditorTab("Tab 2"));
+	tabs.push_back(new EditorTab("Tab 3"));
+	tabs.push_back(new EditorTab("Tab 4"));
 }
 
 EditorUI::~EditorUI() {
-	//ImGui cleanup
-	//glDeleteVertexArrays(1, &m_vao);
+	// Remove the tabs
+	for (auto tab : tabs) {
+		delete tab;
+	}
+	tabs.clear();
 
 	ImGui_ImplOpenGL3_Shutdown();
 	ImGui_ImplSDL2_Shutdown();
@@ -110,6 +116,11 @@ void EditorUI::RenderEnd() {
 }
 
 void EditorUI::DrawTabs() {
+	for (auto tab : tabs) {
+		tab->DrawTab();
+	}
+	
+	/*
 	auto app = App::Get();
 
 	ImGui::Begin("Testing tabs");
@@ -133,5 +144,5 @@ void EditorUI::DrawTabs() {
 		{ 1.f, 1.f, 1.f, 1.f }		// Tint
 	);
 
-	ImGui::End();
+	ImGui::End();*/
 }
