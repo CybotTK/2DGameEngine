@@ -1,11 +1,13 @@
 #include "Editor/EditorUI.h"
-#include "Editor/EditorTheme.h"
 
 #include "Editor/ImGui/imgui.h"
 #include "Editor/ImGui/imgui_impl_sdl2.h"
 #include "Editor/ImGui/imgui_impl_opengl3.h"
 
 #include "Engine.h"
+
+#include "Editor/EditorTheme.h"
+#include "Editor/Tabs/ViewportTab.h"
 
 EditorUI::EditorUI() : viewport(1280, 720){
 	auto app = App::Get();
@@ -39,6 +41,7 @@ EditorUI::EditorUI() : viewport(1280, 720){
 	tabs.push_back(new EditorTab("Tab 2"));
 	tabs.push_back(new EditorTab("Tab 3"));
 	tabs.push_back(new EditorTab("Tab 4"));
+	tabs.push_back(new ViewportTab(this));
 }
 
 EditorUI::~EditorUI() {
@@ -92,7 +95,7 @@ void EditorUI::Render() {
 		ImGuiWindowFlags_NoScrollWithMouse;
 	
 	// Top menu
-	flags |= ImGuiWindowFlags_MenuBar;
+	//flags |= ImGuiWindowFlags_MenuBar;
 
 	if (ImGui::Begin("EditorMain", 0, flags)) {
 		ImGuiID dockspaceId = ImGui::GetID("dockspace");
@@ -123,30 +126,4 @@ void EditorUI::DrawTabs() {
 	for (auto tab : tabs) {
 		tab->DrawTab();
 	}
-	
-	/*
-	auto app = App::Get();
-
-	ImGui::Begin("Testing tabs");
-
-	ImGui::Text("Viewport Test");
-
-	bool gameLogic = app->IsGameLogicEnabled();
-	ImGui::Checkbox("Run Logic", &gameLogic);
-
-	if (gameLogic) {
-		app->EnableGameLogic();
-	}
-	else {
-		app->DisableGameLogic();
-	}
-
-	ImGui::Image(
-		viewport.GetTexture(0)->GetTextureID(),
-		{ 1280.f, 720.f },			// Size
-		{ 0.f, 1.f }, { 1.f, 0.f }, // UV0, UV1
-		{ 1.f, 1.f, 1.f, 1.f }		// Tint
-	);
-
-	ImGui::End();*/
 }
