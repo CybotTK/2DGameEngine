@@ -1,4 +1,5 @@
 #include "Editor/EditorUI.h"
+#include "Editor/EditorTheme.h"
 
 #include "Editor/ImGui/imgui.h"
 #include "Editor/ImGui/imgui_impl_sdl2.h"
@@ -29,6 +30,9 @@ EditorUI::EditorUI() : viewport(1280, 720){
 
 	// Fonts:
 	io.Fonts->AddFontDefault();
+
+	// UI Theme
+	UI::SetTheme();
 
 	// Testing:
 	tabs.push_back(new EditorTab("Tab 1"));

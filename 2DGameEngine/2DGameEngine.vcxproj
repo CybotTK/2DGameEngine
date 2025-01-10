@@ -187,7 +187,8 @@
     <ClInclude Include="Include\Core\Layer.h" />
     <ClInclude Include="Include\Core\Scene.h" />
     <ClInclude Include="Include\Core\Transform.h" />
-    <ClInclude Include="Include\Editor\DebugTab.h" />
+    <ClInclude Include="Include\Editor\EditorTab.h" />
+    <ClInclude Include="Include\Editor\EditorTheme.h" />
     <ClInclude Include="Include\Editor\EditorUI.h" />
     <ClInclude Include="Include\Editor\ImGui\imconfig.h" />
     <ClInclude Include="Include\Editor\ImGui\imgui.h" />
@@ -221,7 +222,8 @@
     <ClCompile Include="Source\Core\Layer.cpp" />
     <ClCompile Include="Source\Core\Scene.cpp" />
     <ClCompile Include="Source\Core\Transform.cpp" />
-    <ClCompile Include="Source\Editor\DebugTab.cpp" />
+    <ClCompile Include="Source\Editor\EditorTab.cpp" />
+    <ClCompile Include="Source\Editor\EditorTheme.cpp" />
     <ClCompile Include="Source\Editor\EditorUI.cpp" />
     <ClCompile Include="Source\Editor\ImGui\imgui.cpp" />
     <ClCompile Include="Source\Editor\ImGui\imgui_demo.cpp" />
