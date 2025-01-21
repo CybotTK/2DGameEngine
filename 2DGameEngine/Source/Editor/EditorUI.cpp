@@ -36,12 +36,6 @@ EditorUI::EditorUI() : viewport(1280, 720){
 	// UI Theme
 	UI::SetTheme();
 
-	// Testing:
-	tabs.push_back(new EditorTab("Tab 1"));
-	tabs.push_back(new EditorTab("Tab 2"));
-	tabs.push_back(new EditorTab("Tab 3"));
-	tabs.push_back(new EditorTab("Tab 4"));
-	tabs.push_back(new ViewportTab(this));
 }
 
 EditorUI::~EditorUI() {
