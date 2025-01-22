@@ -1,0 +1,38 @@
+#ifndef EDITOR_UI_ELEMENTS_H
+#define EDITOR_UI_ELEMENTS_H
+
+#include <string>
+#include <glm/glm.hpp>
+
+#include "Graphics/Texture.h"
+
+namespace ui {
+	typedef std::string Icon;
+
+	float GetCursorX();
+	float GetCursorY();
+
+	void SetCursorX(float value);
+	void SetCursorY(float value);
+
+	float GetWidth(bool minusScrollSize = true);
+	float GetHeight();
+
+	float GetRemainingWidth();
+	float GetRemainingHeight();
+
+	void SameLine(float offsetX = 0.0f, float spacing = -1.0f);
+	void Separator();
+
+	void Text(const std::string& text);
+
+	bool Header(const std::string& name);
+
+	void Image(Texture* image, glm::vec2 size = {0.f, 0.f}, bool flipY = true, glm::vec4 tint = {1.f, 1.f, 1.f, 1.f});
+}
+
+namespace uiInternal {
+	void DrawPropPrefix(const std::string& name, const ui::Icon& icon);
+}
+
+#endif // !EDITOR_UI_ELEMENTS_H

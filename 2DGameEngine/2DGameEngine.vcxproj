@@ -201,6 +201,8 @@
     <ClInclude Include="Include\Editor\ImGui\imstb_textedit.h" />
     <ClInclude Include="Include\Editor\ImGui\imstb_truetype.h" />
     <ClInclude Include="Include\Editor\Tabs\ViewportTab.h" />
+    <ClInclude Include="Include\Editor\UI\Elements.h" />
+    <ClInclude Include="Include\Editor\UI\Props.h" />
     <ClInclude Include="Include\Engine.h" />
     <ClInclude Include="Include\Graphics\FrameBuffer.h" />
     <ClInclude Include="Include\Graphics\Graphics.h" />
@@ -235,6 +237,9 @@
     <ClCompile Include="Source\Editor\ImGui\imgui_tables.cpp" />
     <ClCompile Include="Source\Editor\ImGui\imgui_widgets.cpp" />
     <ClCompile Include="Source\Editor\Tabs\ViewportTab.cpp" />
+    <ClCompile Include="Source\Editor\UI\Elements.cpp" />
+    <ClCompile Include="Source\Editor\UI\Props.cpp" />
+    <ClCompile Include="Source\Editor\UI\PropsTemplated.cpp" />
     <ClCompile Include="Source\Engine.cpp" />
     <ClCompile Include="Source\Graphics\FrameBuffer.cpp" />
     <ClCompile Include="Source\Graphics\Graphics.cpp" />

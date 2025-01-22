@@ -62,7 +62,7 @@ void Texture::GenerateOGLTexture()
 
 	// Updating the Texture Parrameters:
 	{
-		// Texdture Wrap (out of bounds)
+		// Texture Wrap (out of bounds)
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, m_texParams.wrapX);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, m_texParams.wrapY);
 

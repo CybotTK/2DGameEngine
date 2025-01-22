@@ -117,6 +117,12 @@
     <ClInclude Include="Include\Editor\Tabs\ViewportTab.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Include\Editor\UI\Props.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\Editor\UI\Elements.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\Engine.cpp">
@@ -207,6 +213,15 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Source\Editor\Tabs\ViewportTab.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Editor\UI\Props.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Editor\UI\Elements.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Editor\UI\PropsTemplated.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

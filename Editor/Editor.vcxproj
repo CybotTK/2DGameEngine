@@ -168,11 +168,17 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Source\Editor.cpp" />
+    <ClCompile Include="Source\EngineEditorUI.cpp" />
+    <ClCompile Include="Source\Tabs\HierarchyTab.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\2DGameEngine\2DGameEngine.vcxproj">
       <Project>{ab0e1b52-f7cb-44bf-baa2-c236ca454324}</Project>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Source\EngineEditorUI.h" />
+    <ClInclude Include="Source\Tabs\HierarchyTab.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
