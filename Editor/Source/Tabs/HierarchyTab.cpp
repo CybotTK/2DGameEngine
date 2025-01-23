@@ -4,6 +4,8 @@
 
 #include "Editor/UI/Props.h"
 
+#include "Editor/ImGui/imgui.h"
+
 HierarchyTab::HierarchyTab() {
 	name = "Hierarchy";
 }
@@ -12,29 +14,55 @@ HierarchyTab::~HierarchyTab() {
 }
 
 void HierarchyTab::DrawUI() {
-	static bool testB = false;
-	static std::string testField;
-	static int testInt = 0;
-	static float testFloat = 0.f;
+	auto app = App::Get();
+	auto scene = app->GetCurrentScene();
 
-	static glm::vec2 testVec;
-	
-	static glm::vec3 testColor3;
-	static glm::vec4 testColor4;
-
-	if (ui::Header("Testing UI")) {
-		ui::Prop("testB", &testB);
-		ui::Prop("testField", &testField);
-		ui::Prop("testInt", &testInt);
-		ui::Prop("testFloat", &testFloat);
+	if (!scene) {
+		ui::Text("No Scene selected!");
+		return;
 	}
 
-	ui::Separator();
+	int headerFlags = 0;
+	headerFlags |= ImGuiTreeNodeFlags_AllowItemOverlap;
+	headerFlags |= ImGuiTreeNodeFlags_CollapsingHeader;
+	headerFlags |= ImGuiTreeNodeFlags_DefaultOpen;
 
-	ui::Prop("testVec", &testVec);
+	for (auto layer : scene->layers) {
+		ui::PushID(layer);
+		if (ImGui::TreeNodeEx(layer->name.c_str(), headerFlags)) {
+			for (auto obj : layer->objects) {
+				if (obj->GetParent() == nullptr) {
+					DrawObject(obj);
+				}
+			}
+		}
+		ui::PopID();
+	}
 
-	ui::Separator();
+}
 
-	ui::PropColor("Color 3", &testColor3);
-	ui::PropColor("Color 4", &testColor4);
+void HierarchyTab::DrawObject(GameObject* obj) {
+	ui::PushID(obj);
+
+	auto children = obj->GetChildren(false);
+
+	int flags = 0;
+	flags |= ImGuiTreeNodeFlags_AllowItemOverlap;
+	flags |= ImGuiTreeNodeFlags_DefaultOpen;
+	flags |= ImGuiTreeNodeFlags_OpenOnArrow;
+
+	if (children.size() == 0) {
+		flags |= ImGuiTreeNodeFlags_Leaf;
+		//flags |= ImGuiTreeNodeFlags_Bullet;
+	}
+
+	if (ImGui::TreeNodeEx(obj->name.c_str(), flags)) {
+		for (auto child : children) {
+			DrawObject(child);
+		}
+
+		ImGui::TreePop();
+	}
+
+	ui::PopID();
 }

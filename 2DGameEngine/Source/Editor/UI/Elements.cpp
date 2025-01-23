@@ -2,8 +2,7 @@
 
 #include "Editor/ImGui/imgui.h"
 
-float ui::GetCursorX()
-{
+float ui::GetCursorX() {
 	return ImGui::GetCursorPosX();
 }
 
@@ -19,8 +18,7 @@ void ui::SetCursorY(float value) {
 	ImGui::SetCursorPosY(value);
 }
 
-float ui::GetWidth(bool minusScrollSize)
-{
+float ui::GetWidth(bool minusScrollSize) {
 	float out = ImGui::GetWindowWidth();
 	if (minusScrollSize) {
 		ImGuiStyle* style = &ImGui::GetStyle();
@@ -30,18 +28,15 @@ float ui::GetWidth(bool minusScrollSize)
 	return out;
 }
 
-float ui::GetHeight()
-{
+float ui::GetHeight() {
 	return ImGui::GetWindowHeight();
 }
 
-float ui::GetRemainingWidth()
-{
+float ui::GetRemainingWidth() {
 	return ui::GetWidth() - ui::GetCursorX();
 }
 
-float ui::GetRemainingHeight()
-{
+float ui::GetRemainingHeight() {
 	return ui::GetHeight() - ui::GetCursorY();
 }
 
@@ -52,6 +47,23 @@ void ui::SameLine(float offsetX, float spacing) {
 void ui::Separator() {
 	ImGui::Separator();
 }
+
+void ui::PushID(int id) {
+	ImGui::PushID(id);
+}
+
+void ui::PushID(void* id) {
+	ImGui::PushID(id);
+}
+
+void ui::PushID(const std::string& id) {
+	ImGui::PushID(id.c_str());
+}
+
+void ui::PopID() {
+	ImGui::PopID();
+}
+
 
 void ui::Text(const std::string& text) {
 	ImGui::Text(text.c_str());

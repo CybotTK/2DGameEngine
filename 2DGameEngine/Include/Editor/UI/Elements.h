@@ -24,6 +24,11 @@ namespace ui {
 	void SameLine(float offsetX = 0.0f, float spacing = -1.0f);
 	void Separator();
 
+	void PushID(int id);
+	void PushID(void* id);
+	void PushID(const std::string& id);
+	void PopID();
+
 	void Text(const std::string& text);
 
 	bool Header(const std::string& name);
