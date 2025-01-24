@@ -7,7 +7,9 @@
 #include <glm/glm.hpp>
 #include <Box2D/Box2D.h>
 
-#include "Core/Asset.h"
+#include "Asset/Asset.h"
+#include "Asset/Object.h"
+
 #include "Core/Transform.h"
 
 #include "Graphics/Textures/ImageTexture.h"
@@ -19,7 +21,7 @@ class Scene;
 
 typedef uint16 CollisionMask;
 
-class GameObject : public Transform {
+class GameObject : public Object, public Transform {
 	friend class App;
 	friend class Scene;
 public:

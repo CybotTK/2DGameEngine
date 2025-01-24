@@ -3,9 +3,11 @@
 
 #include <string>
 
+#include "Asset/Object.h"
+
 struct Mix_Chunk;
 
-class AudioTrack {
+class AudioTrack : public Object{
 public:
 	AudioTrack();
 	AudioTrack(const std::string& filePath);

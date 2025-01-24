@@ -5,6 +5,8 @@
 #include <GL/glew.h>
 #include <glm/glm.hpp>
 
+#include "Asset/Object.h"
+
 struct Vertex {
 	glm::vec2 position;  // Position (x,y)
 	glm::vec2 texCoords; // Texture Coordinates (u, v)
@@ -14,7 +16,7 @@ struct Face {
 	unsigned int v1, v2, v3;
 };
 
-class Mesh {
+class Mesh : public Object {
 public:
 	Mesh();
 	Mesh(const Mesh& other);

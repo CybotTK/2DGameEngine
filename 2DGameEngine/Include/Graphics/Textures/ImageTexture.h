@@ -4,7 +4,9 @@
 #include "Graphics/Texture.h"
 #include <string>
 
-class ImageTexture : public Texture {
+#include "Asset/Object.h"
+
+class ImageTexture : public Object, public Texture {
 public:
 	ImageTexture();
 	ImageTexture(const std::string& file);

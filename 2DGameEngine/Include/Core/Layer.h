@@ -9,10 +9,12 @@
 #include <Core/GameObject.h>
 #include <Core/Camera.h>
 
+#include "Asset/Object.h"
+
 class Shader;
 class Scene;
 
-class Layer {
+class Layer : public Object{
 public:
 	Layer(Scene* scene, const std::string& layerName);
 	virtual ~Layer();

@@ -8,11 +8,13 @@
 #include "Core/Camera.h"
 #include "Core/GameObject.h"
 
+#include "Asset/Object.h"
+
 class Mesh; // Reduces compilation time cause it doesn't need to compile everything from the mesh
 			// Also changes made to Mesh.h won't force recompilation of any file that has Scene.h
 class Shader;
 
-class Scene {
+class Scene : public Object{
 public:
 	Scene();
 	virtual ~Scene();

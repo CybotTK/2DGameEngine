@@ -3,7 +3,9 @@
 
 #include "Core/Transform.h"
 
-class Camera : public Transform {
+#include "Asset/Object.h"
+
+class Camera : public Object, public Transform {
 public:
 	Camera();
 	virtual ~Camera();

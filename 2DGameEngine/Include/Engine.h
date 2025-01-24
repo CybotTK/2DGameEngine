@@ -13,7 +13,7 @@
 #include "Core/Camera.h"
 #include "Core/Scene.h"
 #include "Core/GameObject.h"
-#include "Core/Asset.h"
+#include "Asset/Asset.h"
 
 #include "Graphics/Mesh.h"
 #include "Graphics/Shader.h"
