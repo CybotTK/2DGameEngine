@@ -1,18 +1,15 @@
 #include "Graphics/FrameBuffer.h"
 
-FrameBuffer::FrameBuffer()
-{
+FrameBuffer::FrameBuffer() {
 }
 
-FrameBuffer::FrameBuffer(int width, int height, int texCount)
-{
+FrameBuffer::FrameBuffer(int width, int height, int texCount) {
 	m_resolution = { width, height };
 
 	Initialize(texCount);
 }
 
-FrameBuffer::~FrameBuffer()
-{
+FrameBuffer::~FrameBuffer() {
 	for (auto tex : m_textures)
 	{
 		delete tex;
@@ -24,24 +21,20 @@ FrameBuffer::~FrameBuffer()
 	glDeleteFramebuffers(1, &m_fbo);
 }
 
-void FrameBuffer::Use()
-{
+void FrameBuffer::Use() {
 	glBindFramebuffer(GL_FRAMEBUFFER, m_fbo);
 }
 
-void FrameBuffer::UseDefault()
-{
+void FrameBuffer::UseDefault() {
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
 }
 
-void FrameBuffer::UseTexture(int textureNumber, int position)
-{
+void FrameBuffer::UseTexture(int textureNumber, int position) {
 	assert(textureNumber >= 0 && textureNumber <= m_textures.size());
 	m_textures[textureNumber]->Use(position);
 }
 
-void FrameBuffer::UseAllTextures(int offset)
-{
+void FrameBuffer::UseAllTextures(int offset) {
 	int i = offset;
 	for (auto& tex : m_textures)
 	{
@@ -50,8 +43,7 @@ void FrameBuffer::UseAllTextures(int offset)
 	}
 }
 
-void FrameBuffer::Resize(int width, int height)
-{
+void FrameBuffer::Resize(int width, int height) {
 	assert(m_initialized);
 
 	auto texCount = m_textures.size();
@@ -68,23 +60,23 @@ void FrameBuffer::Resize(int width, int height)
 	AddTextures(texCount);
 }
 
-glm::ivec2 FrameBuffer::GetResolution()
-{
+glm::ivec2 FrameBuffer::GetResolution() {
 	return m_resolution;
 }
 
-float FrameBuffer::GetAspect() const
-{
+float FrameBuffer::GetAspect() const {
+	if (forceAspect > 0.f) {
+		return forceAspect;
+	}
+
 	return (float)m_resolution.x / (float)m_resolution.y;
 }
 
-Texture* FrameBuffer::GetTexture(int index)
-{
+Texture* FrameBuffer::GetTexture(int index) {
 	return m_textures[index];
 }
 
-void FrameBuffer::Initialize(int texCount)
-{
+void FrameBuffer::Initialize(int texCount) {
 	assert(texCount > 0);
 	assert(m_resolution.x > 0 && m_resolution.y > 0);
 
@@ -96,8 +88,7 @@ void FrameBuffer::Initialize(int texCount)
 	AddTextures(texCount);
 }
 
-void FrameBuffer::AddTextures(int texCount)
-{
+void FrameBuffer::AddTextures(int texCount) {
 	// Using it
 	Use();
 

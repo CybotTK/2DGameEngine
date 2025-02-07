@@ -29,5 +29,8 @@ void ViewportTab::DrawUI() {
 		app->DisableGameLogic();
 	}
 
-	ui::Image(m_editorUI->viewport.GetTexture(0));
+	glm::vec2 size = { ui::GetRemainingWidth(), ui::GetRemainingHeight() };
+	m_editorUI->viewport.forceAspect = size.x / size.y;
+
+	ui::Image(m_editorUI->viewport.GetTexture(0), size);
 }

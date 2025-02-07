@@ -27,6 +27,9 @@ public:
 	float GetAspect() const;
 
 	Texture* GetTexture(int index);
+
+	// -1.f == it will not force it
+	float forceAspect = -1.f;
 protected:
 	void Initialize(int texCount);
 	void AddTextures(int texCount);
