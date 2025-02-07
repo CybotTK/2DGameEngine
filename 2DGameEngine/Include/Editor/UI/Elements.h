@@ -11,9 +11,11 @@ namespace ui {
 
 	float GetCursorX();
 	float GetCursorY();
+	glm::vec2 GetCursor();
 
 	void SetCursorX(float value);
 	void SetCursorY(float value);
+	void SetCursor(glm::vec2 value);
 
 	float GetWidth(bool minusScrollSize = true);
 	float GetHeight();
@@ -31,7 +33,7 @@ namespace ui {
 
 	void Text(const std::string& text);
 
-	bool Header(const std::string& name);
+	bool Header(const std::string& name, bool defaultOpen = true);
 
 	void Image(Texture* image, glm::vec2 size = {0.f, 0.f}, bool flipY = true, glm::vec4 tint = {1.f, 1.f, 1.f, 1.f});
 }

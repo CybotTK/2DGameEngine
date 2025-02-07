@@ -10,12 +10,21 @@ float ui::GetCursorY() {
 	return ImGui::GetCursorPosY();
 }
 
+glm::vec2 ui::GetCursor() {
+	return glm::vec2(ui::GetCursorX(), ui::GetCursorY());
+}
+
 void ui::SetCursorX(float value) {
 	ImGui::SetCursorPosX(value);
 }
 
 void ui::SetCursorY(float value) {
 	ImGui::SetCursorPosY(value);
+}
+
+void ui::SetCursor(glm::vec2 value) {
+	ui::SetCursorX(value.x);
+	ui::SetCursorY(value.y);
 }
 
 float ui::GetWidth(bool minusScrollSize) {
@@ -69,8 +78,17 @@ void ui::Text(const std::string& text) {
 	ImGui::Text(text.c_str());
 }
 
-bool ui::Header(const std::string& name) {
-	return ImGui::CollapsingHeader(name.c_str());
+bool ui::Header(const std::string& name, bool defaultOpen) {
+	//return ImGui::CollapsingHeader(name.c_str());
+	int flags = 0;
+	flags |= ImGuiTreeNodeFlags_AllowItemOverlap;
+	flags |= ImGuiTreeNodeFlags_CollapsingHeader;
+
+	if (defaultOpen) {
+		flags |= ImGuiTreeNodeFlags_DefaultOpen;
+	}
+	
+	return ImGui::TreeNodeEx(name.c_str(), flags);
 }
 
 void ui::Image(Texture* image, glm::vec2 size, bool flipY, glm::vec4 tint) {
