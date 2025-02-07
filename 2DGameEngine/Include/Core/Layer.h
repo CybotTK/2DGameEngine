@@ -22,6 +22,8 @@ public:
 	void Update();
 	void Draw(const Camera& cam, Shader* shader, float aspect);
 
+	virtual void DrawUI() override;
+
 	void Add(GameObject* object);
 	void Remove(GameObject* object);
 

@@ -7,13 +7,13 @@
 #include "Graphics/Shader.h"
 #include "Graphics/Mesh.h"
 
-GameObject::GameObject()
-{
+#include "Editor/UI/Props.h"
+
+GameObject::GameObject() {
 	sprite.shape.Set("Plane");
 }
 
-GameObject::~GameObject()
-{
+GameObject::~GameObject() {
 	if (m_scene && m_physicsBody) {
 		auto world = m_scene->GetBox2DWorld();
 
@@ -25,6 +25,33 @@ GameObject::~GameObject()
 		delete child;
 	}
 	m_children.clear();
+}
+
+void GameObject::DrawUI() {
+	ui::Prop("name", &name);
+	ui::Text("This is a Game Object!");
+
+	ui::Separator();
+
+	if (ui::Header("Transform", true)) {
+		ui::Prop("Position", &position);
+		ui::Prop("Rotation", &rotation);
+		ui::Prop("Scale", &scale);
+	}
+
+	if (ui::Header("Sprite", false)) {
+		ui::PropColor("Color", &sprite.color);
+
+		ui::Text("TO DO: IMPLEMENT TEXTURE AND SHAPE");
+	}
+
+	if (ui::Header("Physics", false)) {
+		ui::Prop("Shape Scale", &physics.shapeScale);
+		ui::Prop("Fixed Rotation", &physics.fixedRotation);
+		ui::Prop("Is Bullet", &physics.isBullet);
+
+		ui::Text("TO DO: IMPLEMENT TYPE, CATEGORY AND MASK");
+	}
 }
 
 std::vector<GameObject*> GameObject::GetChildren(bool recursive)

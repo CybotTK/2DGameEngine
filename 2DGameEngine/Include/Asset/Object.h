@@ -14,11 +14,13 @@ public:
 	virtual void Load(File* file);
 
 	virtual void DrawUI();
-	virtual void DrawIcon();
+
+	//Returns true if it's been drawn
+	bool DrawIcon();
 
 	struct _Debug {
-		std::string name;
-		std::string description;
+		std::string name = "Object";
+		std::string description = "...";
 	} debug;
 };
 

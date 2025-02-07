@@ -4,6 +4,8 @@
 #include "Graphics/Shader.h"
 #include "Graphics/Graphics.h"
 
+#include "Editor/UI/Props.h"
+
 Layer::Layer(Scene* scene, const std::string& layerName) : name(layerName)
 {
 	m_scene = scene;
@@ -57,6 +59,16 @@ void Layer::Draw(const Camera& camera, Shader* shader, float aspect)
 		assert(lastMesh);
 		obj->Draw(shader, lastMesh);
 	}
+}
+
+void Layer::DrawUI() {
+	ui::Prop("Name", &name);
+	ui::Text("This is a Layer!");
+
+	ui::Separator();
+
+	ui::PropColor("Tint", &tint);
+	ui::Prop("Use Camera", &useCamera);
 }
 
 void Layer::Add(GameObject* object)

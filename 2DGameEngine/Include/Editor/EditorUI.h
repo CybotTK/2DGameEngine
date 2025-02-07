@@ -4,6 +4,8 @@
 #include "Editor/EditorTab.h"
 #include "Graphics/FrameBuffer.h"
 
+#include "Asset/Object.h"
+
 class EditorUI {
 public:
 	EditorUI();
@@ -14,14 +16,14 @@ public:
 
 	FrameBuffer viewport;
 	std::vector<EditorTab*> tabs;
+
+	Object* selected = nullptr;
 protected:
 	void RenderBegin();
 	void Render();
 	void RenderEnd();
 	
 	void DrawTabs();
-private:
-	GLuint m_vao;
 };
 
 #endif // !EDITOR_UI_H

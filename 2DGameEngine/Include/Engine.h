@@ -47,6 +47,8 @@ public:
 	bool HasEditorUI() const;
 	bool IsGameLogicEnabled() const;
 
+	EditorUI* GetEditor() const;
+
 	void EnableGameLogic();
 	void DisableGameLogic();
 

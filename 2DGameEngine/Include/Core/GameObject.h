@@ -28,6 +28,8 @@ public:
 	GameObject();
 	virtual ~GameObject();
 
+	virtual void DrawUI() override;
+
 	std::vector<GameObject*> GetChildren(bool recursive = true);
 
 	virtual void Initialize(Scene* scene);

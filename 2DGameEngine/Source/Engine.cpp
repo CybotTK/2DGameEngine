@@ -147,6 +147,10 @@ bool App::IsGameLogicEnabled() const {
 	return m_runGameLogic;
 }
 
+EditorUI* App::GetEditor() const {
+	return m_editorUI;
+}
+
 void App::EnableGameLogic() {
 	m_runGameLogic = true;
 }
