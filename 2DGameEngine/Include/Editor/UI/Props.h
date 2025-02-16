@@ -10,6 +10,10 @@ namespace ui {
 	template <typename T>
 	void Prop(const std::string& name, T* value, const ui::Icon& icon = "");
 
+	void ObjectHeader(std::string* name, const std::string& className, const ui::Icon& icon = "");
+
+	void PropText(const std::string& name, const std::string& text, const ui::Icon& icon = "");
+
 	void PropRange(const std::string& name, float* valueMin, float* valueMax, const ui::Icon& icon = "");
 
 	void PropColor(const std::string& name, glm::vec3* value, const ui::Icon& icon = "");

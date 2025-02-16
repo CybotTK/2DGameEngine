@@ -4,14 +4,14 @@
 
 #include "Tabs/HierarchyTab.h"
 #include "Tabs/DetailsTab.h"
+#include "Tabs/ResourceTab.h"
 
 EngineEditorUI::EngineEditorUI() {
 	// Testing:
 	tabs.push_back(new HierarchyTab());
 	tabs.push_back(new ViewportTab(this));
-	tabs.push_back(new EditorTab("Tab 2"));
 	tabs.push_back(new DetailsTab());
-	tabs.push_back(new EditorTab("Tab 4"));
+	tabs.push_back(new ResourceTab());
 }
 
 EngineEditorUI::~EngineEditorUI() {

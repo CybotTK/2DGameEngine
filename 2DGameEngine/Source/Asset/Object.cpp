@@ -30,24 +30,34 @@ void Object::DrawUI() {
 	ui::Text("Details tab hasn't been implemented for this!");
 }
 
-bool Object::DrawIcon() {
+bool Object::DrawIcon(Texture* thumbnail) {
 	ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(0.1f, 0.1f, 0.1f, 1.f));
 	ImGui::PushStyleColor(ImGuiCol_Text, ImVec4(1.f, 1.f, 1.f, 1.f));
 
 	bool result = false;
 
+	const float bSize = 45.f;
+	const float bPad = 5.f;
+
 	ui::PushID(this);
 	{
 		glm::vec2 posStart = ui::GetCursor();
 
-		result = ImGui::Button("", ImVec2(ui::GetRemainingWidth(), 30.f));
+		result = ImGui::Button("", ImVec2(ui::GetRemainingWidth(), bSize));
 		glm::vec2 posNext = ui::GetCursor();
 
-		const float offsetX = 64.f;
-		ui::SetCursor(posStart + glm::vec2(offsetX, 5));
+		ui::SetCursor(posStart);
+		if (debug.thumbnail) {
+			ui::Image(debug.thumbnail, { bSize, bSize }, false);
+		}
+		else if (thumbnail) {
+			ui::Image(thumbnail, { bSize, bSize }, false);
+		}
 
+		ui::SetCursor(posStart + glm::vec2(bSize + bPad, bPad));
 		ui::Text(debug.name);
-		ui::SetCursorX(offsetX);
+
+		ui::SetCursorX(posStart.x + bSize + bPad);
 		ui::Text(debug.description);
 
 		ui::SetCursor(posNext);

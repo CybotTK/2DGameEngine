@@ -30,8 +30,6 @@ public:
 	// It returns all the objects (and children)
 	std::vector<GameObject*> GetObjectsRecursively();
 
-	std::string name;
-
 	glm::vec4 tint = { 1.f, 1.f, 1.f, 1.f };
 	bool useCamera = true;
 

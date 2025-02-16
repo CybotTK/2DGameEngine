@@ -4,6 +4,7 @@
 #include <string>
 
 class File;
+class Texture;
 
 class Object {
 public:
@@ -16,11 +17,12 @@ public:
 	virtual void DrawUI();
 
 	//Returns true if it's been drawn
-	bool DrawIcon();
+	virtual bool DrawIcon(Texture* thumbnail = nullptr);
 
 	struct _Debug {
 		std::string name = "Object";
 		std::string description = "...";
+		Texture* thumbnail = nullptr;
 	} debug;
 };
 

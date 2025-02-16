@@ -2,6 +2,17 @@
 
 #include "Editor/ImGui/imgui.h"
 
+void ui::ObjectHeader(std::string* name, const std::string& className, const ui::Icon& icon) {
+	ui::Prop("Name", name);
+	ui::PropText("Class", className, icon);
+	ui::Separator();
+}
+
+void ui::PropText(const std::string& name, const std::string& text, const ui::Icon& icon) {
+	uiInternal::DrawPropPrefix(name, icon);
+	ImGui::Text(text.c_str());
+}
+
 void ui::PropRange(const std::string& name, float* valueMin, float* valueMax, const ui::Icon& icon) {
 	uiInternal::DrawPropPrefix(name, icon);
 

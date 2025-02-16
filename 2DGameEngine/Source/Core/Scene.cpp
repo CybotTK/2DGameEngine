@@ -6,8 +6,9 @@
 #include "Graphics/Shader.h"
 #include "Graphics/Graphics.h"
 
-Scene::Scene()
-{
+#include "Editor/UI/Props.h"
+
+Scene::Scene() {
 	//Creating the physics world:
 	m_physicsWorld = new b2World(b2Vec2(0.f, -10.f));
 
@@ -65,8 +66,7 @@ Scene::Scene()
 	}
 }
 
-Scene::~Scene()
-{
+Scene::~Scene() {
 	for (auto layer : layers)
 	{
 		delete layer;
@@ -74,10 +74,30 @@ Scene::~Scene()
 	layers.clear();
 }
 
-void Scene::Update()
-{
-	for (auto layer : layers)
-	{
+void Scene::DrawUI() {
+	ui::ObjectHeader(&debug.name, "Scene");
+
+	if (ui::Header("World")) {
+		ui::PropColor("Background", &background);
+
+		glm::vec2 gravity = GetGravity();
+		ui::Prop("Gravity", &gravity);
+		SetGravity(gravity);
+	}
+
+	if (ui::Header("Camera")) {
+		ui::Prop("Position", &camera.position);
+		ui::Prop("Rotation", &camera.rotation);
+		ui::Prop("Scale", &camera.scale);
+
+		ui::Separator();
+
+		ui::Prop("Area", &camera.area);
+	}
+}
+
+void Scene::Update() {
+	for (auto layer : layers) {
 		layer->Update();
 	}
 }
@@ -101,8 +121,7 @@ void Scene::UpdatePhysics(float deltaTime) {
 	}
 }
 
-void Scene::Draw(Shader* shader, float aspect)
-{
+void Scene::Draw(Shader* shader, float aspect) {
 	// Background color setter
 	graphics::ClearBuffers(background.x, background.y, background.z, 1.f);
 
@@ -130,13 +149,11 @@ void Scene::EndUpdate(){
 	}
 }
 
-b2World* Scene::GetBox2DWorld() const
-{
+b2World* Scene::GetBox2DWorld() const {
 	return m_physicsWorld;
 }
 
-std::vector<GameObject*> Scene::GetObjectsRecursively()
-{
+std::vector<GameObject*> Scene::GetObjectsRecursively() {
 	std::vector<GameObject*> out;
 
 	for (auto layer : layers) {
@@ -147,18 +164,15 @@ std::vector<GameObject*> Scene::GetObjectsRecursively()
 	return out;
 }
 
-glm::vec2 Scene::GetGravity()
-{
+glm::vec2 Scene::GetGravity() {
 	auto gravity = m_physicsWorld->GetGravity();
 	return {gravity.x, gravity.y};
 }
 
-void Scene::SetGravity(glm::vec2 value)
-{
+void Scene::SetGravity(glm::vec2 value) {
 	SetGravity(value.x, value.y);
 }
 
-void Scene::SetGravity(float x, float y)
-{
+void Scene::SetGravity(float x, float y) {
 	m_physicsWorld->SetGravity(b2Vec2(x,y));
 }

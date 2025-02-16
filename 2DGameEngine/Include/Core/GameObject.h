@@ -57,8 +57,6 @@ public:
 	//Destroys the object and its children
 	void Kill();
 
-	std::string name = "Game Object";
-
 	struct _Sprite {
 		glm::vec4 color = {1.f, 1.f, 1.f, 1.f};
 		AssetHandler<ImageTexture> texture;

@@ -8,7 +8,7 @@
 template <typename T>
 class AssetContainer {
 public:
-	std::string name;
+	//std::string name;
 	T* asset;
 };
 
@@ -27,22 +27,20 @@ public:
 
 	size_t Add(const std::string& name, T* newAsset) {
 		size_t id = GenerateAssetID();
-		(*this)[id] = { name, newAsset };
+		newAsset->debug.name = name;
+		(*this)[id] = { newAsset };
 		return id;
 	}
 };
 
-//#define AssetMap(T) AssetMapT<T>
-
 template <typename T>
 class AssetHandler {
 public:
-	//static size_t idGenerator;
-
 	void Add(const std::string& name, T* newAsset) {
 		auto& map = GetMap();
 		m_id = GenerateAssetID();
-		map[m_id] = { name, newAsset };
+		newAsset->debug.name = name;
+		map[m_id] = { newAsset };
 	}
 
 	void Set(size_t id) {
@@ -62,7 +60,7 @@ public:
 	void Set(const std::string& assetName) {
 		AssetMap<T>& map = GetMap();
 		for (auto it : map) {
-			if (it.second.name == assetName) {
+			if (it.second.asset->debug.name == assetName) {
 				m_id = it.first;
 				return;
 			}

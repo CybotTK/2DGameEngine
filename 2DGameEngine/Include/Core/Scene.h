@@ -19,6 +19,8 @@ public:
 	Scene();
 	virtual ~Scene();
 
+	virtual void DrawUI() override;
+
 	void Update();
 	void UpdatePhysics(float deltaTime);
 	void Draw(Shader* shader, float aspect);

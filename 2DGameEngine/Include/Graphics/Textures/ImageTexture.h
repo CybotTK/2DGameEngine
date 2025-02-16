@@ -12,6 +12,8 @@ public:
 	ImageTexture(const std::string& file);
 	virtual ~ImageTexture();
 
+	virtual void DrawUI() override;
+
 private:
 	void GenerateImageFromSource();
 

@@ -6,8 +6,8 @@
 
 #include "Editor/UI/Props.h"
 
-Layer::Layer(Scene* scene, const std::string& layerName) : name(layerName)
-{
+Layer::Layer(Scene* scene, const std::string& layerName) {
+	debug.name = layerName;
 	m_scene = scene;
 }
 
@@ -62,10 +62,7 @@ void Layer::Draw(const Camera& camera, Shader* shader, float aspect)
 }
 
 void Layer::DrawUI() {
-	ui::Prop("Name", &name);
-	ui::Text("This is a Layer!");
-
-	ui::Separator();
+	ui::ObjectHeader(&debug.name, "Layer");
 
 	ui::PropColor("Tint", &tint);
 	ui::Prop("Use Camera", &useCamera);

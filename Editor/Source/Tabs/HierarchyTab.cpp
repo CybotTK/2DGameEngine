@@ -36,7 +36,7 @@ void HierarchyTab::DrawUI() {
 		}
 
 		ui::PushID(layer);
-		if (ImGui::TreeNodeEx(layer->name.c_str(), flags)) {
+		if (ImGui::TreeNodeEx(layer->debug.name.c_str(), flags)) {
 			if (ImGui::IsItemClicked()) {
 				editor->selected = layer;
 			}
@@ -74,7 +74,7 @@ void HierarchyTab::DrawObject(GameObject* obj) {
 	}
 
 	ui::PushID(obj);
-	if (ImGui::TreeNodeEx(obj->name.c_str(), flags)) {
+	if (ImGui::TreeNodeEx(obj->debug.name.c_str(), flags)) {
 		if (ImGui::IsItemClicked()) {
 			editor->selected = obj;
 		}

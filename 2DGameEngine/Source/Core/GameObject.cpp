@@ -28,10 +28,7 @@ GameObject::~GameObject() {
 }
 
 void GameObject::DrawUI() {
-	ui::Prop("name", &name);
-	ui::Text("This is a Game Object!");
-
-	ui::Separator();
+	ui::ObjectHeader(&debug.name, "Game Object");
 
 	if (ui::Header("Transform", true)) {
 		ui::Prop("Position", &position);
