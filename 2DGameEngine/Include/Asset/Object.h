@@ -17,7 +17,7 @@ public:
 	virtual void DrawUI();
 
 	//Returns true if it's been drawn
-	virtual bool DrawIcon(Texture* thumbnail = nullptr);
+	virtual bool DrawIcon(bool* isHovered=nullptr, Texture* thumbnail = nullptr);
 
 	struct _Debug {
 		std::string name = "Object";

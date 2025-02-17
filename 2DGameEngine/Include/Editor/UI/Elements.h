@@ -31,6 +31,8 @@ namespace ui {
 	void PushID(const std::string& id);
 	void PopID();
 
+	bool Button(const std::string& text, glm::vec2 size = { 0.f, 0.f });
+
 	void Text(const std::string& text);
 
 	bool Header(const std::string& name, bool defaultOpen = true);

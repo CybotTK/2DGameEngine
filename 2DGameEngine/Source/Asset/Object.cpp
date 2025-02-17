@@ -30,7 +30,7 @@ void Object::DrawUI() {
 	ui::Text("Details tab hasn't been implemented for this!");
 }
 
-bool Object::DrawIcon(Texture* thumbnail) {
+bool Object::DrawIcon(bool* isHovered, Texture* thumbnail) {
 	ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(0.1f, 0.1f, 0.1f, 1.f));
 	ImGui::PushStyleColor(ImGuiCol_Text, ImVec4(1.f, 1.f, 1.f, 1.f));
 
@@ -45,6 +45,10 @@ bool Object::DrawIcon(Texture* thumbnail) {
 
 		result = ImGui::Button("", ImVec2(ui::GetRemainingWidth(), bSize));
 		glm::vec2 posNext = ui::GetCursor();
+
+		if (isHovered) {
+			*isHovered = ImGui::IsItemHovered();
+		}
 
 		ui::SetCursor(posStart);
 		if (debug.thumbnail) {

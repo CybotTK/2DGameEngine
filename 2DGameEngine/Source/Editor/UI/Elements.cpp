@@ -73,6 +73,16 @@ void ui::PopID() {
 	ImGui::PopID();
 }
 
+bool ui::Button(const std::string& text, glm::vec2 size) {
+	ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(0.1f, 0.1f, 0.1f, 1.f));
+	ImGui::PushStyleColor(ImGuiCol_Text, ImVec4(1.f, 1.f, 1.f, 1.f));
+
+	bool result = ImGui::Button(text.c_str(), ImVec2(size.x, size.y));
+
+	ImGui::PopStyleColor(2);
+	return result;
+}
+
 
 void ui::Text(const std::string& text) {
 	ImGui::Text(text.c_str());

@@ -67,8 +67,13 @@ Scene::Scene() {
 }
 
 Scene::~Scene() {
-	for (auto layer : layers)
-	{
+	auto app = App::Get();
+
+	if (app->GetCurrentScene() == this) {
+		app->SetCurrentScene(nullptr);
+	}
+
+	for (auto layer : layers) {
 		delete layer;
 	}
 	layers.clear();
@@ -76,6 +81,9 @@ Scene::~Scene() {
 
 void Scene::DrawUI() {
 	ui::ObjectHeader(&debug.name, "Scene");
+
+	auto app = App::Get();
+	app->SetCurrentScene(this);
 
 	if (ui::Header("World")) {
 		ui::PropColor("Background", &background);

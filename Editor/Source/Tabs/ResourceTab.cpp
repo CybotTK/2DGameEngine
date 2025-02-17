@@ -12,40 +12,49 @@ ResourceTab::ResourceTab() {
 ResourceTab::~ResourceTab() {
 }
 
-#define DRAW_MAP(NAME, MAP, EXTRAS)									\
-	if (ImGui::BeginTabItem(NAME)) {						\
-		for (auto obj : MAP) {								\
-			if (obj.second.asset->DrawIcon()) {				\
-				editor->selected = obj.second.asset;		\
-			}												\
-		}													\
-		EXTRAS												\
-		ImGui::EndTabItem();								\
-	}														\
+#define DRAW_MAP(NAME, MAP, EXTRAS)												\
+	if (ImGui::BeginTabItem(NAME)) {											\
+		std::vector<size_t> toRemove;											\
+		for (auto obj : MAP) {													\
+			bool isHovered = false;												\
+			if (obj.second.asset->DrawIcon(&isHovered)) {						\
+				editor->selected = obj.second.asset;							\
+			}																	\
+			{																	\
+				std::string aID = std::to_string((size_t)obj.second.asset);		\
+				if (isHovered) {												\
+					if (ImGui::IsMouseClicked(ImGuiMouseButton_Right)) {		\
+						ImGui::OpenPopup(aID.c_str());									\
+					}															\
+				}																\
+				if (ImGui::BeginPopup(aID.c_str())) {									\
+					if (ImGui::MenuItem("Delete")) {							\
+						toRemove.push_back(obj.first);							\
+					}															\
+					ImGui::EndPopup();											\
+				}																\
+			}																	\
+		}																		\
+		for (auto obj : toRemove) {												\
+			MAP.Remove(obj);													\
+		}																		\
+		EXTRAS																	\
+		ImGui::EndTabItem();													\
+	}																			\
 
 void ResourceTab::DrawUI()  {
 	auto app = App::Get();
 	auto editor = app->GetEditor();
 
-	/*if (ImGui::BeginMainMenuBar()) {
-		if (ImGui::BeginMenu("Import...")) {
-			if (ImGui::MenuItem("Image")) {
-
-			}
-			if (ImGui::MenuItem("Audio")) {
-
-			}
-
-			ImGui::EndMenu();
-		}
-		if (ImGui::MenuItem("NewScene")) {
-
-		}
-
-		ImGui::EndMainMenuBar();
+	if (ImGui::Button("New Scene")) {
+		auto scene = new Scene();
+		app->data.scenes.Add("Scene " + std::to_string(app->data.scenes.size()), scene);
+		editor->selected = scene;
 	}
-	Trying to add a menu bar
-	*/
+	ui::SameLine();
+	if (ui::Button("Import...")) {
+
+	}
 
 	if (ImGui::BeginTabBar("##ResourcesTab")) {
 		DRAW_MAP("Images", app->data.images, {});

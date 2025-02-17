@@ -17,7 +17,6 @@ size_t GenerateAssetID();
 template <typename T>
 class AssetMap : public std::unordered_map<size_t, AssetContainer<T>> {
 public:
-
 	void Reset() {
 		for (auto it : *this) { 
 			delete it.second.asset; 
@@ -30,6 +29,14 @@ public:
 		newAsset->debug.name = name;
 		(*this)[id] = { newAsset };
 		return id;
+	}
+
+	void Remove(size_t id) {
+		auto it = this->find(id);
+		if (it != this->end()) {
+			delete it->second.asset;
+			this->erase(it);
+		}
 	}
 };
 

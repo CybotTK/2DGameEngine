@@ -126,6 +126,21 @@ Scene* App::GetCurrentScene() {
 	return m_currentScene;
 }
 
+void App::SetCurrentScene(const std::string& name) {
+	AssetHandler<Scene> handle;
+	handle.Set(name);
+
+	m_currentScene = handle.Get();
+}
+
+void App::SetCurrentScene(size_t id) {
+	m_currentScene = data.scenes[id].asset;
+}
+
+void App::SetCurrentScene(Scene* scene) {
+	m_currentScene = scene;
+}
+
 float App::GetDeltaTime() const {
 	return m_deltaTime;
 }
