@@ -63,7 +63,7 @@
     <ClInclude Include="Include\Core\Scene.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Include\Core\Asset.h">
+    <ClInclude Include="Include\Asset\Asset.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Include\Core\Layer.h">
@@ -123,6 +123,12 @@
     <ClInclude Include="Include\Editor\UI\Elements.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Include\Asset\Object.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\System\Dialogs.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\Engine.cpp">
@@ -167,7 +173,7 @@
     <ClCompile Include="Source\Core\Scene.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Core\Asset.cpp">
+    <ClCompile Include="Source\Asset\Asset.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Source\Core\Layer.cpp">
@@ -222,6 +228,12 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Source\Editor\UI\PropsTemplated.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Asset\Object.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\System\Dialogs.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

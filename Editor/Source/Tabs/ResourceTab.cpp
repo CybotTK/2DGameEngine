@@ -3,6 +3,8 @@
 #include "Editor/UI/Props.h"
 #include "Editor/ImGui/imgui.h"
 
+#include "System/Dialogs.h"
+
 #include "Engine.h"
 
 ResourceTab::ResourceTab() {
@@ -12,35 +14,39 @@ ResourceTab::ResourceTab() {
 ResourceTab::~ResourceTab() {
 }
 
-#define DRAW_MAP(NAME, MAP, EXTRAS)												\
-	if (ImGui::BeginTabItem(NAME)) {											\
-		std::vector<size_t> toRemove;											\
-		for (auto obj : MAP) {													\
-			bool isHovered = false;												\
-			if (obj.second.asset->DrawIcon(&isHovered)) {						\
-				editor->selected = obj.second.asset;							\
-			}																	\
-			{																	\
-				std::string aID = std::to_string((size_t)obj.second.asset);		\
-				if (isHovered) {												\
-					if (ImGui::IsMouseClicked(ImGuiMouseButton_Right)) {		\
-						ImGui::OpenPopup(aID.c_str());									\
-					}															\
-				}																\
-				if (ImGui::BeginPopup(aID.c_str())) {									\
-					if (ImGui::MenuItem("Delete")) {							\
-						toRemove.push_back(obj.first);							\
-					}															\
-					ImGui::EndPopup();											\
-				}																\
-			}																	\
-		}																		\
-		for (auto obj : toRemove) {												\
-			MAP.Remove(obj);													\
-		}																		\
-		EXTRAS																	\
-		ImGui::EndTabItem();													\
-	}																			\
+//#define DRAW_MAP(NAME, MAP, EXTRAS)	
+
+template <typename T>
+void DrawMapUI(const std::string& name, T& MAP) {
+	auto app = App::Get();
+	auto editor = app->GetEditor();
+
+	if (ImGui::BeginTabItem(name.c_str())) {
+		std::vector<size_t> toRemove;
+		for (auto obj : MAP) {
+			bool isHovered = false;
+			if (obj.second.asset->DrawIcon(&isHovered)) {
+				editor->selected = obj.second.asset;
+			}
+			std::string aID = std::to_string((size_t)obj.second.asset);
+				if (isHovered) {
+					if (ImGui::IsMouseClicked(ImGuiMouseButton_Right)) {
+						ImGui::OpenPopup(aID.c_str());
+					}
+				}
+			if (ImGui::BeginPopup(aID.c_str())) {
+				if (ImGui::MenuItem("Delete")) {
+					toRemove.push_back(obj.first);
+				}
+				ImGui::EndPopup();
+			}
+		}
+		for (auto obj : toRemove) {
+			MAP.Remove(obj);
+		}
+		ImGui::EndTabItem();
+	}
+}
 
 void ResourceTab::DrawUI()  {
 	auto app = App::Get();
@@ -53,15 +59,40 @@ void ResourceTab::DrawUI()  {
 	}
 	ui::SameLine();
 	if (ui::Button("Import...")) {
+		ImGui::OpenPopup("ImportPopup");
+	}
+	if (ImGui::BeginPopup("ImportPopup")) {
+		if (ImGui::MenuItem("Image...")) {	
+			auto results = dialogs::OpenFile(
+				"Import Image Resource",
+				{ "Images (.png .jpg)", "*.png *.jpg" }
+			);
 
+			for (auto res : results) {
+				auto img = new ImageTexture(res);
+				app->data.images.Add(res, img);
+			}
+		}
+		if (ImGui::MenuItem("Audio...")) {	
+			auto results = dialogs::OpenFile(
+				"Import Audio Resource",
+				{ "Audios (.mp3 .ogg .wav)", "*.mp3 *.ogg *.wav" }
+			);
+
+			for (auto res : results) {
+				auto audio = new AudioTrack(res);
+				app->data.audios.Add(res, audio);
+			}
+		}															
+		ImGui::EndPopup();											
 	}
 
 	if (ImGui::BeginTabBar("##ResourcesTab")) {
-		DRAW_MAP("Images", app->data.images, {});
-		DRAW_MAP("Audios", app->data.audios, {});
-		DRAW_MAP("Scenes", app->data.scenes, {});
+		DrawMapUI("Images", app->data.images);
+		DrawMapUI("Audios", app->data.audios);
+		DrawMapUI("Scenes", app->data.scenes);
 
-		//DRAW_MAP("Meshes", app->data.meshes, {});
+		//DrawMapUI("Meshes", app->data.meshes);
 
 		ImGui::EndTabBar();
 	}

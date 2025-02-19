@@ -181,10 +181,11 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="Include\Audio\AudioTrack.h" />
-    <ClInclude Include="Include\Core\Asset.h" />
+    <ClInclude Include="Include\Asset\Asset.h" />
     <ClInclude Include="Include\Core\Camera.h" />
     <ClInclude Include="Include\Core\GameObject.h" />
     <ClInclude Include="Include\Core\Layer.h" />
+    <ClInclude Include="Include\Asset\Object.h" />
     <ClInclude Include="Include\Core\Scene.h" />
     <ClInclude Include="Include\Core\Transform.h" />
     <ClInclude Include="Include\Editor\EditorTab.h" />
@@ -211,6 +212,7 @@
     <ClInclude Include="Include\Graphics\Shaders\BasicShaders.h" />
     <ClInclude Include="Include\Graphics\Texture.h" />
     <ClInclude Include="Include\Graphics\Textures\ImageTexture.h" />
+    <ClInclude Include="Include\System\Dialogs.h" />
     <ClInclude Include="Include\System\FileUtils.h" />
     <ClInclude Include="Include\System\Input.h" />
     <ClInclude Include="Include\System\InputTypes.h" />
@@ -219,10 +221,11 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\Audio\AudioTrack.cpp" />
-    <ClCompile Include="Source\Core\Asset.cpp" />
+    <ClCompile Include="Source\Asset\Asset.cpp" />
     <ClCompile Include="Source\Core\Camera.cpp" />
     <ClCompile Include="Source\Core\GameObject.cpp" />
     <ClCompile Include="Source\Core\Layer.cpp" />
+    <ClCompile Include="Source\Asset\Object.cpp" />
     <ClCompile Include="Source\Core\Scene.cpp" />
     <ClCompile Include="Source\Core\Transform.cpp" />
     <ClCompile Include="Source\Editor\EditorTab.cpp" />
@@ -247,6 +250,7 @@
     <ClCompile Include="Source\Graphics\Shader.cpp" />
     <ClCompile Include="Source\Graphics\Texture.cpp" />
     <ClCompile Include="Source\Graphics\Textures\ImageTexture.cpp" />
+    <ClCompile Include="Source\System\Dialogs.cpp" />
     <ClCompile Include="Source\System\FileUtils.cpp" />
     <ClCompile Include="Source\System\Input.cpp" />
     <ClCompile Include="Source\System\Timer.cpp" />

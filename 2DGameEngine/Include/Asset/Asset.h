@@ -8,7 +8,6 @@
 template <typename T>
 class AssetContainer {
 public:
-	//std::string name;
 	T* asset;
 };
 
