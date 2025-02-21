@@ -1,5 +1,7 @@
 #include "Core/Layer.h"
 
+#include "Core/Scene.h"
+
 #include "Graphics/Mesh.h"
 #include "Graphics/Shader.h"
 #include "Graphics/Graphics.h"
@@ -11,8 +13,7 @@ Layer::Layer(Scene* scene, const std::string& layerName) {
 	m_scene = scene;
 }
 
-Layer::~Layer()
-{
+Layer::~Layer() {
 	for (auto obj : objects)
 	{
 		if (obj->GetParent() == nullptr)
@@ -23,8 +24,7 @@ Layer::~Layer()
 	objects.clear();
 }
 
-void Layer::Update()
-{
+void Layer::Update() {
 	for (auto obj : objects)
 	{
 		if (!obj->IsInitialized()) {
@@ -34,8 +34,7 @@ void Layer::Update()
 	}
 }
 
-void Layer::Draw(const Camera& camera, Shader* shader, float aspect)
-{
+void Layer::Draw(const Camera& camera, Shader* shader, float aspect) {
 	if (useCamera) {
 		//Camera view projection
 		shader->Set("viewProjection", camera.GetViewProjection(aspect));
@@ -66,22 +65,64 @@ void Layer::DrawUI() {
 
 	ui::PropColor("Tint", &tint);
 	ui::Prop("Use Camera", &useCamera);
+
+	if (ui::Header("Layer Order", false)) {
+		int indx = GetLayerIndex();
+
+		ui::PropText("Current Index", std::to_string(indx + 1) + "/" + std::to_string(m_scene->layers.size()));
+
+		ui::Separator();
+
+		if (ui::Button("Move up", { ui::GetRemainingWidth(), 0.f })) {
+			MoveUp();
+		}
+		if (ui::Button("Move down", { ui::GetRemainingWidth(), 0.f })) {
+			MoveDown();
+		}
+	}
 }
 
-void Layer::Add(GameObject* object)
-{
+void Layer::Add(GameObject* object) {
 	object->SetLayer(this);
 }
 
-void Layer::Remove(GameObject* object)
-{
+void Layer::Remove(GameObject* object) {
 	auto it = std::find(objects.begin(), objects.end(), object);
 	assert(it != objects.end()); // Make sure we found the GameObject
 	objects.erase(it);
 }
 
-std::vector<GameObject*> Layer::GetObjectsRecursively()
-{
+int Layer::GetLayerIndex() {
+	int pos = 0;
+	for (auto layer : m_scene->layers) {
+		if (layer == this) { break; }
+		pos++;
+	}
+	if (pos == m_scene->layers.size()) {
+		return -1;
+	}
+	return pos;
+}
+
+void Layer::MoveUp() {
+	int indx = GetLayerIndex();
+
+	if (indx > 0) {
+		m_scene->layers[indx] = m_scene->layers[indx - 1];
+		m_scene->layers[indx - 1] = this;
+	}
+}
+
+void Layer::MoveDown() {
+	int indx = GetLayerIndex();
+
+	if (indx < m_scene->layers.size() - 1) {
+		m_scene->layers[indx] = m_scene->layers[indx + 1];
+		m_scene->layers[indx + 1] = this;
+	}
+}
+
+std::vector<GameObject*> Layer::GetObjectsRecursively() {
 	std::vector<GameObject*> out = objects;
 
 	for (auto obj : objects) {

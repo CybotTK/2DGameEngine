@@ -51,8 +51,7 @@ void GameObject::DrawUI() {
 	}
 }
 
-std::vector<GameObject*> GameObject::GetChildren(bool recursive)
-{
+std::vector<GameObject*> GameObject::GetChildren(bool recursive) {
 	std::vector<GameObject*> out = m_children;
 
 	if (recursive) {
@@ -64,8 +63,7 @@ std::vector<GameObject*> GameObject::GetChildren(bool recursive)
 	return out;
 }
 
-void GameObject::Initialize(Scene* scene)
-{
+void GameObject::Initialize(Scene* scene) {
 	m_initialized = true;
 
 	auto world = scene->GetBox2DWorld();
@@ -106,8 +104,7 @@ void GameObject::Initialize(Scene* scene)
 	}
 }
 
-void GameObject::Update()
-{
+void GameObject::Update() {
 	assert(m_initialized);
 
 	for (auto child : m_children)
@@ -116,8 +113,7 @@ void GameObject::Update()
 	}
 }
 
-void GameObject::Draw(Shader* shader, Mesh* mesh)
-{
+void GameObject::Draw(Shader* shader, Mesh* mesh) {
 	shader->Set("transform", GetWorldMatrix()); 
 	shader->Set("sprite.color", sprite.color);
 
@@ -134,8 +130,7 @@ void GameObject::Draw(Shader* shader, Mesh* mesh)
 	}
 }
 
-glm::mat4 GameObject::GetWorldMatrix()
-{
+glm::mat4 GameObject::GetWorldMatrix() {
 	if (m_parent)
 	{
 		return m_parent->GetWorldMatrix() * GetMatrix();
@@ -143,20 +138,23 @@ glm::mat4 GameObject::GetWorldMatrix()
 	return GetMatrix();
 }
 
-void GameObject::RemoveParent()
-{
+void GameObject::RemoveParent() {
+	auto parent = m_parent;
+
 	if (m_parent)
 	{
 		auto it = std::find(m_parent->m_children.begin(), m_parent->m_children.end(), this);
-		assert(it != m_parent->m_children.end()); // Make suer we found the child
+		assert(it != m_parent->m_children.end()); // Make sure we found the child
 		m_parent->m_children.erase(it);
 
 		m_parent = nullptr;
 	}
+	if (parent) {
+		SetLayer(parent->GetLayer());
+	}
 }
 
-void GameObject::SetParent(GameObject* parent)
-{
+void GameObject::SetParent(GameObject* parent) {
 	if (m_parent != nullptr)
 	{
 		RemoveParent();
@@ -168,16 +166,17 @@ void GameObject::SetParent(GameObject* parent)
 	position = { 0.f, 0.f, };
 
 	// Only root GameObjects can have a layer
+	if (m_layer) {
+		m_layer->Remove(this);
+	}
 	m_layer = nullptr;
 }
 
-GameObject* GameObject::GetParent() const
-{
+GameObject* GameObject::GetParent() const {
 	return m_parent;
 }
 
-GameObject* GameObject::GetRoot()
-{
+GameObject* GameObject::GetRoot() {
 	if (m_parent == nullptr) {
 		return this;
 	}
@@ -185,8 +184,7 @@ GameObject* GameObject::GetRoot()
 	return m_parent->GetRoot();
 }
 
-void GameObject::SetLayer(Layer* layer)
-{
+void GameObject::SetLayer(Layer* layer) {
 	if (m_layer == layer || layer == nullptr) {
 		return;
 	}
@@ -202,18 +200,15 @@ void GameObject::SetLayer(Layer* layer)
 	}
 }
 
-Layer* GameObject::GetLayer()
-{
+Layer* GameObject::GetLayer() {
 	return GetRoot()->m_layer;
 }
 
-bool GameObject::IsInitialized() const
-{
+bool GameObject::IsInitialized() const {
 	return m_initialized;
 }
 
-void GameObject::SubmitTransformToPhysicsWorld()
-{
+void GameObject::SubmitTransformToPhysicsWorld() {
 	Transform transf;
 	transf.SetMatrix(GetWorldMatrix());
 
@@ -227,8 +222,7 @@ void GameObject::SubmitTransformToPhysicsWorld()
 	}
 }
 
-void GameObject::RetrieveTransformFromPhysicsWorld()
-{
+void GameObject::RetrieveTransformFromPhysicsWorld() {
 	Transform transf;
 
 	auto pos = m_physicsBody->GetPosition();
@@ -248,7 +242,6 @@ void GameObject::RetrieveTransformFromPhysicsWorld()
 	}
 }
 
-void GameObject::Kill()
-{
+void GameObject::Kill() {
 	m_killed = true;
 }

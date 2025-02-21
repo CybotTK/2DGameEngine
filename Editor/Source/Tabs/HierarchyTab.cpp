@@ -13,6 +13,9 @@ HierarchyTab::HierarchyTab() {
 HierarchyTab::~HierarchyTab() {
 }
 
+static GameObject*	__dndGameObject = nullptr;
+static Layer*		__dndLayer		= nullptr;
+
 void HierarchyTab::DrawUI() {
 	auto app = App::Get();
 	auto scene = app->GetCurrentScene();
@@ -30,13 +33,71 @@ void HierarchyTab::DrawUI() {
 	headerFlags |= ImGuiTreeNodeFlags_DefaultOpen;
 
 	for (auto layer : scene->layers) {
+		bool abortIteration = false;
 		int flags = headerFlags;
 		if (layer == editor->selected) {
 			flags |= ImGuiTreeNodeFlags_Selected;
 		}
 
 		ui::PushID(layer);
-		if (ImGui::TreeNodeEx(layer->debug.name.c_str(), flags)) {
+		auto out = ImGui::TreeNodeEx(layer->debug.name.c_str(), flags);
+
+		// Drag and Drop : Source
+		{
+			if (ImGui::BeginDragDropSource(ImGuiDragDropFlags_None)) {
+				__dndLayer = layer;
+
+				ImGui::SetDragDropPayload("DND_Layer", nullptr, 0);
+				{
+					ui::Text(layer->debug.name);
+				}
+				ImGui::EndDragDropSource();
+			}
+		}
+
+		//Drag and Drop Target:
+		{
+			if (ImGui::BeginDragDropTarget()) {
+				if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("DND_GameObject")) {
+					GameObject* gameObject = __dndGameObject;
+					
+					if (gameObject->GetParent()) {
+						gameObject->RemoveParent();
+					}
+					gameObject->SetLayer(layer);
+
+				}
+				ImGui::EndDragDropTarget();
+			}
+			if (ImGui::BeginDragDropTarget()) {
+				bool hasBeenMoved = false;
+				if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("DND_Layer")) {
+					Layer* dndLayer = __dndLayer;
+					
+					if (dndLayer == layer) {
+						hasBeenMoved = true;
+						dndLayer->MoveDown();
+					}
+					if (dndLayer->GetLayerIndex() > layer->GetLayerIndex() && !hasBeenMoved) {
+						hasBeenMoved = true;
+						while (dndLayer->GetLayerIndex() > layer->GetLayerIndex()) {
+							dndLayer->MoveUp();
+						}
+					}
+					if (dndLayer->GetLayerIndex() < layer->GetLayerIndex() && !hasBeenMoved) {
+						while (dndLayer->GetLayerIndex() < layer->GetLayerIndex()) {
+							dndLayer->MoveDown();
+						}
+					}
+
+					//You can't keep iterating the layer list if you change them
+					abortIteration = true;
+				}
+				ImGui::EndDragDropTarget();
+			}
+		}
+
+		if (out) {
 			if (ImGui::IsItemClicked()) {
 				editor->selected = layer;
 			}
@@ -48,6 +109,10 @@ void HierarchyTab::DrawUI() {
 			}
 		}
 		ui::PopID();
+
+		if (abortIteration) {
+			break;
+		}
 	}
 
 }
@@ -74,11 +139,46 @@ void HierarchyTab::DrawObject(GameObject* obj) {
 	}
 
 	ui::PushID(obj);
-	if (ImGui::TreeNodeEx(obj->debug.name.c_str(), flags)) {
-		if (ImGui::IsItemClicked()) {
-			editor->selected = obj;
-		}
+	auto out = ImGui::TreeNodeEx(obj->debug.name.c_str(), flags);
 
+	// Drag and Drop : Source
+	{
+		if (ImGui::BeginDragDropSource(ImGuiDragDropFlags_None)) {
+			__dndGameObject = obj;
+
+			ImGui::SetDragDropPayload("DND_GameObject", nullptr, 0);
+			{
+				ui::Text(obj->debug.name);
+			}
+			ImGui::EndDragDropSource();
+		}
+	}
+
+	//Drag and Drop Target:
+	{
+		if (ImGui::BeginDragDropTarget()) {
+			if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("DND_GameObject")) {
+				GameObject* gameObject = __dndGameObject;
+				if (gameObject == obj) {
+					gameObject->RemoveParent();
+				}
+				else if (gameObject->GetParent() == obj) {
+					gameObject->RemoveParent();
+				}
+				else {
+					//gameObject->GetLayer()->Remove(gameObject);
+					gameObject->SetParent(obj);
+				}
+			}
+			ImGui::EndDragDropTarget();
+		}
+	}
+
+	if (ImGui::IsItemClicked()) {
+		editor->selected = obj;
+	}
+
+	if (out) {
 		for (auto child : children) {
 			DrawObject(child);
 		}

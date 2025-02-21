@@ -27,6 +27,12 @@ public:
 	void Add(GameObject* object);
 	void Remove(GameObject* object);
 
+	// Returns the layer index in the scene's layer vector
+	int GetLayerIndex();
+
+	void MoveUp();
+	void MoveDown();
+
 	// It returns all the objects (and children)
 	std::vector<GameObject*> GetObjectsRecursively();
 
