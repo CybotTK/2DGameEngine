@@ -67,9 +67,12 @@ void App::Run() {
 			m_gameLoop = false;
 		}
 
-		if (m_currentScene && m_runGameLogic) {
-			m_currentScene->Update();
-			m_currentScene->UpdatePhysics(m_deltaTime);
+		if (m_currentScene) {
+			if (m_runGameLogic) {
+				m_currentScene->Update();
+				m_currentScene->UpdatePhysics(m_deltaTime);
+			}
+			m_currentScene->EndUpdate();
 		}
 
 		if (m_editorUI) {

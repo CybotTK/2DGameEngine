@@ -20,11 +20,18 @@ GameObject::~GameObject() {
 		world->DestroyBody(m_physicsBody);
 	}
 
-	for (auto child : m_children)
-	{
-		delete child;
+	for (auto child : m_children) {
+		child->m_killed = true;
+		child->RemoveParent();
 	}
 	m_children.clear();
+
+	if (m_parent) {
+		auto it = std::find(m_parent->m_children.begin(), m_parent->m_children.end(), this);
+		if (it != m_parent->m_children.end()) {
+			m_parent->m_children.erase(it);
+		}
+	}
 }
 
 void GameObject::DrawUI() {
@@ -131,8 +138,7 @@ void GameObject::Draw(Shader* shader, Mesh* mesh) {
 }
 
 glm::mat4 GameObject::GetWorldMatrix() {
-	if (m_parent)
-	{
+	if (m_parent) {
 		return m_parent->GetWorldMatrix() * GetMatrix();
 	}
 	return GetMatrix();

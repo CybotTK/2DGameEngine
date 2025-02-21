@@ -89,7 +89,6 @@ private:
 
 	GameObject* m_parent;
 	std::vector<GameObject*> m_children;
-	
 
 	bool m_initialized = false;
 	bool m_killed = false;  // True means it will be garbage collected 

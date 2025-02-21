@@ -88,8 +88,9 @@ void Layer::Add(GameObject* object) {
 
 void Layer::Remove(GameObject* object) {
 	auto it = std::find(objects.begin(), objects.end(), object);
-	assert(it != objects.end()); // Make sure we found the GameObject
-	objects.erase(it);
+	if (it != objects.end()) { // Make sure we found the GameObject
+		objects.erase(it);
+	}
 }
 
 int Layer::GetLayerIndex() {

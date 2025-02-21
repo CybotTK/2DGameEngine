@@ -32,6 +32,7 @@ void HierarchyTab::DrawUI() {
 	headerFlags |= ImGuiTreeNodeFlags_OpenOnArrow;
 	headerFlags |= ImGuiTreeNodeFlags_DefaultOpen;
 
+	std::vector<Layer*> toRemoveLayers;
 	for (auto layer : scene->layers) {
 		bool abortIteration = false;
 		int flags = headerFlags;
@@ -55,7 +56,7 @@ void HierarchyTab::DrawUI() {
 			}
 		}
 
-		//Drag and Drop Target:
+		// Drag and Drop : Target
 		{
 			if (ImGui::BeginDragDropTarget()) {
 				if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("DND_GameObject")) {
@@ -97,6 +98,22 @@ void HierarchyTab::DrawUI() {
 			}
 		}
 
+		// RightClick panel
+		{
+			if (ImGui::IsItemHovered()) {
+				if (ImGui::IsMouseClicked(ImGuiMouseButton_Right)) {
+					ImGui::OpenPopup("##Layer");
+				}
+			}
+			if (ImGui::BeginPopup("##Layer")) {
+				if (ImGui::MenuItem("Delete")) {
+					abortIteration = true;
+					toRemoveLayers.push_back(layer);
+				}
+				ImGui::EndPopup();
+			}
+		}
+
 		if (out) {
 			if (ImGui::IsItemClicked()) {
 				editor->selected = layer;
@@ -113,6 +130,12 @@ void HierarchyTab::DrawUI() {
 		if (abortIteration) {
 			break;
 		}
+	}
+
+	for (auto layer : toRemoveLayers) {
+		auto it = std::find(scene->layers.begin(), scene->layers.end(), layer);
+		scene->layers.erase(it);
+		delete layer;
 	}
 
 }
@@ -154,7 +177,7 @@ void HierarchyTab::DrawObject(GameObject* obj) {
 		}
 	}
 
-	//Drag and Drop Target:
+	// Drag and Drop : Target
 	{
 		if (ImGui::BeginDragDropTarget()) {
 			if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("DND_GameObject")) {
@@ -171,6 +194,21 @@ void HierarchyTab::DrawObject(GameObject* obj) {
 				}
 			}
 			ImGui::EndDragDropTarget();
+		}
+	}
+
+	// RightClick panel
+	{
+		if (ImGui::IsItemHovered()) {
+			if (ImGui::IsMouseClicked(ImGuiMouseButton_Right)) {
+				ImGui::OpenPopup("##GameObject");
+			}
+		}
+		if (ImGui::BeginPopup("##GameObject")) {
+			if (ImGui::MenuItem("Delete")) {
+				obj->Kill();
+			}
+			ImGui::EndPopup();
 		}
 	}
 
