@@ -36,6 +36,12 @@ public:
 	void Update();
 	void Draw(Shader* shader, Mesh* mesh);
 
+	void ReloadPhysics();
+
+protected:
+	void InitializePhysics();
+public:
+
 	glm::mat4 GetWorldMatrix();
 
 	void RemoveParent();

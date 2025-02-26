@@ -22,6 +22,9 @@ public:
 	void Update();
 	void Draw(const Camera& cam, Shader* shader, float aspect);
 
+	// Creates a game object on the fly
+	GameObject* NewObject();
+
 	virtual void DrawUI() override;
 
 	void Add(GameObject* object);

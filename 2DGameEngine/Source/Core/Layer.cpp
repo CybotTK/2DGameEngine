@@ -60,6 +60,12 @@ void Layer::Draw(const Camera& camera, Shader* shader, float aspect) {
 	}
 }
 
+GameObject* Layer::NewObject() {
+	auto obj = new GameObject();
+	Add(obj);
+	return obj;
+}
+
 void Layer::DrawUI() {
 	ui::ObjectHeader(&debug.name, "Layer");
 

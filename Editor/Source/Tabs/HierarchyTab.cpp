@@ -26,15 +26,33 @@ void HierarchyTab::DrawUI() {
 		return;
 	}
 
+	if (ui::Button("New Layer", {ui::GetRemainingWidth(), 0.f})) {
+		Layer* newLayer = new Layer(scene, "Layer" + std::to_string(scene->layers.size()));
+		scene->layers.push_back(newLayer);
+	}
+
+	ui::Separator();
+
+	ImGui::BeginChild("HierarchyTabList");
+	DrawLayers();
+	ImGui::EndChild();
+}
+
+void HierarchyTab::DrawLayers() {
+	auto app = App::Get();
+	auto scene = app->GetCurrentScene();
+	auto editor = app->GetEditor();
+
 	int headerFlags = 0;
 	headerFlags |= ImGuiTreeNodeFlags_AllowItemOverlap;
-	headerFlags |= ImGuiTreeNodeFlags_CollapsingHeader;	
+	headerFlags |= ImGuiTreeNodeFlags_CollapsingHeader;
 	headerFlags |= ImGuiTreeNodeFlags_OpenOnArrow;
 	headerFlags |= ImGuiTreeNodeFlags_DefaultOpen;
 
 	std::vector<Layer*> toRemoveLayers;
 	for (auto layer : scene->layers) {
 		bool abortIteration = false;
+
 		int flags = headerFlags;
 		if (layer == editor->selected) {
 			flags |= ImGuiTreeNodeFlags_Selected;
@@ -61,7 +79,7 @@ void HierarchyTab::DrawUI() {
 			if (ImGui::BeginDragDropTarget()) {
 				if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("DND_GameObject")) {
 					GameObject* gameObject = __dndGameObject;
-					
+
 					if (gameObject->GetParent()) {
 						gameObject->RemoveParent();
 					}
@@ -74,7 +92,7 @@ void HierarchyTab::DrawUI() {
 				bool hasBeenMoved = false;
 				if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("DND_Layer")) {
 					Layer* dndLayer = __dndLayer;
-					
+
 					if (dndLayer == layer) {
 						hasBeenMoved = true;
 						dndLayer->MoveDown();
@@ -114,6 +132,16 @@ void HierarchyTab::DrawUI() {
 			}
 		}
 
+		ui::SameLine();
+
+		ui::SetCursorX(ui::GetWidth() - 90.f);
+		if (ui::Button("Add New Object")) {
+			auto obj = new GameObject();
+			obj->debug.name += " " + std::to_string(layer->objects.size());
+			layer->Add(obj);
+			editor->selected = obj;
+		}
+
 		if (out) {
 			if (ImGui::IsItemClicked()) {
 				editor->selected = layer;
@@ -137,7 +165,6 @@ void HierarchyTab::DrawUI() {
 		scene->layers.erase(it);
 		delete layer;
 	}
-
 }
 
 void HierarchyTab::DrawObject(GameObject* obj) {

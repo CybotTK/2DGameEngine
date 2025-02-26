@@ -12,6 +12,7 @@ public:
 
 	virtual void DrawUI() override;
 private:
+	void DrawLayers();
 	void DrawObject(GameObject* obj);
 };
 

@@ -8,8 +8,10 @@
 #include "Graphics/Mesh.h"
 
 #include "Editor/UI/Props.h"
+#include "Editor/ImGui/imgui.h"
 
 GameObject::GameObject() {
+	debug.name = "Game Object";
 	sprite.shape.Set("Plane");
 }
 
@@ -56,6 +58,13 @@ void GameObject::DrawUI() {
 
 		ui::Text("TO DO: IMPLEMENT TYPE, CATEGORY AND MASK");
 	}
+
+	/*if (ImGui::IsAnyItemActive() && ImGui::IsWindowFocused() && m_physicsBody) {
+		ReloadPhysics();
+	}*/
+	if (ImGui::IsAnyItemActive() && ImGui::IsWindowFocused()) {
+		ReloadPhysics();
+	}
 }
 
 std::vector<GameObject*> GameObject::GetChildren(bool recursive) {
@@ -71,40 +80,12 @@ std::vector<GameObject*> GameObject::GetChildren(bool recursive) {
 }
 
 void GameObject::Initialize(Scene* scene) {
+	m_scene = scene;
+
+	assert (!m_initialized);
 	m_initialized = true;
 
-	auto world = scene->GetBox2DWorld();
-
-	b2BodyDef bodyDef;
-	bodyDef.position.Set(position.x, position.y);
-	bodyDef.angle = glm::radians(rotation);
-	bodyDef.type = physics.type == PhysicsType::DYNAMIC ? b2_dynamicBody : b2_staticBody;
-	bodyDef.fixedRotation = physics.fixedRotation;
-	bodyDef.bullet = physics.isBullet;
-	m_physicsBody = world->CreateBody(&bodyDef);
-
-	b2PolygonShape shape;
-	shape.SetAsBox(
-		scale.x * physics.shapeScale.x, 
-		scale.y * physics.shapeScale.y
-	);
-	
-	b2FixtureDef fixture;
-	fixture.shape = &shape;
-	fixture.filter.categoryBits = physics.category;
-	fixture.filter.maskBits		= physics.mask;
-	switch (physics.type) {
-		case PhysicsType::GHOST:
-			fixture.filter.categoryBits = 0x000;
-			break;
-		case PhysicsType::STATIC:
-			fixture.density = 0.f;
-			break;
-		case PhysicsType::DYNAMIC:
-			fixture.density = 1.f;
-			break;
-	}
-	m_physicsBody->CreateFixture(&fixture);
+	InitializePhysics();
 
 	for (auto child : m_children) {
 		child->Initialize(scene);
@@ -135,6 +116,53 @@ void GameObject::Draw(Shader* shader, Mesh* mesh) {
 	{
 		child->Draw(shader, mesh);
 	}
+}
+
+void GameObject::ReloadPhysics() {
+	// Remove the physicsBody
+	if (m_scene && m_physicsBody) {
+		auto world = m_scene->GetBox2DWorld();
+		world->DestroyBody(m_physicsBody);
+	}
+
+	// Add it again
+	InitializePhysics();
+}
+
+void GameObject::InitializePhysics() {
+	auto world = m_scene->GetBox2DWorld();
+
+	b2BodyDef bodyDef;
+	bodyDef.position.Set(position.x, position.y);
+	bodyDef.angle = glm::radians(rotation);
+	bodyDef.type = physics.type == PhysicsType::DYNAMIC ? b2_dynamicBody : b2_staticBody;
+	bodyDef.fixedRotation = physics.fixedRotation;
+	bodyDef.bullet = physics.isBullet;
+	m_physicsBody = world->CreateBody(&bodyDef);
+
+	b2PolygonShape shape;
+	shape.SetAsBox(
+		scale.x * physics.shapeScale.x,
+		scale.y * physics.shapeScale.y
+	);
+
+	b2FixtureDef fixture;
+	fixture.shape = &shape;
+	fixture.filter.categoryBits = physics.category;
+	fixture.filter.maskBits = physics.mask;
+	switch (physics.type) {
+	case PhysicsType::GHOST:
+		fixture.filter.categoryBits = 0x000;
+		break;
+	case PhysicsType::STATIC:
+		fixture.density = 0.f;
+		break;
+	case PhysicsType::DYNAMIC:
+		fixture.density = 1.f;
+		break;
+	}
+	m_physicsBody->CreateFixture(&fixture);
+
 }
 
 glm::mat4 GameObject::GetWorldMatrix() {
