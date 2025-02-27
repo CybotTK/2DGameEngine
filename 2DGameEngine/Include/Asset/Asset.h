@@ -5,6 +5,9 @@
 #include <vector>
 #include <unordered_map>
 
+#include "Editor/UI/Elements.h"
+#include "Editor/ImGui/imgui.h"
+
 template <typename T>
 class AssetContainer {
 public:
@@ -42,6 +45,33 @@ public:
 template <typename T>
 class AssetHandler {
 public:
+	void DrawUI(const std::string& name, bool allowUnselect = true) {
+		auto& assetMap = GetMap();
+
+		std::string assetName = "";
+		auto it = assetMap.find(m_id);
+		if (it != assetMap.end()) {
+			assetName = it->second.asset->debug.name;
+		}
+
+		uiInternal::DrawPropPrefix(name, "");
+
+		if (ImGui::BeginCombo(("##" + name).c_str(), assetName.c_str())) {
+			for (auto obj : assetMap) {
+				if (ImGui::Selectable(obj.second.asset->debug.name.c_str(), obj.first == m_id)) {
+					m_id = obj.first;
+				}
+			}
+			ImGui::EndCombo();
+		}
+
+		if (allowUnselect) {
+			if (ImGui::IsItemHovered() && ImGui::IsMouseClicked(ImGuiMouseButton_Right)) {
+				m_id = 0;
+			}
+		}
+	}
+
 	void Add(const std::string& name, T* newAsset) {
 		auto& map = GetMap();
 		m_id = GenerateAssetID();
