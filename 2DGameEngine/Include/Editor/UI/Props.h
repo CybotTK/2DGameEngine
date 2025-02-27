@@ -2,6 +2,8 @@
 #define EDITOR_UI_PROPS_H
 
 #include <string>
+#include <stdint.h>
+
 #include <glm/glm.hpp>
 
 #include "Editor/UI/Elements.h"
@@ -9,6 +11,8 @@
 namespace ui {
 	template <typename T>
 	void Prop(const std::string& name, T* value, const ui::Icon& icon = "");
+
+	void PropMask(const std::string& name, uint16_t* mask, const ui::Icon& icon = "");
 
 	void ObjectHeader(std::string* name, const std::string& className, const ui::Icon& icon = "");
 
