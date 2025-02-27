@@ -48,20 +48,48 @@ void GameObject::DrawUI() {
 	if (ui::Header("Sprite", false)) {
 		ui::PropColor("Color", &sprite.color);
 
-		ui::Text("TO DO: IMPLEMENT TEXTURE AND SHAPE");
+		sprite.texture.DrawUI("Texture");
+		// ATM commented
+		//sprite.shape.DrawUI("Shape");
+		//ui::Text("TO DO: IMPLEMENT TEXTURE AND SHAPE");
 	}
 
 	if (ui::Header("Physics", false)) {
+		uiInternal::DrawPropPrefix("Type", "");
+		std::string assetName = "";
+		switch (physics.type) {
+		case GameObject::GHOST:
+			assetName = "Ghost"; break;
+		case GameObject::STATIC:
+			assetName = "Static"; break;
+		case GameObject::DYNAMIC:
+			assetName = "Dynamic"; break;
+		}
+		if (ImGui::BeginCombo(("##PhysicsType" + debug.name).c_str(), assetName.c_str())) {
+			if (ImGui::Selectable("Ghost", physics.type == GameObject::GHOST)) {
+				physics.type = GameObject::GHOST;
+			}
+			if (ImGui::Selectable("Static", physics.type == GameObject::STATIC)) {
+				physics.type = GameObject::STATIC;
+			}
+			if (ImGui::Selectable("Dynamic", physics.type == GameObject::DYNAMIC)) {
+				physics.type = GameObject::DYNAMIC;
+			}
+			ImGui::EndCombo();
+		}
+
+		ui::Separator();
+
 		ui::Prop("Shape Scale", &physics.shapeScale);
 		ui::Prop("Fixed Rotation", &physics.fixedRotation);
 		ui::Prop("Is Bullet", &physics.isBullet);
 
-		ui::Text("TO DO: IMPLEMENT TYPE, CATEGORY AND MASK");
+		ui::Separator();
+
+		ui::PropMask("Category", &physics.category);
+		ui::PropMask("Mask", &physics.mask);
 	}
 
-	/*if (ImGui::IsAnyItemActive() && ImGui::IsWindowFocused() && m_physicsBody) {
-		ReloadPhysics();
-	}*/
 	if (ImGui::IsAnyItemActive() && ImGui::IsWindowFocused()) {
 		ReloadPhysics();
 	}
@@ -120,16 +148,19 @@ void GameObject::Draw(Shader* shader, Mesh* mesh) {
 
 void GameObject::ReloadPhysics() {
 	// Remove the physicsBody
-	if (m_scene && m_physicsBody) {
-		auto world = m_scene->GetBox2DWorld();
-		world->DestroyBody(m_physicsBody);
+	if (m_scene) {
+		if (m_physicsBody) {
+			auto world = m_scene->GetBox2DWorld();
+			world->DestroyBody(m_physicsBody);
+		}
+		// Adding it again
+		InitializePhysics();
 	}
-
-	// Add it again
-	InitializePhysics();
 }
 
 void GameObject::InitializePhysics() {
+	assert(m_scene);
+
 	auto world = m_scene->GetBox2DWorld();
 
 	b2BodyDef bodyDef;
