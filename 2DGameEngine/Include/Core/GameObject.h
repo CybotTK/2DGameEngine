@@ -87,6 +87,12 @@ public:
 		bool isBullet = false;
 	} physics;
 
+	// Optimization. 
+	// The engine will not run any game logic if this is false
+	// it also includes the construction script
+	bool runLogic = false; // LATER USE
+
+	std::string constructionScript;
 private:
 	Scene* m_scene = nullptr;	
 	Layer* m_layer = nullptr;
@@ -99,6 +105,7 @@ private:
 	bool m_initialized = false;
 	bool m_killed = false;  // True means it will be garbage collected 
 							// in the end frame
+
 };
 
 #endif // !GAME_OBJECT_H

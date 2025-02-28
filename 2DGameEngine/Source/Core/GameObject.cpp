@@ -13,6 +13,10 @@
 GameObject::GameObject() {
 	debug.name = "Game Object";
 	sprite.shape.Set("Plane");
+
+	constructionScript = R"(
+This is a test
+)";
 }
 
 GameObject::~GameObject() {
@@ -36,58 +40,96 @@ GameObject::~GameObject() {
 	}
 }
 
+#define MULTILINE_TEXT_SIZE 8192
+
 void GameObject::DrawUI() {
 	ui::ObjectHeader(&debug.name, "Game Object");
 
-	if (ui::Header("Transform", true)) {
-		ui::Prop("Position", &position);
-		ui::Prop("Rotation", &rotation);
-		ui::Prop("Scale", &scale);
-	}
+	if (ImGui::BeginTabBar("GameObjectTab")) {
+		if (ImGui::BeginTabItem("General")) {
+			if (ui::Header("Transform", true)) {
+				ui::Prop("Position", &position);
+				ui::Prop("Rotation", &rotation);
+				ui::Prop("Scale", &scale);
+			}
 
-	if (ui::Header("Sprite", false)) {
-		ui::PropColor("Color", &sprite.color);
+			if (ui::Header("Sprite", false)) {
+				ui::PropColor("Color", &sprite.color);
 
-		sprite.texture.DrawUI("Texture");
-		// ATM commented
-		//sprite.shape.DrawUI("Shape");
-		//ui::Text("TO DO: IMPLEMENT TEXTURE AND SHAPE");
-	}
+				sprite.texture.DrawUI("Texture");
+				// ATM commented
+				//sprite.shape.DrawUI("Shape");
+			}
 
-	if (ui::Header("Physics", false)) {
-		uiInternal::DrawPropPrefix("Type", "");
-		std::string assetName = "";
-		switch (physics.type) {
-		case GameObject::GHOST:
-			assetName = "Ghost"; break;
-		case GameObject::STATIC:
-			assetName = "Static"; break;
-		case GameObject::DYNAMIC:
-			assetName = "Dynamic"; break;
+			if (ui::Header("Physics", false)) {
+				uiInternal::DrawPropPrefix("Type", "");
+				std::string assetName = "";
+				switch (physics.type) {
+				case GameObject::GHOST:
+					assetName = "Ghost"; break;
+				case GameObject::STATIC:
+					assetName = "Static"; break;
+				case GameObject::DYNAMIC:
+					assetName = "Dynamic"; break;
+				}
+				if (ImGui::BeginCombo(("##PhysicsType" + debug.name).c_str(), assetName.c_str())) {
+					if (ImGui::Selectable("Ghost", physics.type == GameObject::GHOST)) {
+						physics.type = GameObject::GHOST;
+					}
+					if (ImGui::Selectable("Static", physics.type == GameObject::STATIC)) {
+						physics.type = GameObject::STATIC;
+					}
+					if (ImGui::Selectable("Dynamic", physics.type == GameObject::DYNAMIC)) {
+						physics.type = GameObject::DYNAMIC;
+					}
+					ImGui::EndCombo();
+				}
+
+				ui::Separator();
+
+				ui::Prop("Shape Scale", &physics.shapeScale);
+				ui::Prop("Fixed Rotation", &physics.fixedRotation);
+				ui::Prop("Is Bullet", &physics.isBullet);
+
+				ui::Separator();
+
+				ui::PropMask("Category", &physics.category);
+				ui::PropMask("Mask", &physics.mask);
+			}
+
+			ImGui::EndTabItem();
 		}
-		if (ImGui::BeginCombo(("##PhysicsType" + debug.name).c_str(), assetName.c_str())) {
-			if (ImGui::Selectable("Ghost", physics.type == GameObject::GHOST)) {
-				physics.type = GameObject::GHOST;
+
+		// This is the place where the script should show
+		if (ImGui::BeginTabItem("Construction Script")) {
+			ui::Prop("Run Logic", &runLogic);
+
+			ui::Separator();
+
+			if (runLogic) {
+				char buf[MULTILINE_TEXT_SIZE];
+
+				if (constructionScript.size() < MULTILINE_TEXT_SIZE - 2) {
+					strcpy_s(buf, constructionScript.c_str());
+					ImGui::InputTextMultiline(
+						"##ConstructionScript",
+						buf, MULTILINE_TEXT_SIZE,
+						{ ui::GetRemainingWidth(), ui::GetRemainingHeight() }
+					);
+					constructionScript = buf;
+				}
+				else {
+					ImGui::Text("Text is too big!");
+				}
 			}
-			if (ImGui::Selectable("Static", physics.type == GameObject::STATIC)) {
-				physics.type = GameObject::STATIC;
+			else {
+				ImGui::Text("Object's run logic is disabled.");
 			}
-			if (ImGui::Selectable("Dynamic", physics.type == GameObject::DYNAMIC)) {
-				physics.type = GameObject::DYNAMIC;
-			}
-			ImGui::EndCombo();
+
+			ImGui::EndTabItem();
 		}
 
-		ui::Separator();
-
-		ui::Prop("Shape Scale", &physics.shapeScale);
-		ui::Prop("Fixed Rotation", &physics.fixedRotation);
-		ui::Prop("Is Bullet", &physics.isBullet);
-
-		ui::Separator();
-
-		ui::PropMask("Category", &physics.category);
-		ui::PropMask("Mask", &physics.mask);
+		ImGui::EndTabBar();
 	}
 
 	if (ImGui::IsAnyItemActive() && ImGui::IsWindowFocused()) {
