@@ -56,6 +56,7 @@ void ImageTexture::GenerateImageFromSource() {
 	m_texParams = {
 		GL_REPEAT, GL_REPEAT,
 		GL_NEAREST, GL_NEAREST,
+		//GL_LINEAR_MIPMAP_LINEAR, GL_LINEAR,
 		{0.f, 0.f, 0.f, 0.f}
 	};
 
