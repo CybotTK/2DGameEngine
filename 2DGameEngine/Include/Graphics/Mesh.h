@@ -22,6 +22,9 @@ public:
 	Mesh(const Mesh& other);
 	virtual ~Mesh();
 
+	virtual void Save(File* file) override;
+	virtual void Load(File* file) override;
+
 	static Mesh* CreatePlane();
 
 	void BindMeshBuffersData();

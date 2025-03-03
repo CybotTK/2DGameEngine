@@ -23,6 +23,8 @@
 
 #include "Editor/EditorUI.h"
 
+#include "System/File.h"
+
 class App {
 private:
 	App();
@@ -32,6 +34,11 @@ public:
 	// we will have will have a dependency on the App instance
 	// That will mess things up! That's why we use this
 	void Initialize();
+
+	const float engineVersion = 1.0f;
+
+	void Save(File* file, bool withEditor = true);
+	void Load(File* file);
 
 	//Main loop goes here
 	void Run();

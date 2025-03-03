@@ -213,6 +213,7 @@
     <ClInclude Include="Include\Graphics\Texture.h" />
     <ClInclude Include="Include\Graphics\Textures\ImageTexture.h" />
     <ClInclude Include="Include\System\Dialogs.h" />
+    <ClInclude Include="Include\System\File.h" />
     <ClInclude Include="Include\System\FileUtils.h" />
     <ClInclude Include="Include\System\Input.h" />
     <ClInclude Include="Include\System\InputTypes.h" />
@@ -251,6 +252,7 @@
     <ClCompile Include="Source\Graphics\Texture.cpp" />
     <ClCompile Include="Source\Graphics\Textures\ImageTexture.cpp" />
     <ClCompile Include="Source\System\Dialogs.cpp" />
+    <ClCompile Include="Source\System\File.cpp" />
     <ClCompile Include="Source\System\FileUtils.cpp" />
     <ClCompile Include="Source\System\Input.cpp" />
     <ClCompile Include="Source\System\Timer.cpp" />

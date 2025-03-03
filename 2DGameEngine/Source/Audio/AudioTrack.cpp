@@ -23,6 +23,33 @@ AudioTrack::~AudioTrack() {
 	}
 }
 
+void AudioTrack::Save(File* file) {
+	Object::Save(file);
+
+	file->Write(m_sourceLength);
+	if (m_sourceLength > 0) {
+		file->Write(m_source, m_sourceLength);
+	}
+}
+
+void AudioTrack::Load(File* file) {
+	Object::Load(file);
+
+	file->Read(m_sourceLength);
+	if (m_sourceLength > 0) {
+		m_source = new unsigned char[m_sourceLength];
+		file->Read(m_source, m_sourceLength);
+	}
+
+	if (m_chunk) {
+		Mix_FreeChunk(m_chunk);
+	}
+	m_chunk = Mix_LoadWAV_RW(
+		SDL_RWFromMem((void*)m_source, m_sourceLength),
+		0
+	);
+}
+
 static std::unordered_map<int, bool> __finishedChannels;
 
 void __ChannelDone(int channel) {

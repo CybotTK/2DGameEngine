@@ -13,6 +13,7 @@
 #endif // STB_IMAGE_IMPLEMENTATION
 
 ImageTexture::ImageTexture() {
+	debug.thumbnail = this;
 }
 
 ImageTexture::ImageTexture(const std::string& file) {
@@ -29,6 +30,27 @@ ImageTexture::~ImageTexture() {
 	if (m_source) {
 		delete[] m_source;
 	}
+}
+
+void ImageTexture::Save(File* file) {
+	Object::Save(file);
+
+	file->Write(m_sourceLength);
+	if (m_source) {
+		file->Write(m_source, m_sourceLength);
+	}
+}
+
+void ImageTexture::Load(File* file) {
+	Object::Load(file);
+
+	file->Read(m_sourceLength);
+	if (m_sourceLength > 0) {
+		m_source = new unsigned char[m_sourceLength];
+		file->Read(m_source, m_sourceLength);
+	}
+
+	GenerateImageFromSource();
 }
 
 void ImageTexture::DrawUI() {

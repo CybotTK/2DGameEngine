@@ -12,12 +12,15 @@ public:
 	ImageTexture(const std::string& file);
 	virtual ~ImageTexture();
 
+	virtual void Save(File* file) override;
+	virtual void Load(File* file) override;
+
 	virtual void DrawUI() override;
 
 private:
 	void GenerateImageFromSource();
 
-	size_t m_sourceLength;
+	size_t m_sourceLength = 0;
 	unsigned char* m_source = nullptr;
 };
 

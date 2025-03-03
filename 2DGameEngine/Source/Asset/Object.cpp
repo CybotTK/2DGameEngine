@@ -19,11 +19,13 @@ Object::~Object() {
 }
 
 void Object::Save(File* file) {
-
+	file->WriteStr(debug.name);
+	file->WriteStr(debug.description);
 }
 
 void Object::Load(File* file) {
-
+	file->ReadStr(debug.name);
+	file->ReadStr(debug.description);
 }
 
 void Object::DrawUI() {

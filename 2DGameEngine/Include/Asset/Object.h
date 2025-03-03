@@ -3,6 +3,8 @@
 
 #include <string>
 
+#include "System/File.h"
+
 class File;
 class Texture;
 

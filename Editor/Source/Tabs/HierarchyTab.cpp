@@ -233,6 +233,7 @@ void HierarchyTab::DrawObject(GameObject* obj) {
 		}
 		if (ImGui::BeginPopup("##GameObject")) {
 			if (ImGui::MenuItem("Delete")) {
+				obj->deletedInEditor = true;
 				obj->Kill();
 			}
 			ImGui::EndPopup();

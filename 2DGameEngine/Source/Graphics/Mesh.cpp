@@ -14,6 +14,31 @@ Mesh::~Mesh() {
 	Reset(true);
 }
 
+void Mesh::Save(File* file) {
+	Object::Save(file);
+
+	file->Write(vertices.size());
+	file->Write(vertices[0], vertices.size());
+
+	file->Write(vertices.size());
+	file->Write(vertices[0], vertices.size());
+}
+
+void Mesh::Load(File* file) {
+	Object::Load(file);
+
+	size_t size;
+	file->Read(size);
+	vertices.resize(size);
+	file->Read(vertices[0], size);
+
+	file->Read(size);
+	faces.resize(size);
+	file->Read(faces[0], size);
+
+	assert(!alreadySentToGPU);
+}
+
 Mesh* Mesh::CreatePlane() {
 	Mesh* out = new Mesh();
 

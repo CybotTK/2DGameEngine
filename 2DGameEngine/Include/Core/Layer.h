@@ -16,8 +16,11 @@ class Scene;
 
 class Layer : public Object{
 public:
-	Layer(Scene* scene, const std::string& layerName);
+	Layer(Scene* scene, const std::string& layerName = "Layer");
 	virtual ~Layer();
+
+	virtual void Save(File* file) override;
+	virtual void Load(File* file) override;
 
 	void Update();
 	void Draw(const Camera& cam, Shader* shader, float aspect);
@@ -35,6 +38,9 @@ public:
 
 	void MoveUp();
 	void MoveDown();
+
+	// It will remove all non root objects from the list
+	void CleanupObjectList();
 
 	// It returns all the objects (and children)
 	std::vector<GameObject*> GetObjectsRecursively();

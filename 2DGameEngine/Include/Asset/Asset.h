@@ -8,6 +8,8 @@
 #include "Editor/UI/Elements.h"
 #include "Editor/ImGui/imgui.h"
 
+#include "System/File.h"
+
 template <typename T>
 class AssetContainer {
 public:
@@ -24,6 +26,33 @@ public:
 			delete it.second.asset; 
 		} 
 		this->clear();
+	}
+
+	void Save(File* file) {
+		file->Write(this->size());
+
+		for (auto it : *this) {
+			file->Write(it.first);
+			it.second.asset->Save(file);
+		}
+	}
+
+	void Load(File* file) {
+		// To not add everything twice
+		Reset();
+
+		size_t count;
+		file->Read(count);
+
+		for (size_t i = 0; i < count; i++) {
+			size_t id;
+
+			file->Read(id);
+			auto obj = new T();
+			obj->Load(file);
+
+			(*this)[id] = { obj };
+		}
 	}
 
 	size_t Add(const std::string& name, T* newAsset) {

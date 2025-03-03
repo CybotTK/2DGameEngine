@@ -24,6 +24,33 @@ Layer::~Layer() {
 	objects.clear();
 }
 
+void Layer::Save(File* file) {
+	Object::Save(file);
+
+	file->Write(tint);
+	file->Write(useCamera);
+
+	file->Write(objects.size());
+	for (auto obj : objects) {
+		obj->Save(file);
+	}
+}
+
+void Layer::Load(File* file) {
+	Object::Load(file);
+
+	file->Read(tint);
+	file->Read(useCamera);
+
+	size_t count;
+	file->Read(count);
+	for (size_t i = 0; i < count; i++) {
+		auto obj = new GameObject();
+		obj->Load(file);
+		Add(obj);
+	}
+}
+
 void Layer::Update() {
 	for (auto obj : objects)
 	{
@@ -127,6 +154,21 @@ void Layer::MoveDown() {
 		m_scene->layers[indx] = m_scene->layers[indx + 1];
 		m_scene->layers[indx + 1] = this;
 	}
+}
+
+void Layer::CleanupObjectList() {
+	std::vector<GameObject*> toRemove;
+
+	for (auto obj : objects) {
+		if (obj->GetParent() != nullptr) {
+			toRemove.push_back(obj);
+		}
+	}
+	for (auto obj : toRemove) {
+		auto it = std::find(objects.begin(), objects.end(), obj);
+		objects.erase(it);
+	}
+	toRemove.clear();
 }
 
 std::vector<GameObject*> Layer::GetObjectsRecursively() {

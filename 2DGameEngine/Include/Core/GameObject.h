@@ -28,6 +28,9 @@ public:
 	GameObject();
 	virtual ~GameObject();
 
+	virtual void Save(File* file) override;
+	virtual void Load(File* file) override;
+
 	virtual void DrawUI() override;
 
 	std::vector<GameObject*> GetChildren(bool recursive = true);
@@ -93,6 +96,10 @@ public:
 	bool runLogic = false; // LATER USE
 
 	std::string constructionScript;
+
+	// True means the user deleted the object 
+	// False means the user closed the app
+	bool deletedInEditor = false;
 private:
 	Scene* m_scene = nullptr;	
 	Layer* m_layer = nullptr;

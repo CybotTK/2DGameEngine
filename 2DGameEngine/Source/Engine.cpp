@@ -56,6 +56,40 @@ void App::Initialize() {
 	data.scenes.Add("Main Scene", m_currentScene);	
 }
 
+void App::Save(File* file, bool withEditor) {
+	file->Write(engineVersion);
+	file->Write(withEditor);
+
+	data.images.Save(file);
+	data.meshes.Save(file);
+	data.audios.Save(file);
+	data.scenes.Save(file);
+}
+
+void App::Load(File* file) {
+	float version;
+	bool withEditor;
+	file->Read(version);
+	file->Read(withEditor);
+
+	assert(version == engineVersion);
+	if(HasEditorUI()) {
+		// Prevents the user (that has access to this editor) 
+		// from opening an exported game in the editor.
+		// TOP SECURITY MEASURE
+		// Idea got from: https://www.google.com/url?sa=i&url=https%3A%2F%2Fknowyourmeme.com%2Fmemes%2Fcheeto-lock&psig=AOvVaw2oEKj9kgjvT35hm0OHXJv9&ust=1740953528333000&source=images&cd=vfe&opi=89978449&ved=0CBQQjRxqFwoTCIi827bz6YsDFQAAAAAdAAAAABAs
+		assert(withEditor == true);
+		if (!withEditor) {
+			return;
+		}
+	}
+
+	data.images.Load(file);
+	data.meshes.Load(file);
+	data.audios.Load(file);
+	data.scenes.Load(file);
+}
+
 void App::Run() {
 	m_deltaTimer.Reset();
 

@@ -24,12 +24,24 @@
     <ClCompile Include="Source\Tabs\HierarchyTab.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Tabs\DetailsTab.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Tabs\ResourceTab.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\EngineEditorUI.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Source\Tabs\HierarchyTab.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Tabs\DetailsTab.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Tabs\ResourceTab.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

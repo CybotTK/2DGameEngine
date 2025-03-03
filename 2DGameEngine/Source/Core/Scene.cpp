@@ -28,12 +28,14 @@ Scene::Scene() {
 
 		// Layer1 Objects
 		auto root1 = new GameObject();
+		root1->debug.name = "Parent";
 		root1->physics.type = GameObject::DYNAMIC;
 		root1->sprite.texture.Set("test.png");
 		root1->position = { -2.f, 3.f };
 		root1->rotation = 25.f;
 
 		auto root1Child = new GameObject();
+		root1Child->debug.name = "Child";
 		root1Child->physics.type = GameObject::GHOST;
 		root1Child->SetParent(root1);
 		root1Child->sprite.color = { 1.f,0.f,0.f,1.f };
@@ -77,6 +79,51 @@ Scene::~Scene() {
 		delete layer;
 	}
 	layers.clear();
+}
+
+void Scene::Save(File* file) {
+	Object::Save(file);
+
+	auto gravity = GetGravity();
+	file->Write(gravity);
+
+	file->Write(background);
+
+	camera.Save(file);
+
+	file->Write(layers.size());
+	for (auto layer : layers) {
+		layer->Save(file);
+	}
+}
+
+void Scene::Load(File* file) {
+	Object::Load(file);
+
+	glm::vec2 gravity;
+	file->Read(gravity);
+	SetGravity(gravity);
+
+	file->Read(background);
+
+	camera.Load(file);
+
+	// Makes sure this is a "blank" scene
+	{
+		for (auto layer : layers) {
+			delete layer;
+		}
+		layers.clear();
+	}
+
+	size_t count;
+	file->Read(count); 
+
+	for (size_t i = 0; i < count; i++) {
+		auto layer = new Layer(this);
+		layer->Load(file);
+		layers.push_back(layer);
+	}
 }
 
 void Scene::DrawUI() {

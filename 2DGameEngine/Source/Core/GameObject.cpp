@@ -27,8 +27,13 @@ GameObject::~GameObject() {
 	}
 
 	for (auto child : m_children) {
-		child->m_killed = true;
-		child->RemoveParent();
+		if (deletedInEditor == true) {
+			child->m_killed = true;
+			child->RemoveParent();
+			child->deletedInEditor = true;	// It marks the child being deleted
+											// in editor not when app was closed
+		}
+		else delete child; // if I don't delete when app closes error at parent
 	}
 	m_children.clear();
 
@@ -37,6 +42,52 @@ GameObject::~GameObject() {
 		if (it != m_parent->m_children.end()) {
 			m_parent->m_children.erase(it);
 		}
+	}
+}
+
+void GameObject::Save(File* file) {
+	Object::Save(file);
+
+	// Transform save
+	file->Write(position);
+	file->Write(rotation);
+	file->Write(scale);
+
+	file->Write(sprite);
+	file->Write(physics);
+
+	file->Write(runLogic);
+	file->WriteStr(constructionScript);
+
+	// We need to take care of the children =D
+	file->Write(m_children.size());
+	for (auto obj : m_children) {
+		obj->Save(file);
+	}
+}
+
+void GameObject::Load(File* file) {
+	assert(!m_initialized); // modify when python scripting
+	Object::Load(file);
+
+	// Transform save
+	file->Read(position);
+	file->Read(rotation);
+	file->Read(scale);
+
+	file->Read(sprite);
+	file->Read(physics);
+
+	file->Read(runLogic);
+	file->ReadStr(constructionScript);
+
+	// We need to take care of the children =D
+	size_t count;
+	file->Read(count);
+	for (size_t i = 0; i < count; i++) {
+		auto obj = new GameObject();
+		obj->SetParent(this);
+		obj->Load(file);
 	}
 }
 
