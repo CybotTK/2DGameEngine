@@ -37,3 +37,15 @@
 *.exe
 *.out
 *.app
+
+# Log files
+*.log
+logs/
+log/
+debug.log
+error.log
+*.trace
+*.dbg
+
+# Temp Save File (Configurations)
+*.sv
