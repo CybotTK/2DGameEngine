@@ -47,5 +47,8 @@ error.log
 *.trace
 *.dbg
 
+# Ignore tlog files
+*.tlog
+
 # Temp Save File (Configurations)
 *.sv
