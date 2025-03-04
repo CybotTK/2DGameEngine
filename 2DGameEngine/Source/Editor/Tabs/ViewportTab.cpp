@@ -20,20 +20,20 @@ ViewportTab::~ViewportTab() {
 void ViewportTab::DrawUI() {
 	auto app = App::Get();
 
-	const std::string tmpSavePath = file::GetEditorPath("tmp.sv");
+	const std::string tempSavePath = file::GetEditorPath("temp.sv");
 
 	bool gameLogic = app->IsGameLogicEnabled();
 	if (gameLogic) {
 		if (ui::Button("Quit Game")) {
 			app->DisableGameLogic();
 
-			File file(tmpSavePath, File::READ);
+			File file(tempSavePath, File::READ);
 			app->Load(&file);
 		}
 	}
 	else {
 		if (ui::Button("Play Game")) {
-			File file(tmpSavePath, File::WRITE);
+			File file(tempSavePath, File::WRITE);
 			app->Save(&file, true);
 
 			app->EnableGameLogic();

@@ -133,6 +133,12 @@ void App::Render(FrameBuffer* finalFbo) {
 		graphics::ClearBuffers(0.f, 0.3f, 1.f, 1.f);
 
 		float aspect = finalFbo ? finalFbo->GetAspect() : m_window.GetAspect();
+		
+		if (m_currentScene == nullptr) {
+			AssetHandler<Scene> handle;
+			handle.Set(data.scenes.begin()->first); // Set using the first scene's ID
+			m_currentScene = handle.Get();          // Get the actual Scene*
+		}
 		m_currentScene->Draw(m_defaultShader, aspect);
 	}
 

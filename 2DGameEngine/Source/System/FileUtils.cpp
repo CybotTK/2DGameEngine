@@ -11,7 +11,7 @@
 
 std::string file::GetBasePath()
 {
-	std::cout << SDL_GetBasePath();
+	//std::cout << SDL_GetBasePath();
 	return SDL_GetBasePath();
 }
 

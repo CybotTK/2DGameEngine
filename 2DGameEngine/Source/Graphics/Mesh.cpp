@@ -20,8 +20,8 @@ void Mesh::Save(File* file) {
 	file->Write(vertices.size());
 	file->Write(vertices[0], vertices.size());
 
-	file->Write(vertices.size());
-	file->Write(vertices[0], vertices.size());
+	file->Write(faces.size());
+	file->Write(faces[0], faces.size());
 }
 
 void Mesh::Load(File* file) {
@@ -36,7 +36,7 @@ void Mesh::Load(File* file) {
 	faces.resize(size);
 	file->Read(faces[0], size);
 
-	assert(!alreadySentToGPU);
+	Reload();
 }
 
 Mesh* Mesh::CreatePlane() {
