@@ -169,6 +169,15 @@ Scene* App::GetCurrentScene() {
 	return m_currentScene;
 }
 
+size_t App::GetCurrentSceneID() const {
+	for (auto it : data.scenes) {
+		if (it.second.asset == m_currentScene) {
+			return it.first;
+		}
+	}
+	return 0;
+}
+
 void App::SetCurrentScene(const std::string& name) {
 	AssetHandler<Scene> handle;
 	handle.Set(name);

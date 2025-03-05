@@ -47,6 +47,7 @@ public:
 	void Render(FrameBuffer* finalFbo = nullptr);
 
 	Scene* GetCurrentScene();
+	size_t GetCurrentSceneID() const;
 	void SetCurrentScene(const std::string& name);
 	void SetCurrentScene(size_t id);
 	void SetCurrentScene(Scene* scene);

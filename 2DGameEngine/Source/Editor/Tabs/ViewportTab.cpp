@@ -27,8 +27,14 @@ void ViewportTab::DrawUI() {
 		if (ui::Button("Quit Game")) {
 			app->DisableGameLogic();
 
+			// Backing up the current scene
+			size_t sceneID = app->GetCurrentSceneID();
+
 			File file(tempSavePath, File::READ);
 			app->Load(&file);
+
+			// Restoring the current scene
+			app->SetCurrentScene(sceneID);
 		}
 	}
 	else {
@@ -39,14 +45,6 @@ void ViewportTab::DrawUI() {
 			app->EnableGameLogic();
 		}
 	}
-
-	/*ui::Prop("Run Logic", &gameLogic);
-	if (gameLogic) {
-		app->EnableGameLogic();
-	}
-	else {
-		app->DisableGameLogic();
-	}*/
 
 	glm::vec2 size = { ui::GetRemainingWidth(), ui::GetRemainingHeight() };
 	m_editorUI->viewport.forceAspect = size.x / size.y;
