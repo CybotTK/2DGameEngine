@@ -1882,7 +1882,51 @@ namespace pfd
 //===============================================================================//
 //===============================================================================//
 
+#include <SDL2/SDL.h>
+
 #include "System/FileUtils.h"
+
+void dialogs::ErrorMessage(const std::string& title, const std::string& body) {
+    SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR,
+        title.c_str(),
+        body.c_str(),
+        NULL
+    );
+}
+
+void dialogs::WarningMessage(const std::string& title, const std::string& body) {
+    SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_WARNING,
+        title.c_str(),
+        body.c_str(),
+        NULL
+    );
+}
+
+bool dialogs::QuestionMessage(const std::string& title, const std::string& body) {
+    const SDL_MessageBoxButtonData buttons[] = {
+        {SDL_MESSAGEBOX_BUTTON_ESCAPEKEY_DEFAULT, 0 , "No"},
+        {SDL_MESSAGEBOX_BUTTON_RETURNKEY_DEFAULT, 1 , "Yes"}
+    };
+    
+    SDL_MessageBoxData messageboxdata = {
+        SDL_MESSAGEBOX_INFORMATION,
+        NULL,
+        title.c_str(),
+        body.c_str(),
+        SDL_arraysize(buttons),
+        buttons,
+        NULL
+    };
+
+    int buttonid;
+    SDL_ShowMessageBox(&messageboxdata, &buttonid);
+
+    if (buttonid == 1) {
+        return true;
+    }
+
+    return false;
+}
 
 std::vector<std::string> dialogs::OpenFile(const std::string& title, std::vector<std::string> filters, bool multipleSelected) {
     auto f = pfd::open_file(
@@ -1893,4 +1937,14 @@ std::vector<std::string> dialogs::OpenFile(const std::string& title, std::vector
     );
 
     return f.result();
+}
+
+std::string dialogs::SaveFile(const std::string& title, std::vector<std::string> filters) {
+    auto file = pfd::save_file(
+        title,
+        file::GetEditorPath(""),
+        filters
+    );
+    
+    return file.result();
 }
