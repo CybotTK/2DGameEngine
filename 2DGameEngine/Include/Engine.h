@@ -37,6 +37,9 @@ public:
 
 	const float engineVersion = 1.0f;
 
+	// This is for creating a new project
+	void ClearAll();
+
 	void Save(File* file, bool withEditor = true);
 	void Load(File* file);
 

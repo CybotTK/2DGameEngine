@@ -50,8 +50,9 @@ EditorUI::~EditorUI() {
 	ImGui::DestroyContext();
 }
 
-void EditorUI::Update() {
+void EditorUI::UpdateAll() {
 	auto app = App::Get();
+
 	for (SDL_Event ev : app->input.sdlEvents) {
 		ImGui_ImplSDL2_ProcessEvent(&ev);
 	}
@@ -65,7 +66,13 @@ void EditorUI::Draw() {
 
 	RenderBegin();
 	Render();
+
+	Update();
+
 	RenderEnd();
+}
+
+void EditorUI::Update() {
 }
 
 void EditorUI::RenderBegin() {
@@ -89,7 +96,9 @@ void EditorUI::Render() {
 		ImGuiWindowFlags_NoScrollWithMouse;
 	
 	// Top menu
-	//flags |= ImGuiWindowFlags_MenuBar;
+	if (m_useMenuBar) {
+		flags |= ImGuiWindowFlags_MenuBar;
+	}
 
 	if (ImGui::Begin("EditorMain", 0, flags)) {
 		ImGuiID dockspaceId = ImGui::GetID("dockspace");

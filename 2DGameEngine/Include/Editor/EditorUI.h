@@ -11,8 +11,10 @@ public:
 	EditorUI();
 	virtual ~EditorUI();
 
-	void Update();
+	void UpdateAll();
 	void Draw();
+
+	virtual void Update();
 
 	FrameBuffer viewport;
 	std::vector<EditorTab*> tabs;
@@ -24,6 +26,8 @@ protected:
 	void RenderEnd();
 	
 	void DrawTabs();
+
+	bool m_useMenuBar = false;
 };
 
 #endif // !EDITOR_UI_H
