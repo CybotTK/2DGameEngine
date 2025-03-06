@@ -56,6 +56,13 @@ void App::Initialize() {
 	data.scenes.Add("Main Scene", m_currentScene);	
 }
 
+void App::ClearAll() {
+	data.images.Reset();
+	data.meshes.Reset();
+	data.audios.Reset();
+	data.scenes.Reset();
+}
+
 void App::Save(File* file, bool withEditor) {
 	file->Write(engineVersion);
 	file->Write(withEditor);
@@ -112,7 +119,7 @@ void App::Run() {
 		if (m_editorUI) {
 			Render(&m_editorUI->viewport);
 
-			m_editorUI->Update();
+			m_editorUI->UpdateAll();
 			m_editorUI->Draw();
 		}
 		else {
