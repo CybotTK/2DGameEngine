@@ -20,9 +20,9 @@ public:
 	bool GetQuitStatus();
 	bool HasResized();
 
-	bool Pressed(InputCode& inputKey);
-	bool Active(InputCode& inputKey);
-	bool Released(InputCode& inputKey);
+	bool Pressed(const InputCode& inputKey);
+	bool Active(const InputCode& inputKey);
+	bool Released(const InputCode& inputKey);
 
 	glm::vec2 GetMouseMotion() const;
 	float GetMouseScrollY() const;

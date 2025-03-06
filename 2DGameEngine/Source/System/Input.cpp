@@ -99,17 +99,17 @@ bool Input::HasResized()
 	return resized;
 }
 
-bool Input::Pressed(InputCode& inputKey)
+bool Input::Pressed(const InputCode& inputKey)
 {
 	return inputStatus[inputKey].pressed;
 }
 
-bool Input::Active(InputCode& inputKey)
+bool Input::Active(const InputCode& inputKey)
 {
 	return inputStatus[inputKey].active;
 }
 
-bool Input::Released(InputCode& inputKey)
+bool Input::Released(const InputCode& inputKey)
 {
 	return inputStatus[inputKey].released;
 }
