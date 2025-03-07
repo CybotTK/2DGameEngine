@@ -71,6 +71,8 @@ public:
 	static void Destroy();
 	static bool IsInitialized();
 
+	FrameBuffer* GetFrameBuffer() const;
+
 	Input input;
 	Window m_window;
 
@@ -82,6 +84,15 @@ public:
 
 		AssetMap<Scene>		   scenes;
 	} data;
+
+	std::string projectName = "Gion Game";
+	struct _Project {
+		// Not used atm
+		bool vSync		= true;
+		bool fullscreen = false;
+
+		AssetHandler<Scene> mainScene;
+	} project;
 private:
 	void UpdateDeltaTime();
 

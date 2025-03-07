@@ -31,8 +31,6 @@ void EngineEditorUI::Update() {
 		if (app->input.Pressed(InputKey::KEY_N)) {
 			RunNewProject();
 		}
-		ui::Separator();
-
 		if (app->input.Pressed(InputKey::KEY_S)) {
 			RunSaveProject();
 		}
@@ -47,6 +45,7 @@ void EngineEditorUI::Update() {
 			if (ImGui::MenuItem("New", "Ctrl + N")) {
 				RunNewProject();
 			}
+			ui::Separator();
 			if (ImGui::MenuItem("Save", "Ctrl + S")) {
 				RunSaveProject();
 			}
@@ -55,6 +54,11 @@ void EngineEditorUI::Update() {
 			}
 			ImGui::EndMenu();
 		}
+
+		if (ImGui::MenuItem("Project Settings")) {
+			selected = &m_projectSettings;
+		}
+
 		ImGui::EndMainMenuBar();
 	}
 }

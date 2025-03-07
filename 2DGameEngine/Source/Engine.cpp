@@ -45,15 +45,22 @@ App::~App() {
 }
 
 void App::Initialize() {
-	data.images.Add("test.png", new ImageTexture(file::GetEditorPath("..\\Assets\\test.png")));
+	// Testing
+	{
+		data.images.Add("test.png", new ImageTexture(file::GetEditorPath("..\\Assets\\test.png")));
 
-	auto audioId = data.audios.Add("Ambience", new AudioTrack(file::GetEditorPath("..\\Assets\\Ambience.wav")));
+		auto audioId = data.audios.Add("Ambience", new AudioTrack(file::GetEditorPath("..\\Assets\\Ambience.wav")));
 
-	//Testing audio -- It works
-	//data.audios[audioId].asset->Play();
+		//Testing audio -- It works
+		//data.audios[audioId].asset->Play();
 
-	m_currentScene = new Scene();
-	data.scenes.Add("Main Scene", m_currentScene);	
+		m_currentScene = new Scene();
+		data.scenes.Add("Main Scene", m_currentScene);
+	}
+
+	if (!HasEditorUI()) {
+		m_window.SetTitle(projectName);
+	}
 }
 
 void App::ClearAll() {
@@ -66,6 +73,9 @@ void App::ClearAll() {
 void App::Save(File* file, bool withEditor) {
 	file->Write(engineVersion);
 	file->Write(withEditor);
+
+	file->WriteStr(projectName);
+	file->Write(project);
 
 	data.images.Save(file);
 	data.meshes.Save(file);
@@ -91,10 +101,24 @@ void App::Load(File* file) {
 		}
 	}
 
+	// Project Settings
+	file->ReadStr(projectName);
+	file->Read(project);
+
+	// Game Data
 	data.images.Load(file);
 	data.meshes.Load(file);
 	data.audios.Load(file);
 	data.scenes.Load(file);
+
+	// Initialization
+	{
+		m_currentScene = project.mainScene.Get();
+		if (m_currentScene == nullptr && data.scenes.size()) {
+			// If no default scene is set, it selects any available scene
+			m_currentScene = data.scenes.begin()->second.asset;
+		}
+	}
 }
 
 void App::Run() {
@@ -249,6 +273,10 @@ void App::Destroy() {
 
 bool App::IsInitialized() {
 	return singletonInstance != nullptr;
+}
+
+FrameBuffer* App::GetFrameBuffer() const {
+	return m_defaultFbo;
 }
 
 void App::UpdateDeltaTime() {

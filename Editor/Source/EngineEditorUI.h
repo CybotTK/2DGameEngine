@@ -2,6 +2,7 @@
 #define ENGINE_EDITOR_UI_H
 
 #include "Editor/EditorUI.h"
+#include "Mocks/ProjectSettings.h"
 
 class EngineEditorUI : public EditorUI {
 public:
@@ -17,6 +18,8 @@ protected:
 
 	void RunSaveProject();
 	void RunLoadProject();
+
+	ProjectSettings m_projectSettings;
 };
 
 #endif // !ENGINE_EDITOR_UI_H
