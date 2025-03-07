@@ -46,6 +46,11 @@ void FrameBuffer::UseAllTextures(int offset) {
 void FrameBuffer::Resize(int width, int height) {
 	assert(m_initialized);
 
+	auto newRes = glm::ivec2(width, height);
+
+	if (newRes == m_resolution) { return; }
+	m_resolution = newRes;
+
 	auto texCount = m_textures.size();
 	assert(texCount > 0);
 
