@@ -59,93 +59,94 @@ void HierarchyTab::DrawLayers() {
 		}
 
 		ui::PushID(layer);
+		auto out = ImGui::TreeNodeEx(layer->debug.name.c_str(), flags);
 
-		// Drag and Drop : Source
-		{
-			if (ImGui::BeginDragDropSource(ImGuiDragDropFlags_None)) {
-				__dndLayer = layer;
-
-				ImGui::SetDragDropPayload("DND_Layer", nullptr, 0);
-				{
-					ui::Text(layer->debug.name);
-				}
-				ImGui::EndDragDropSource();
-			}
-		}
-
-		// Drag and Drop : Target
-		{
-			if (ImGui::BeginDragDropTarget()) {
-				if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("DND_GameObject")) {
-					GameObject* gameObject = __dndGameObject;
-
-					if (gameObject->GetParent()) {
-						gameObject->RemoveParent();
-					}
-					gameObject->SetLayer(layer);
-
-				}
-				ImGui::EndDragDropTarget();
-			}
-			if (ImGui::BeginDragDropTarget()) {
-				bool hasBeenMoved = false;
-				if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("DND_Layer")) {
-					Layer* dndLayer = __dndLayer;
-
-					if (dndLayer == layer) {
-						hasBeenMoved = true;
-						dndLayer->MoveDown();
-					}
-					if (dndLayer->GetLayerIndex() > layer->GetLayerIndex() && !hasBeenMoved) {
-						hasBeenMoved = true;
-						while (dndLayer->GetLayerIndex() > layer->GetLayerIndex()) {
-							dndLayer->MoveUp();
-						}
-					}
-					if (dndLayer->GetLayerIndex() < layer->GetLayerIndex() && !hasBeenMoved) {
-						while (dndLayer->GetLayerIndex() < layer->GetLayerIndex()) {
-							dndLayer->MoveDown();
-						}
-					}
-
-					//You can't keep iterating the layer list if you change them
-					abortIteration = true;
-				}
-				ImGui::EndDragDropTarget();
-			}
-		}
-
-		// RightClick panel
-		{
-			if (ImGui::IsItemHovered()) {
-				if (ImGui::IsMouseClicked(ImGuiMouseButton_Right)) {
-					ImGui::OpenPopup("##Layer");
-				}
-			}
-			if (ImGui::BeginPopup("##Layer")) {
-				if (ImGui::MenuItem("Delete")) {
-					abortIteration = true;
-					toRemoveLayers.push_back(layer);
-				}
-				ImGui::EndPopup();
-			}
-		}
-
-		ui::SameLine();
-
-		ui::SetCursorX(ui::GetWidth() - 90.f);
-		if (ui::Button("Add New Object")) {
-			auto obj = new GameObject();
-			obj->debug.name += " " + std::to_string(layer->objects.size());
-			layer->Add(obj);
-			editor->selected = obj;
-		}
-
-		if (ImGui::TreeNodeEx(layer->debug.name.c_str(), flags)) {
+		if (out) {
 			if (ImGui::IsItemClicked()) {
 				editor->selected = layer;
 			}
 
+			// Drag and Drop : Source
+			{
+				if (ImGui::BeginDragDropSource(ImGuiDragDropFlags_None)) {
+					__dndLayer = layer;
+
+					ImGui::SetDragDropPayload("DND_Layer", nullptr, 0);
+					{
+						ui::Text(layer->debug.name);
+					}
+					ImGui::EndDragDropSource();
+				}
+			}
+
+			// Drag and Drop : Target
+			{
+				if (ImGui::BeginDragDropTarget()) {
+					if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("DND_GameObject")) {
+						GameObject* gameObject = __dndGameObject;
+
+						if (gameObject->GetParent()) {
+							gameObject->RemoveParent();
+						}
+						gameObject->SetLayer(layer);
+
+					}
+					ImGui::EndDragDropTarget();
+				}
+				if (ImGui::BeginDragDropTarget()) {
+					bool hasBeenMoved = false;
+					if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("DND_Layer")) {
+						Layer* dndLayer = __dndLayer;
+
+						if (dndLayer == layer) {
+							hasBeenMoved = true;
+							dndLayer->MoveDown();
+						}
+						if (dndLayer->GetLayerIndex() > layer->GetLayerIndex() && !hasBeenMoved) {
+							hasBeenMoved = true;
+							while (dndLayer->GetLayerIndex() > layer->GetLayerIndex()) {
+								dndLayer->MoveUp();
+							}
+						}
+						if (dndLayer->GetLayerIndex() < layer->GetLayerIndex() && !hasBeenMoved) {
+							while (dndLayer->GetLayerIndex() < layer->GetLayerIndex()) {
+								dndLayer->MoveDown();
+							}
+						}
+
+						//You can't keep iterating the layer list if you change them
+						abortIteration = true;
+					}
+					ImGui::EndDragDropTarget();
+				}
+			}
+
+			// RightClick panel
+			{
+				if (ImGui::IsItemHovered()) {
+					if (ImGui::IsMouseClicked(ImGuiMouseButton_Right)) {
+						ImGui::OpenPopup("##Layer");
+					}
+				}
+				if (ImGui::BeginPopup("##Layer")) {
+					if (ImGui::MenuItem("Delete")) {
+						abortIteration = true;
+						toRemoveLayers.push_back(layer);
+					}
+					ImGui::EndPopup();
+				}
+			}
+
+			ui::SameLine();
+
+			ui::SetCursorX(ui::GetWidth() - 90.f);
+			if (ui::Button("Add New Object")) {
+				auto obj = new GameObject();
+				obj->debug.name += " " + std::to_string(layer->objects.size());
+				layer->Add(obj);
+				editor->selected = obj;
+			}
+			
 			for (auto obj : layer->objects) {
 				if (obj->GetParent() == nullptr) {
 					DrawObject(obj);
