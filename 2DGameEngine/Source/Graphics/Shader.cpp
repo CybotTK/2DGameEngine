@@ -46,7 +46,7 @@ void Shader::Set(const std::string& name, bool value)
 
 void Shader::Set(const std::string& name, glm::vec4 value)
 {
-	glUniform4f(GetUniformLocation(name), value.x, value.y, value.y, value.w);
+	glUniform4f(GetUniformLocation(name), value.x, value.y, value.z, value.w);
 }
 
 void Shader::Set(const std::string& name, glm::mat4 value){
