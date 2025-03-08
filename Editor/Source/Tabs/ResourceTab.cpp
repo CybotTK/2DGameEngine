@@ -14,8 +14,6 @@ ResourceTab::ResourceTab() {
 ResourceTab::~ResourceTab() {
 }
 
-//#define DRAW_MAP(NAME, MAP, EXTRAS)	
-
 template <typename T>
 void DrawMapUI(const std::string& name, T& MAP) {
 	auto app = App::Get();

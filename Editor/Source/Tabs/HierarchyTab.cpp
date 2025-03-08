@@ -59,7 +59,6 @@ void HierarchyTab::DrawLayers() {
 		}
 
 		ui::PushID(layer);
-		auto out = ImGui::TreeNodeEx(layer->debug.name.c_str(), flags);
 
 		// Drag and Drop : Source
 		{
@@ -142,7 +141,7 @@ void HierarchyTab::DrawLayers() {
 			editor->selected = obj;
 		}
 
-		if (out) {
+		if (ImGui::TreeNodeEx(layer->debug.name.c_str(), flags)) {
 			if (ImGui::IsItemClicked()) {
 				editor->selected = layer;
 			}
