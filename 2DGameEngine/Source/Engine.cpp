@@ -54,6 +54,7 @@ void App::NewProject() {
 	data.meshes.Add("Plane", Mesh::CreatePlane());
 
 	m_currentScene = new Scene();
+	m_currentScene->AddDefaultObjects();
 	data.scenes.Add("Main Scene", m_currentScene);
 }
 

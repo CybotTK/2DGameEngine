@@ -11,61 +11,6 @@
 Scene::Scene() {
 	//Creating the physics world:
 	m_physicsWorld = new b2World(b2Vec2(0.f, -10.f));
-
-	// Testing testing 
-	{
-		auto layer1 = new Layer(this, "Layer1");
-		auto layer2 = new Layer(this, "Layer2");
-		layer2->tint = { 1.f, 0., 0., 1.0f };
-		layer2->useCamera = false;
-
-		auto layer3 = new Layer(this, "SimulationLayer");
-
-		// The order we add will also define the render order
-		layers.push_back(layer2);
-		layers.push_back(layer1);
-		layers.push_back(layer3);
-
-		// Layer1 Objects
-		auto root1 = new GameObject();
-		root1->debug.name = "Parent";
-		root1->physics.type = GameObject::DYNAMIC;
-		root1->sprite.texture.Set("test.png");
-		root1->position = { -2.f, 3.f };
-		root1->rotation = 25.f;
-
-		auto root1Child = new GameObject();
-		root1Child->debug.name = "Child";
-		root1Child->physics.type = GameObject::GHOST;
-		root1Child->SetParent(root1);
-		root1Child->sprite.color = { 1.f,0.f,0.f,1.f };
-		root1Child->position = { 1.f, 1.f };
-		root1Child->scale = { 0.2f, 0.2f };
-		root1Child->rotation = 45.f;
-
-		layer1->Add(root1);
-
-		// Layer2 Objects (The Background)
-		auto obj3 = new GameObject();
-		obj3->physics.type = GameObject::GHOST;
-		obj3->sprite.texture.Set("test.png");
-		layer2->Add(obj3);
-
-		//Simulation Layer Object
-		auto ground = new GameObject();
-		auto box = new GameObject();
-
-		ground->scale = { 10.f, 2.f };
-		ground->position = { 0.f, -5.f };
-
-		box->position = { 3.f, 2.f };
-		box->rotation = 32.f;
-		box->physics.type = GameObject::DYNAMIC;
-		box->physics.fixedRotation = true;
-
-		layer3->Add(ground);
-		layer3->Add(box);
-	}
 }
 
 Scene::~Scene() {
@@ -79,6 +24,44 @@ Scene::~Scene() {
 		delete layer;
 	}
 	layers.clear();
+}
+
+void Scene::AddDefaultObjects() {
+	auto lBackground = new Layer(this, "Background");
+	lBackground->useCamera = false;
+
+	auto lGame = new Layer(this, "Simulation Layer");
+
+	// The order we add will also define the render order
+	layers.push_back(lBackground);
+	layers.push_back(lGame);
+
+	// lGame Objects
+	auto box = new GameObject();
+	box->debug.name = "Box";
+	box->physics.type = GameObject::DYNAMIC;
+	box->sprite.color = { 0.5f, 0.5f, 0.5f, 1.f };
+	box->position = { -2.f, 3.f };
+	box->rotation = 25.f;
+	box->runLogic = true;
+
+	lGame->Add(box);
+
+	// lBackground Objects
+	auto obj3 = new GameObject();
+	obj3->debug.name = "Background";
+	obj3->physics.type = GameObject::GHOST;
+	obj3->sprite.color = { 0.f, 0.58f, 1.f, 1.f };
+	lBackground->Add(obj3);
+
+	// Simulation Layer Object
+	auto ground = new GameObject();
+	ground->debug.name = "Ground";
+	ground->sprite.color = { 0.1f, 0.1f, 0.1f, 1.f };
+	ground->scale = { 10.f, 2.f };
+	ground->position = { 0.f, -5.f };
+
+	lGame->Add(ground);
 }
 
 void Scene::Save(File* file) {

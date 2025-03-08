@@ -52,6 +52,7 @@ void ResourceTab::DrawUI()  {
 
 	if (ImGui::Button("New Scene")) {
 		auto scene = new Scene();
+		scene->AddDefaultObjects();
 		app->data.scenes.Add("Scene " + std::to_string(app->data.scenes.size()), scene);
 		editor->selected = scene;
 	}

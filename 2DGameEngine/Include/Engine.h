@@ -37,11 +37,12 @@ public:
 
 	const float engineVersion = 1.0f;
 
+	void NewProject();
 	// This is for creating a new project
 	void ClearAll();
 
 	void Save(File* file, bool withEditor = true);
-	void Load(File* file);
+	void Load(File* file, bool evaluateScript = true); // need this for scripts
 
 	//Main loop goes here
 	void Run();

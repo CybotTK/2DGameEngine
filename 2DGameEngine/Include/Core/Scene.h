@@ -19,6 +19,8 @@ public:
 	Scene();
 	virtual ~Scene();
 
+	void AddDefaultObjects();
+
 	virtual void Save(File* file) override;
 	virtual void Load(File* file) override;
 
