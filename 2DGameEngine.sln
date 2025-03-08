@@ -7,6 +7,12 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "2DGameEngine", "2DGameEngin
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Editor", "Editor\Editor.vcxproj", "{7849EE89-D5F8-474D-AE61-84E2393C9E82}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Player", "Player\Player.vcxproj", "{AC7AAD3C-E148-4CD4-BE59-B5F81E08E6C1}"
+	ProjectSection(ProjectDependencies) = postProject
+		{7849EE89-D5F8-474D-AE61-84E2393C9E82} = {7849EE89-D5F8-474D-AE61-84E2393C9E82}
+		{AB0E1B52-F7CB-44BF-BAA2-C236CA454324} = {AB0E1B52-F7CB-44BF-BAA2-C236CA454324}
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -31,6 +37,14 @@ Global
 		{7849EE89-D5F8-474D-AE61-84E2393C9E82}.Release|x64.Build.0 = Release|x64
 		{7849EE89-D5F8-474D-AE61-84E2393C9E82}.Release|x86.ActiveCfg = Release|Win32
 		{7849EE89-D5F8-474D-AE61-84E2393C9E82}.Release|x86.Build.0 = Release|Win32
+		{AC7AAD3C-E148-4CD4-BE59-B5F81E08E6C1}.Debug|x64.ActiveCfg = Debug|x64
+		{AC7AAD3C-E148-4CD4-BE59-B5F81E08E6C1}.Debug|x64.Build.0 = Debug|x64
+		{AC7AAD3C-E148-4CD4-BE59-B5F81E08E6C1}.Debug|x86.ActiveCfg = Debug|Win32
+		{AC7AAD3C-E148-4CD4-BE59-B5F81E08E6C1}.Debug|x86.Build.0 = Debug|Win32
+		{AC7AAD3C-E148-4CD4-BE59-B5F81E08E6C1}.Release|x64.ActiveCfg = Release|x64
+		{AC7AAD3C-E148-4CD4-BE59-B5F81E08E6C1}.Release|x64.Build.0 = Release|x64
+		{AC7AAD3C-E148-4CD4-BE59-B5F81E08E6C1}.Release|x86.ActiveCfg = Release|Win32
+		{AC7AAD3C-E148-4CD4-BE59-B5F81E08E6C1}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -22,8 +22,6 @@ App::App() {
 	
 	m_defaultShader = new Shader(shader::BasicVertex, shader::BasicFragment);
 	m_defaultPlane = Mesh::CreatePlane();
-	
-	data.meshes.Add("Plane", Mesh::CreatePlane());
 
 	m_currentScene = nullptr;
 
@@ -45,22 +43,18 @@ App::~App() {
 }
 
 void App::Initialize() {
-	// Testing
-	{
-		data.images.Add("test.png", new ImageTexture(file::GetEditorPath("..\\Assets\\test.png")));
-
-		auto audioId = data.audios.Add("Ambience", new AudioTrack(file::GetEditorPath("..\\Assets\\Ambience.wav")));
-
-		//Testing audio -- It works
-		//data.audios[audioId].asset->Play();
-
-		m_currentScene = new Scene();
-		data.scenes.Add("Main Scene", m_currentScene);
-	}
-
 	if (!HasEditorUI()) {
 		m_window.SetTitle(projectName);
 	}
+}
+
+void App::NewProject() {
+	ClearAll();
+
+	data.meshes.Add("Plane", Mesh::CreatePlane());
+
+	m_currentScene = new Scene();
+	data.scenes.Add("Main Scene", m_currentScene);
 }
 
 void App::ClearAll() {
@@ -83,7 +77,7 @@ void App::Save(File* file, bool withEditor) {
 	data.scenes.Save(file);
 }
 
-void App::Load(File* file) {
+void App::Load(File* file, bool evaluateScript) {
 	float version;
 	bool withEditor;
 	file->Read(version);
@@ -113,6 +107,11 @@ void App::Load(File* file) {
 
 	// Initialization
 	{
+		// I think I need this for scripting
+		/*if (evaluateScript) {
+			EvaluateAllScripts();
+		}*/
+
 		m_currentScene = project.mainScene.Get();
 		if (m_currentScene == nullptr && data.scenes.size()) {
 			// If no default scene is set, it selects any available scene

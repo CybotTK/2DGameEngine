@@ -13,8 +13,10 @@ Object::~Object() {
 	auto app = App::Get();
 	auto editor = app->GetEditor();
 	
-	if (editor->selected == this) {
-		editor->selected = nullptr;
+	if (editor) {
+		if (editor->selected == this) {
+			editor->selected = nullptr;
+		}
 	}
 }
 

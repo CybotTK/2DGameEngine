@@ -82,8 +82,9 @@ void Layer::Draw(const Camera& camera, Shader* shader, float aspect) {
 			lastMesh = obj->sprite.shape.Get();
 			lastMesh->Use();
 		}
-		assert(lastMesh);
-		obj->Draw(shader, lastMesh);
+		if (lastMesh) {
+			obj->Draw(shader, lastMesh);
+		}
 	}
 }
 

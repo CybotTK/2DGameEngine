@@ -75,7 +75,7 @@ void EngineEditorUI::RunNewProject() {
 			}
 		}
 
-		app->ClearAll();
+		app->NewProject();
 	}
 }
 
