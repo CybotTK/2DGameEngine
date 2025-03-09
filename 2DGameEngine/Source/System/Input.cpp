@@ -45,6 +45,7 @@ void Input::Update()
 			case SDL_KEYDOWN:
 				input = { InputType::Key, event.key.keysym.scancode };
 				inputStatus[input].pressed = true;
+				inputStatus[input].released = false;
 				inputStatus[input].active = true;
 				break;
 			case SDL_KEYUP:
@@ -61,6 +62,7 @@ void Input::Update()
 				input = { InputType::Mouse };
 				input.mouseButton = event.button.button;
 				inputStatus[input].pressed = true;
+				inputStatus[input].released = false;
 				inputStatus[input].active = true;
 				break;
 			case SDL_MOUSEBUTTONUP:
