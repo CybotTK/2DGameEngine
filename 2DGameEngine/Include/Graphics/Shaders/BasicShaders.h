@@ -56,14 +56,21 @@ struct Layer{
 uniform Sprite sprite;
 uniform Layer  layer;
 
+uniform bool isSelected = false;
+uniform vec4 selectedColor = vec4(0.207f, 0.1176f, 0.30196f, 1.f);
+
 void main(){
-	gColor = vec4(1.f, 1.f, 1.f, 1.f);
+	gColor = vec4( 1.f, 1.f, 1.f, 1.f );
 
 	if (sprite.useTexture == true)
 		gColor = texture2D(sprite.texture, vsOut.UV);
 	
 	gColor  *= sprite.color;	
 	gColor  *= layer.tint;	
+
+	if (isSelected){
+		gColor = selectedColor;
+	}
 }
 )";
 

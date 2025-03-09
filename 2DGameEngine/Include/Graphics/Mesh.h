@@ -35,6 +35,7 @@ public:
 
 	void Use();
 	void Draw();
+	void DrawDebug(float thicknessGain = 1.f);
 
 	void AddVertex(glm::vec2 position, glm::vec2 texCoords);
 	void MakeTriangle(unsigned int v1, unsigned int v2, unsigned int v3);

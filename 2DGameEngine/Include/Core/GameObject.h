@@ -37,7 +37,7 @@ public:
 
 	virtual void Initialize(Scene* scene);
 	void Update();
-	void Draw(Shader* shader, Mesh* mesh);
+	void Draw(Shader* shader, Mesh* mesh, GameObject* selection = nullptr);
 
 	void ReloadPhysics();
 

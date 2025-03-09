@@ -47,7 +47,7 @@ Mesh* Mesh::CreatePlane() {
 		int y = (i / 2) % 2;
 		out->AddVertex(glm::vec2(x * 2 - 1, y * 2 - 1), glm::vec2(x, y));
 	}
-	out->faces = { {0,1,2}, {2,1,3} };
+	out->faces = { {0,2,1}, {2,3,1} };
 
 	out->BindMeshBuffersData();
 	return out;
@@ -136,6 +136,16 @@ void Mesh::Use() {
 void Mesh::Draw() {
 	assert(alreadySentToGPU); 
 	glDrawElements(GL_TRIANGLES, (unsigned int)GetNumIndices(), GL_UNSIGNED_INT, 0);
+}
+
+void Mesh::DrawDebug(float thicknessGain) {
+	assert(alreadySentToGPU);
+
+	glLineWidth(3.f * thicknessGain);
+	glDrawElements(GL_LINE_LOOP, (unsigned int)GetNumIndices(), GL_UNSIGNED_INT, 0);
+
+	glPointSize(10.f);
+	glDrawElements(GL_POINTS, (unsigned int)GetNumIndices(), GL_UNSIGNED_INT, 0);
 }
 
 void Mesh::AddVertex(glm::vec2 position, glm::vec2 texCoords) {

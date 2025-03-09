@@ -222,7 +222,7 @@ void GameObject::Update() {
 	}
 }
 
-void GameObject::Draw(Shader* shader, Mesh* mesh) {
+void GameObject::Draw(Shader* shader, Mesh* mesh, GameObject* selection) {
 	shader->Set("transform", GetWorldMatrix()); 
 	shader->Set("sprite.color", sprite.color);
 
@@ -231,11 +231,23 @@ void GameObject::Draw(Shader* shader, Mesh* mesh) {
 	shader->Set("sprite.useTexture", (tex != nullptr));
 	if (tex) { tex->Use(0); }
 
+	//shader->Set("isSelected", selection == this);
+	shader->Set("isSelected", false);
 	mesh->Draw();
 
-	for (auto child : m_children)
-	{
-		child->Draw(shader, mesh);
+	if (selection == this) {
+		shader->Set("isSelected", true);
+
+		shader->Set("selectedColor", glm::vec4(0.f, 0.f, 0.f, .3f));
+		mesh->DrawDebug(2.f);
+
+		float g = 1.7f;
+		shader->Set("selectedColor", glm::vec4(0.207f*g, 0.1176f*g, 0.30196f*g, 1.f));
+		mesh->DrawDebug();
+	}
+
+	for (auto child : m_children) {
+		child->Draw(shader, mesh, selection);
 	}
 }
 

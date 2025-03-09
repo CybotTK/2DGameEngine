@@ -8,6 +8,8 @@
 
 #include "Editor/UI/Props.h"
 
+#include "Engine.h"
+
 Layer::Layer(Scene* scene, const std::string& layerName) {
 	debug.name = layerName;
 	m_scene = scene;
@@ -62,6 +64,9 @@ void Layer::Update() {
 }
 
 void Layer::Draw(const Camera& camera, Shader* shader, float aspect) {
+	auto app = App::Get();
+	auto editor = app->GetEditor();
+
 	if (useCamera) {
 		//Camera view projection
 		shader->Set("viewProjection", camera.GetViewProjection(aspect));
@@ -71,6 +76,11 @@ void Layer::Draw(const Camera& camera, Shader* shader, float aspect) {
 	}
 
 	shader->Set("layer.tint", tint);
+
+	GameObject* selected = nullptr;
+	if (editor) {
+		selected = dynamic_cast<GameObject*>(editor->selected);
+	}
 
 	// Drawing the GameObjects;
 	size_t lastID = 0;
@@ -83,7 +93,7 @@ void Layer::Draw(const Camera& camera, Shader* shader, float aspect) {
 			lastMesh->Use();
 		}
 		if (lastMesh) {
-			obj->Draw(shader, lastMesh);
+			obj->Draw(shader, lastMesh, selected);
 		}
 	}
 }
