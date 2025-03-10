@@ -10,7 +10,8 @@ namespace dialogs {
 	bool QuestionMessage(const std::string& title, const std::string& body);
 
 	std::vector<std::string> OpenFile(const std::string& title, std::vector<std::string> filters = { "All files", "*" }, bool multipleSelected = true);
-	std::string SaveFile(const std::string& title, std::vector<std::string> filters = { "Save file", "*" });
+	std::string SaveFile(const std::string& title, std::vector<std::string> filters = { "Save file", "*.gion" });
+	std::string SelectFolder(const std::string& title);
 }
 
 #endif // !SYS_DIALOGS_H

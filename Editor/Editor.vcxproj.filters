@@ -30,6 +30,9 @@
     <ClCompile Include="Source\Tabs\ResourceTab.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Mocks\ProjectSettings.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\EngineEditorUI.h">
@@ -42,6 +45,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Source\Tabs\ResourceTab.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Mocks\ProjectSettings.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

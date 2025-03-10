@@ -1948,3 +1948,12 @@ std::string dialogs::SaveFile(const std::string& title, std::vector<std::string>
     
     return file.result();
 }
+
+std::string dialogs::SelectFolder(const std::string& title) {
+    auto folder = pfd::select_folder(
+        title,
+        file::GetEditorPath("")
+    );
+
+    return folder.result();
+}

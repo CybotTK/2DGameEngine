@@ -104,7 +104,7 @@ void GameObject::DrawUI() {
 				ui::Prop("Scale", &scale);
 			}
 
-			if (ui::Header("Sprite", false)) {
+			if (ui::Header("Sprite", true)) {
 				ui::PropColor("Color", &sprite.color);
 
 				sprite.texture.DrawUI("Texture");

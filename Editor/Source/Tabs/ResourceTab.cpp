@@ -86,10 +86,12 @@ void ResourceTab::DrawUI()  {
 		ImGui::EndPopup();											
 	}
 
+	ui::Separator();
+
 	if (ImGui::BeginTabBar("##ResourcesTab")) {
+		DrawMapUI("Scenes", app->data.scenes);
 		DrawMapUI("Images", app->data.images);
 		DrawMapUI("Audios", app->data.audios);
-		DrawMapUI("Scenes", app->data.scenes);
 
 		//DrawMapUI("Meshes", app->data.meshes);
 

@@ -19,6 +19,8 @@ protected:
 	void RunSaveProject();
 	void RunLoadProject();
 
+	void RunExportGame();
+
 	ProjectSettings m_projectSettings;
 };
 

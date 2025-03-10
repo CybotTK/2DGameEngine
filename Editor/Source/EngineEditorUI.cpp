@@ -52,11 +52,25 @@ void EngineEditorUI::Update() {
 			if (ImGui::MenuItem("Load", "Ctrl + O")) {
 				RunLoadProject();
 			}
+
+			ui::Separator();
+
+			if (ImGui::MenuItem("Export Game...")) {
+				RunExportGame();
+			}
+
 			ImGui::EndMenu();
 		}
 
 		if (ImGui::MenuItem("Project Settings")) {
 			selected = &m_projectSettings;
+		}
+
+		auto scene = app->GetCurrentScene();
+		if (scene) {
+			if (ImGui::MenuItem("Scene Settings")) {
+				selected = scene;
+			}
 		}
 
 		ImGui::EndMainMenuBar();
@@ -108,4 +122,17 @@ void EngineEditorUI::RunLoadProject() {
 		File file(saveFile, File::READ);
 		app->Load(&file);
 	}
+}
+
+void EngineEditorUI::RunExportGame() {
+	auto app = App::Get();
+
+	auto exportFolder = dialogs::SelectFolder("Export Game At...");
+
+	if (exportFolder != "") {
+		File file(exportFolder + "\\data.block", File::WRITE);
+		app->Save(&file, false);
+	}
+
+	dialogs::WarningMessage("Succes!", "NOTE : This version of the engine does not copy the necessary file to the folder.You can copy them by hand = D");
 }
