@@ -271,12 +271,12 @@ PYBIND11_WARNING_DISABLE_MSVC(4505)
 #    endif
 #endif
 
-#include <Python.h>
+#include <Python/Python.h>
 #if PY_VERSION_HEX < 0x03070000
 #    error "PYTHON < 3.7 IS UNSUPPORTED. pybind11 v2.12 was the last to support Python 3.6."
 #endif
-#include <frameobject.h>
-#include <pythread.h>
+#include <Python/frameobject.h>
+#include <Python/pythread.h>
 
 /* Python #defines overrides on all sorts of core functions, which
    tends to weak havok in C++ codebases that expect these to work
