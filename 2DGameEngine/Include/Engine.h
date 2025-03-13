@@ -25,6 +25,8 @@
 
 #include "System/File.h"
 
+#include "Python/PythonEnv.h"
+
 class App {
 private:
 	App();
@@ -98,6 +100,8 @@ private:
 	void UpdateDeltaTime();
 
 	static App* singletonInstance;
+
+	PythonEnv m_pythonEnv;
 
 	Timer m_deltaTimer;
 	float m_deltaTime = 0.f;

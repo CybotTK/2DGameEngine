@@ -46,6 +46,11 @@ void App::Initialize() {
 	if (!HasEditorUI()) {
 		m_window.SetTitle(projectName);
 	}
+
+	//Python test:
+	PythonEnv::Run("import engine");
+	PythonEnv::Run("engine.doSomething(6969)");
+	PythonEnv::Run("engine.pleaseWorkSomething()");
 }
 
 void App::NewProject() {
