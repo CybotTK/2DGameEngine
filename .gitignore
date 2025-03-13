@@ -52,3 +52,9 @@ error.log
 
 # Temp Save File (Configurations)
 *.sv
+
+# Python Tools for Visual Studio
+__pycache__/
+*.pyc
+
+!ThirdParty/Lib/
