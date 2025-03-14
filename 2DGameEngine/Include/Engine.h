@@ -30,8 +30,9 @@
 class App {
 private:
 	App();
-	virtual ~App();
+	
 public:
+	virtual ~App();
 	// We don't want to initialize everything since some of the stuff 
 	// we will have will have a dependency on the App instance
 	// That will mess things up! That's why we use this

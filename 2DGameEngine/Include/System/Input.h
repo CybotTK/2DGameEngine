@@ -31,8 +31,7 @@ public:
 	std::vector<SDL_Event> sdlEvents;
 
 private:
-	struct KeyState
-	{
+	struct KeyState {
 		bool pressed = false;
 		bool released = false;
 		bool active = false;

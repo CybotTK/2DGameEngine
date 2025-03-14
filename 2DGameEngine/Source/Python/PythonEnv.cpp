@@ -2,26 +2,16 @@
 
 #include <iostream>
 
-#include <pybind11/pybind11.h>
-#include <pybind11/operators.h>
-#include <pybind11/embed.h>
-#include <pybind11/stl.h>
+#include "Python/PythonRegistry.h"
 
 namespace py = pybind11;
 using namespace py::literals;
 
-void __DoSomething(int value) {
-	std::cout << value << " -> Something happened!\n";
-}
-
-void __PleaseWorkSomething() {
-	std::cout << "PLEASE WORK\n";
-}
-
-#define PY_REFFERENCE py::return_value_policy::reference
-
 PYBIND11_EMBEDDED_MODULE(engine, m) {
-	m.def("doSomething", &__DoSomething);
+	PyRegisterInputTypes(m);
+	PyRegisterMath(m);
+
+	PyRegisterEngineCode(m);
 }
 
 void __ShowPythonError(const std::string& method, const std::string& error) {
@@ -30,7 +20,6 @@ void __ShowPythonError(const std::string& method, const std::string& error) {
 
 PythonEnv::PythonEnv() {
 	auto engine = py::module_::import("engine");
-	engine.def("pleaseWorkSomething", &__PleaseWorkSomething);
 }
 
 PythonEnv::~PythonEnv() {

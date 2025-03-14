@@ -48,6 +48,22 @@ void App::Initialize() {
 	}
 
 	//Python test:
+	try {
+		// Test the Python code by calling Python directly
+		py::exec(R"(
+            import engine
+
+            # Test InputType enum
+            print(engine.InputType.Key)  # Should output: InputType::Key
+            print(engine.InputType.Mouse)  # Should output: InputType::Mouse
+
+            # Access constants
+            print(engine.KEY_A)  # Should print the key constant: InputKey::KEY_A
+        )");
+	}
+	catch (const py::error_already_set& e) {
+		std::cerr << "Python error: " << e.what() << std::endl;
+	}
 }
 
 void App::NewProject() {
