@@ -25,19 +25,21 @@ size_t GenerateAssetID() {
 }
 
 template<>
-AssetMap<ImageTexture>& AssetHandler<ImageTexture>::GetMap()
-{
+AssetMap<ImageTexture>& AssetHandler<ImageTexture>::GetMap() {
 	return App::Get()->data.images;
 }
 
 template<>
-AssetMap<Mesh>& AssetHandler<Mesh>::GetMap()
-{
+AssetMap<Mesh>& AssetHandler<Mesh>::GetMap() {
 	return App::Get()->data.meshes;
 }
 
 template<>
-AssetMap<Scene>& AssetHandler<Scene>::GetMap()
-{
+AssetMap<Scene>& AssetHandler<Scene>::GetMap() {
 	return App::Get()->data.scenes;
+}
+
+template<>
+AssetMap<AudioTrack>& AssetHandler<AudioTrack>::GetMap() {
+	return App::Get()->data.audios;
 }
