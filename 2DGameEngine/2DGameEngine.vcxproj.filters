@@ -132,6 +132,15 @@
     <ClInclude Include="Include\System\File.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Include\Python\PythonEnv.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\Python\PythonObj.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\Python\PythonRegistry.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\Engine.cpp">
@@ -240,6 +249,18 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Source\System\File.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Python\PythonEnv.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Python\PythonObj.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Python\PythonRegistry.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Python\PythonRegistryInputs.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

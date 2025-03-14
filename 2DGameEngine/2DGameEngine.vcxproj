@@ -113,8 +113,9 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
     <Lib>
-      <AdditionalDependencies>OpenGL32.lib;glew32.lib;glew32s.lib;SDL2.lib;SDL2main.lib;SDL2test.lib;SDL2_mixer.lib;box2d.lib;_tkinter.lib;python3_d.lib;python37_d.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>OpenGL32.lib;glew32.lib;glew32s.lib;SDL2.lib;SDL2main.lib;SDL2test.lib;SDL2_mixer.lib;box2d.lib;_tkinter.lib;python3.lib;python37.lib;python3_d.lib;python37_d.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>$(SolutionDir)ThirdParty\Lib\$(Platform)\$(Configuration);$(SolutionDir)ThirdParty\Lib\$(Platform)\Python;$(SolutionDir)ThirdParty\Lib\$(Platform);$(SolutionDir)ThirdParty\Lib\;$(LibraryPath);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalOptions>/IGNORE:4006,4221 %(AdditionalOptions)</AdditionalOptions>
     </Lib>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -135,8 +136,9 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
     <Lib>
-      <AdditionalDependencies>OpenGL32.lib;glew32.lib;glew32s.lib;SDL2.lib;SDL2main.lib;SDL2test.lib;SDL2_mixer.lib;box2d.lib;_tkinter.lib;python3_d.lib;python37_d.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>OpenGL32.lib;glew32.lib;glew32s.lib;SDL2.lib;SDL2main.lib;SDL2test.lib;SDL2_mixer.lib;box2d.lib;_tkinter.lib;python3.lib;python37.lib;python3_d.lib;python37_d.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>$(SolutionDir)ThirdParty\Lib\$(Platform)\$(Configuration);$(SolutionDir)ThirdParty\Lib\$(Platform)\Python;$(SolutionDir)ThirdParty\Lib\$(Platform);$(SolutionDir)ThirdParty\Lib\;$(LibraryPath);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalOptions>/IGNORE:4006,4221 %(AdditionalOptions)</AdditionalOptions>
     </Lib>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -153,8 +155,9 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
     <Lib>
-      <AdditionalDependencies>OpenGL32.lib;glew32.lib;glew32s.lib;SDL2.lib;SDL2main.lib;SDL2test.lib;SDL2_mixer.lib;box2d.lib;_tkinter.lib;python3_d.lib;python37_d.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>OpenGL32.lib;glew32.lib;glew32s.lib;SDL2.lib;SDL2main.lib;SDL2test.lib;SDL2_mixer.lib;box2d.lib;_tkinter.lib;python3.lib;python37.lib;python3_d.lib;python37_d.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>$(SolutionDir)ThirdParty\Lib\$(Platform)\$(Configuration);$(SolutionDir)ThirdParty\Lib\$(Platform)\Python;$(SolutionDir)ThirdParty\Lib\$(Platform);$(SolutionDir)ThirdParty\Lib\;$(LibraryPath);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalOptions>/IGNORE:4006,4221 %(AdditionalOptions)</AdditionalOptions>
     </Lib>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -175,8 +178,9 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
     <Lib>
-      <AdditionalDependencies>OpenGL32.lib;glew32.lib;glew32s.lib;SDL2.lib;SDL2main.lib;SDL2test.lib;SDL2_mixer.lib;box2d.lib;_tkinter.lib;python3_d.lib;python37_d.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>OpenGL32.lib;glew32.lib;glew32s.lib;SDL2.lib;SDL2main.lib;SDL2test.lib;SDL2_mixer.lib;box2d.lib;_tkinter.lib;python3.lib;python37.lib;python3_d.lib;python37_d.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>$(SolutionDir)ThirdParty\Lib\$(Platform)\$(Configuration);$(SolutionDir)ThirdParty\Lib\$(Platform)\Python;$(SolutionDir)ThirdParty\Lib\$(Platform);$(SolutionDir)ThirdParty\Lib\;$(LibraryPath);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalOptions>/IGNORE:4006,4221 %(AdditionalOptions)</AdditionalOptions>
     </Lib>
   </ItemDefinitionGroup>
   <ItemGroup>
@@ -212,6 +216,9 @@
     <ClInclude Include="Include\Graphics\Shaders\BasicShaders.h" />
     <ClInclude Include="Include\Graphics\Texture.h" />
     <ClInclude Include="Include\Graphics\Textures\ImageTexture.h" />
+    <ClInclude Include="Include\Python\PythonEnv.h" />
+    <ClInclude Include="Include\Python\PythonObj.h" />
+    <ClInclude Include="Include\Python\PythonRegistry.h" />
     <ClInclude Include="Include\System\Dialogs.h" />
     <ClInclude Include="Include\System\File.h" />
     <ClInclude Include="Include\System\FileUtils.h" />
@@ -251,6 +258,10 @@
     <ClCompile Include="Source\Graphics\Shader.cpp" />
     <ClCompile Include="Source\Graphics\Texture.cpp" />
     <ClCompile Include="Source\Graphics\Textures\ImageTexture.cpp" />
+    <ClCompile Include="Source\Python\PythonEnv.cpp" />
+    <ClCompile Include="Source\Python\PythonObj.cpp" />
+    <ClCompile Include="Source\Python\PythonRegistry.cpp" />
+    <ClCompile Include="Source\Python\PythonRegistryInputs.cpp" />
     <ClCompile Include="Source\System\Dialogs.cpp" />
     <ClCompile Include="Source\System\File.cpp" />
     <ClCompile Include="Source\System\FileUtils.cpp" />
