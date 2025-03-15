@@ -2,7 +2,7 @@
 
 #include <iostream>
 
-void __ShowPythonError(const std::string& method, const std::string& error) {
+void __ShowPythonObjectError(const std::string& method, const std::string& error) {
 	std::cout << "Python Error:" << method << "\n\tError: " << error << '\n';
 }
 
@@ -13,7 +13,7 @@ PythonObj::PythonObj(const std::string& code) {
 		m_object = new py::object(py::eval(code));
 	}
 	catch (py::error_already_set e) {
-		__ShowPythonError(code, e.what());
+		__ShowPythonObjectError(code, e.what());
 	}
 }
 
@@ -23,7 +23,7 @@ PythonObj::~PythonObj() {
 			delete m_object;
 		}
 		catch (py::error_already_set e) {
-			__ShowPythonError("Destroying Python Object", e.what());
+			__ShowPythonObjectError("Destroying Python Object", e.what());
 		}
 	}
 }
@@ -33,7 +33,7 @@ bool PythonObj::HasAttr(const std::string& attr) {
 		return !m_object->attr(attr.c_str()).is_none();
 	}
 	catch (py::error_already_set& e) {
-		__ShowPythonError(attr, e.what());
+		__ShowPythonObjectError(attr, e.what());
 		return false;
 	}
 }
@@ -47,7 +47,7 @@ void PythonObj::Call(const std::string& method) {
 			}
 		}
 		catch (py::error_already_set e) {
-			__ShowPythonError(method, e.what());
+			__ShowPythonObjectError(method, e.what());
 		}
 		catch (std::exception e) {
 
@@ -61,7 +61,7 @@ void PythonObj::Call(const std::string& method, const py::object& obj) {
 			m_object->attr(method.c_str())(obj);
 		}
 		catch (py::error_already_set e) {
-			__ShowPythonError(method, e.what());
+			__ShowPythonObjectError(method, e.what());
 		}
 		catch (std::exception e) {
 
