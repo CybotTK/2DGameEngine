@@ -117,9 +117,11 @@ void PyRegisterEngineCode(py::module_& m) {
 	m.def("getApp", __GetApp, PY_REFFERENCE);
 
 	py::class_<App>(m, "App")
-		.def_readonly("input",	&App::input, PY_REFFERENCE)
-		.def("getDelatTime",	&App::GetDeltaTime)
-		.def("getCurrentScene", &App::GetCurrentScene, PY_REFFERENCE);
+		.def_readonly("input",			&App::input, PY_REFFERENCE)
+		.def_property("currentScene",	&App::GetCurrentScene, (void(App::*)(const std::string&))&App::SetCurrentScene)
+		.def("getDelatTime",			&App::GetDeltaTime)
+		.def("getCurrentScene",			&App::GetCurrentScene, PY_REFFERENCE)
+		.def("setCurrentScene",			(void(App::*)(const std::string&))&App::SetCurrentScene);
 
 	py::class_<Input>(m, "Input")
 		.def("quit",			&Input::ForceQuit)
@@ -209,7 +211,7 @@ void PyRegisterEngineCode(py::module_& m) {
 		.def_readwrite("scale",		&Transform::scale);
 
 	py::class_<GameObject, Transform>(m, "GameObject")
-		.def_readwrite("debug",			&GameObject::debug)
+		.def_readwrite("debug",			&Layer::debug)
 		.def_readwrite("sprite",		&GameObject::sprite,		PY_REFFERENCE)
 		.def_readwrite("physics",		&GameObject::physics,		PY_REFFERENCE)
 		.def_readwrite("components",	&GameObject::components,	PY_REFFERENCE)
