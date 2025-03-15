@@ -22,7 +22,10 @@ struct InputCode {
     InputCode() : type(InputType::None), key(SDL_SCANCODE_UNKNOWN) {}
 
     // Constructor for keyboard input
-    InputCode(SDL_Scancode k) : type(InputType::Key), key(k) {}
+    InputCode(SDL_Scancode k) : type(InputType::Key) {
+        key = k;
+        mouseButton = 0; // Ensure the other union member does not hold garbage data
+    }
 
     // Constructor for mouse input (with just InputType)
     InputCode(InputType type) : type(type), key(SDL_SCANCODE_UNKNOWN) {}
