@@ -12,12 +12,15 @@
 
 #include "Core/Transform.h"
 
+#include "Python/PythonObj.h"
+
 #include "Graphics/Textures/ImageTexture.h"
 
 class Layer;
 class Shader;
 class Mesh;
 class Scene;
+class Component;
 
 typedef uint16 CollisionMask;
 
@@ -35,6 +38,9 @@ public:
 
 	std::vector<GameObject*> GetChildren(bool recursive = true);
 
+	// This will run the construction script (recursively)
+	// Gets called once, before Initialize
+	void Construct(Scene* scene);
 	virtual void Initialize(Scene* scene);
 	void Update();
 	void Draw(Shader* shader, Mesh* mesh, GameObject* selection = nullptr);
@@ -57,6 +63,8 @@ public:
 	// Note: Only root GameObjects (with no parents) can have layers
 	void SetLayer(Layer* layer);
 	Layer* GetLayer();
+
+	Scene* GetScene() const;
 
 	bool IsInitialized() const;
 
@@ -95,11 +103,17 @@ public:
 	// it also includes the construction script
 	bool runLogic = false; // LATER USE
 
-	std::string constructionScript;
-
 	// True means the user deleted the object 
 	// False means the user closed the app
 	bool deletedInEditor = false;
+
+	std::string constructionScript;
+
+	py::list components;
+protected:
+	void PyComponentsStart();
+	void PyComponentsUpdate();
+	void PyComponentsEnd();
 private:
 	Scene* m_scene = nullptr;	
 	Layer* m_layer = nullptr;
@@ -109,6 +123,7 @@ private:
 	GameObject* m_parent;
 	std::vector<GameObject*> m_children;
 
+	bool m_constructed = false;
 	bool m_initialized = false;
 	bool m_killed = false;  // True means it will be garbage collected 
 							// in the end frame

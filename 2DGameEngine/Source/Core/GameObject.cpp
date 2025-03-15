@@ -3,6 +3,7 @@
 #include "Engine.h"
 
 #include "Core/Layer.h"
+#include "Core/Component.h"
 
 #include "Graphics/Shader.h"
 #include "Graphics/Mesh.h"
@@ -15,11 +16,14 @@ GameObject::GameObject() {
 	sprite.shape.Set("Plane");
 
 	constructionScript = R"(
-This is a test
+print("This is a test")
 )";
 }
 
 GameObject::~GameObject() {
+	// End components
+	PyComponentsEnd();
+
 	if (m_scene && m_physicsBody) {
 		auto world = m_scene->GetBox2DWorld();
 
@@ -200,14 +204,38 @@ std::vector<GameObject*> GameObject::GetChildren(bool recursive) {
 	return out;
 }
 
+#include <iostream>
+
+using namespace py::literals;
+
+void GameObject::Construct(Scene* scene) {
+	m_scene = scene;
+
+	if (m_constructed) { return; }
+	m_constructed = true;
+
+	auto locals = py::dict("object"_a = py::cast(this));
+	PythonEnv::Run(constructionScript, locals);
+
+	// Construct the children
+	for (auto child : m_children) {
+		child->Construct(scene);
+	}
+}
+
 void GameObject::Initialize(Scene* scene) {
 	m_scene = scene;
+	Construct(scene);
 
 	assert (!m_initialized);
 	m_initialized = true;
 
 	InitializePhysics();
 
+	// Start components
+	PyComponentsStart();
+
+	// Initialize children
 	for (auto child : m_children) {
 		child->Initialize(scene);
 	}
@@ -216,8 +244,10 @@ void GameObject::Initialize(Scene* scene) {
 void GameObject::Update() {
 	assert(m_initialized);
 
-	for (auto child : m_children)
-	{
+	// Update components
+	PyComponentsUpdate();
+
+	for (auto child : m_children) {
 		child->Update();
 	}
 }
@@ -374,6 +404,10 @@ Layer* GameObject::GetLayer() {
 	return GetRoot()->m_layer;
 }
 
+Scene* GameObject::GetScene() const {
+	return m_scene;
+}
+
 bool GameObject::IsInitialized() const {
 	return m_initialized;
 }
@@ -414,4 +448,29 @@ void GameObject::RetrieveTransformFromPhysicsWorld() {
 
 void GameObject::Kill() {
 	m_killed = true;
+}
+
+void GameObject::PyComponentsStart() {
+	auto locals = py::dict("object"_a = py::cast(this));
+	PythonEnv::Run(R"(
+print("Starting components...")
+for comp in object.components:
+	comp.start()
+	)", locals);
+}
+
+void GameObject::PyComponentsUpdate() {
+	auto locals = py::dict("object"_a = py::cast(this));
+	PythonEnv::Run(R"(
+for comp in object.components:
+	comp.update()
+	)", locals);
+}
+
+void GameObject::PyComponentsEnd() {
+	auto locals = py::dict("object"_a = py::cast(this));
+	PythonEnv::Run(R"(
+for comp in object.components:
+	comp.end()
+	)", locals);
 }

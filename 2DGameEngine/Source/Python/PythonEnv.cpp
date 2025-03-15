@@ -10,7 +10,6 @@ using namespace py::literals;
 PYBIND11_EMBEDDED_MODULE(engine, m) {
 	PyRegisterInputTypes(m);
 	PyRegisterMath(m);
-
 	PyRegisterEngineCode(m);
 }
 
@@ -19,10 +18,11 @@ void __ShowPythonError(const std::string& method, const std::string& error) {
 }
 
 PythonEnv::PythonEnv() {
-	auto engine = py::module_::import("engine");
+	Run("import engine");
 }
 
 PythonEnv::~PythonEnv() {
+
 }
 
 void PythonEnv::Run(const std::string& code, py::object locals) {

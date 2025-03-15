@@ -45,6 +45,39 @@ void Scene::AddDefaultObjects() {
 	box->rotation = 25.f;
 	box->runLogic = true;
 
+	box->constructionScript = R"(
+import engine
+
+class MyComponent(engine.Component):
+	#def __init__(self, obj):
+	#	super().__init__(obj)
+	#	self.tap = False
+	#	print("\t[MyComponent] Constructor")
+
+	def start(self):
+		self.tap = False
+		print("\t[MyComponent] Started!")
+	
+	vec = engine.math.Vector2(1, 0)
+	print(vec)	
+
+	def update(self):
+		owner = self.getOwner()
+		input = engine.getApp().input
+
+		if input.active(engine.KEY_A):
+			print("KEY_A pressed!")
+			owner.rotation += 1
+			print("New rotation:", owner.rotation)		
+		
+		if not self.tap:
+			self.tap = True
+			print("\t[MyComponent] Updated!")
+
+print("Add component to the Game")
+object.components.append(MyComponent(object))
+)";
+
 	lGame->Add(box);
 
 	// lBackground Objects

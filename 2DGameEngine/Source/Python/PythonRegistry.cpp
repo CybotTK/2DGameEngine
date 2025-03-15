@@ -6,6 +6,7 @@
 #include <pybind11/stl.h>
 
 #include "Engine.h"
+#include "Core/Component.h"
 
 #define PY_REFFERENCE py::return_value_policy::reference
 
@@ -14,7 +15,9 @@ App* __GetApp() {
 }
 
 void PyRegisterMath(py::module_& m) {
-	py::class_<glm::vec2>(m, "Vector2")
+	py::module math = m.def_submodule("math");
+
+	py::class_<glm::vec2>(math, "Vector2")
 		.def(py::init<>())
 		.def(py::init<float>())
 		.def(py::init<const glm::vec2&>())
@@ -43,7 +46,7 @@ void PyRegisterMath(py::module_& m) {
 		});
 
 
-	py::class_<glm::vec3>(m, "Vector3")
+	py::class_<glm::vec3>(math, "Vector3")
 		.def(py::init<>())
 		.def(py::init<float>())
 		.def(py::init<const glm::vec3&>())
@@ -70,7 +73,7 @@ void PyRegisterMath(py::module_& m) {
 				+ ", " + std::to_string(v.z) + ")>";
 		});
 
-	py::class_<glm::vec4>(m, "Vector4")
+	py::class_<glm::vec4>(math, "Vector4")
 		.def(py::init<>())
 		.def(py::init<float>())
 		.def(py::init<const glm::vec4&>())
@@ -127,19 +130,19 @@ void PyRegisterEngineCode(py::module_& m) {
 		.def("getMouseScroll",	&Input::GetMouseScrollY);
 
 	py::class_<Scene>(m, "Scene")
-		.def_readonly("camera",			&Scene::camera, PY_REFFERENCE)
-		.def_readonly("layers",			&Scene::layers, PY_REFFERENCE)
+		.def_readwrite("camera",			&Scene::camera,		PY_REFFERENCE)
+		.def_readwrite("layers",			&Scene::layers,		PY_REFFERENCE)
 		.def_readwrite("background",	&Scene::background, PY_REFFERENCE)
 		.def("getObjects",				&Scene::GetObjectsRecursively)
 		.def("getGravity",				&Scene::GetGravity)
 		.def("setGravity",				(void (Scene::*)(float, float))&Scene::SetGravity)
 		.def("setGravity",				(void (Scene::*)(glm::vec2))&Scene::SetGravity);
 
-	/*py::class_<Object::_Debug>(m, "ObjectDebugDesc")
-		.def_readwrite("name", &Layer::_Debug::name);*/
+	py::class_<Object::_Debug>(m, "ObjectDebugDesc")
+		.def_readwrite("name", &Layer::_Debug::name);
 
 	py::class_<Layer>(m, "Layer")
-		//.def_readwrite("debug",		&Layer::debug)
+		.def_readwrite("debug",		&Layer::debug)
 		.def_readwrite("tint",		&Layer::tint)
 		.def_readwrite("useCamera", &Layer::useCamera)
 		.def_readwrite("objects",	&Layer::objects)
@@ -173,6 +176,14 @@ void PyRegisterEngineCode(py::module_& m) {
 	//						 Game Object related:						//
 	//==================================================================//
 
+	//py::class_<Component, std::unique_ptr<Component, py::nodelete>>(m, "Component")
+	py::class_<Component>(m, "Component")
+		.def(py::init<GameObject*>())
+		.def("start",		&Component::Start)
+		.def("update",		&Component::Update)
+		.def("end",			&Component::End)
+		.def("getOwner",	&Component::GetOwner, PY_REFFERENCE);
+
 	py::enum_<GameObject::PhysicsType>(m, "physicsType")
 		.value("GHOST",		GameObject::GHOST)
 		.value("STATIC",	GameObject::STATIC)
@@ -198,15 +209,17 @@ void PyRegisterEngineCode(py::module_& m) {
 		.def_readwrite("scale",		&Transform::scale);
 
 	py::class_<GameObject, Transform>(m, "GameObject")
-		//.def_readwrite("debug",		&GameObject::debug)
-		.def_readwrite("sprite",	&GameObject::sprite, PY_REFFERENCE)
-		.def_readwrite("physics",	&GameObject::physics, PY_REFFERENCE)
-		.def_property("parent",		&GameObject::GetParent, &GameObject::SetParent, PY_REFFERENCE)
-		.def_property("layer",		&GameObject::GetLayer, &GameObject::SetLayer, PY_REFFERENCE)
-		.def("getRoot",				&GameObject::GetRoot)
-		.def("removeParent",		&GameObject::RemoveParent)
-		.def("isInitialized",		&GameObject::IsInitialized)
-		.def("kill",				&GameObject::Kill);
+		.def_readwrite("debug",			&GameObject::debug)
+		.def_readwrite("sprite",		&GameObject::sprite,		PY_REFFERENCE)
+		.def_readwrite("physics",		&GameObject::physics,		PY_REFFERENCE)
+		.def_readwrite("components",	&GameObject::components,	PY_REFFERENCE)
+		.def_property("parent",			&GameObject::GetParent, &GameObject::SetParent, PY_REFFERENCE)
+		.def_property("layer",			&GameObject::GetLayer,	&GameObject::SetLayer, PY_REFFERENCE)
+		.def("getRoot",					&GameObject::GetRoot,		PY_REFFERENCE)
+		.def("getScene",				&GameObject::GetScene,		PY_REFFERENCE)
+		.def("removeParent",			&GameObject::RemoveParent)
+		.def("isInitialized",			&GameObject::IsInitialized)
+		.def("kill",					&GameObject::Kill);
 
 	py::class_<Camera, Transform>(m, "Camera")
 		.def_readwrite("area", &Camera::area);
