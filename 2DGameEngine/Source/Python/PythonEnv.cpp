@@ -25,9 +25,9 @@ PythonEnv::PythonEnv() {
 PythonEnv::~PythonEnv() {
 }
 
-void PythonEnv::Run(const std::string& code) {
+void PythonEnv::Run(const std::string& code, py::object locals) {
 	try {
-		py::exec(code, py::globals());
+		py::exec(code, py::globals(), locals);
 	}
 	catch (py::error_already_set e) {
 		__ShowPythonError(code, e.what());

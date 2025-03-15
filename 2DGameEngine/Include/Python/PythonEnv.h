@@ -14,7 +14,7 @@ public:
 	PythonEnv();
 	virtual ~PythonEnv();
 
-	static void Run(const std::string& code);
+	static void Run(const std::string& code, py::object locals = py::object());
 private:
 	py::scoped_interpreter m_guard;
 };
