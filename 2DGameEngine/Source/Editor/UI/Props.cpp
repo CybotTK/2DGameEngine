@@ -63,7 +63,7 @@ void ui::PropMask(const std::string& name, uint16_t* mask, const ui::Icon& icon)
 	style->ItemSpacing = backupSpacing;
 	style->FramePadding = backupPadding;
 
-	ImGui::Dummy({ 1,3 });
+	ImGui::Dummy({ 1, 3 });
 }
 
 void ui::ObjectHeader(std::string* name, const std::string& className, const ui::Icon& icon) {

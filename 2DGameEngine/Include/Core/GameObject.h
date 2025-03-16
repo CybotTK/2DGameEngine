@@ -7,14 +7,17 @@
 #include <glm/glm.hpp>
 #include <Box2D/Box2D.h>
 
+#include <pybind11/pybind11.h>
+#include <pybind11/embed.h>
+
 #include "Asset/Asset.h"
 #include "Asset/Object.h"
 
 #include "Core/Transform.h"
 
-#include "Python/PythonObj.h"
-
 #include "Graphics/Textures/ImageTexture.h"
+
+namespace py = pybind11;
 
 class Layer;
 class Shader;
@@ -101,13 +104,12 @@ public:
 	// Optimization. 
 	// The engine will not run any game logic if this is false
 	// it also includes the construction script
-	bool runLogic = false; // LATER USE
+	bool runLogic = false;
+	std::string constructionScript;
 
 	// True means the user deleted the object 
 	// False means the user closed the app
 	bool deletedInEditor = false;
-
-	std::string constructionScript;
 
 	py::list components;
 protected:

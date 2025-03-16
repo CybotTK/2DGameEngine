@@ -26,6 +26,7 @@
 #include "System/File.h"
 
 #include "Python/PythonEnv.h"
+#include "Python/PythonScript.h"
 
 class App {
 private:
@@ -65,6 +66,8 @@ public:
 	bool HasEditorUI() const;
 	bool IsGameLogicEnabled() const;
 
+	void EvaluateAllScripts();
+
 	EditorUI* GetEditor() const;
 
 	void EnableGameLogic();
@@ -83,8 +86,8 @@ public:
 	struct Data {
 		AssetMap<ImageTexture> images;
 		AssetMap<Mesh>		   meshes;
-
 		AssetMap<AudioTrack>   audios;
+		AssetMap<PythonScript>   scripts;
 
 		AssetMap<Scene>		   scenes;
 	} data;

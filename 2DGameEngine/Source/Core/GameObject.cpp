@@ -15,8 +15,10 @@ GameObject::GameObject() {
 	debug.name = "Game Object";
 	sprite.shape.Set("Plane");
 
-	constructionScript = R"(
-print("This is a test")
+	constructionScript = R"(import engine
+
+# Use "object" to access this Gameobject. Example:
+# object.add(YourComponent())
 )";
 }
 
@@ -162,23 +164,10 @@ void GameObject::DrawUI() {
 			ui::Separator();
 
 			if (runLogic) {
-				char buf[MULTILINE_TEXT_SIZE];
-
-				if (constructionScript.size() < MULTILINE_TEXT_SIZE - 2) {
-					strcpy_s(buf, constructionScript.c_str());
-					ImGui::InputTextMultiline(
-						"##ConstructionScript",
-						buf, MULTILINE_TEXT_SIZE,
-						{ ui::GetRemainingWidth(), ui::GetRemainingHeight() }
-					);
-					constructionScript = buf;
-				}
-				else {
-					ImGui::Text("Text is too big!");
-				}
+				ui::PropScript("Construction Script Editor", &constructionScript);
 			}
 			else {
-				ImGui::Text("Object's run logic is disabled.");
+				ImGui::Text("Object's Run Logic is disabled.");
 			}
 
 			ImGui::EndTabItem();
@@ -214,8 +203,10 @@ void GameObject::Construct(Scene* scene) {
 	if (m_constructed) { return; }
 	m_constructed = true;
 
-	auto locals = py::dict("object"_a = py::cast(this));
-	PythonEnv::Run(constructionScript, locals);
+	if (runLogic) {
+		auto locals = py::dict("object"_a = py::cast(this));
+		PythonEnv::Run(constructionScript, locals);
+	}
 
 	// Construct the children
 	for (auto child : m_children) {
@@ -451,6 +442,8 @@ void GameObject::Kill() {
 }
 
 void GameObject::PyComponentsStart() {
+	if (!runLogic) { return; }
+
 	auto locals = py::dict("object"_a = py::cast(this));
 	PythonEnv::Run(R"(
 print("Starting components...")
@@ -460,6 +453,8 @@ for comp in object.components:
 }
 
 void GameObject::PyComponentsUpdate() {
+	if (!runLogic) { return; }
+
 	auto locals = py::dict("object"_a = py::cast(this));
 	PythonEnv::Run(R"(
 for comp in object.components:
@@ -468,6 +463,8 @@ for comp in object.components:
 }
 
 void GameObject::PyComponentsEnd() {
+	if (!runLogic) { return; }
+
 	auto locals = py::dict("object"_a = py::cast(this));
 	PythonEnv::Run(R"(
 for comp in object.components:

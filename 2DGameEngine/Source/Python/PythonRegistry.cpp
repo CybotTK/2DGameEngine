@@ -148,6 +148,10 @@ void PyRegisterEngineCode(py::module_& m) {
 		.def_readwrite("tint",		&Layer::tint)
 		.def_readwrite("useCamera", &Layer::useCamera)
 		.def_readwrite("objects",	&Layer::objects)
+		.def("addNew",				&Layer::NewObject)
+		.def("getLayerIndex",		&Layer::GetLayerIndex)
+		.def("moveUp",				&Layer::MoveUp)
+		.def("modeDown",			&Layer::MoveDown)
 		.def("getObjects",			&Layer::GetObjectsRecursively)
 		.def("add",					&Layer::Add, "Adds an objects to the given Layer");
 
@@ -165,6 +169,10 @@ void PyRegisterEngineCode(py::module_& m) {
 		.def(py::init<>())
 		.def("play", &AudioTrack::Play);
 
+	py::class_<PythonScript	>(m, "PythonScript")
+		.def(py::init<>())
+		.def_readwrite("code", &PythonScript::code);
+
 	//==================================================================//
 	//						Asset Handler related:						//
 	//==================================================================//
@@ -172,6 +180,7 @@ void PyRegisterEngineCode(py::module_& m) {
 	REGISTER_HANDLER(ImageTexture,	"ImageTextureHandler");
 	REGISTER_HANDLER(Mesh,			"MeshHandler");
 	REGISTER_HANDLER(AudioTrack,	"AudioTrackHandler");
+	REGISTER_HANDLER(PythonScript,	"PythonScriptHandler");
 	REGISTER_HANDLER(Scene,			"SceneHandler");
 
 	//==================================================================//
@@ -211,12 +220,14 @@ void PyRegisterEngineCode(py::module_& m) {
 		.def_readwrite("scale",		&Transform::scale);
 
 	py::class_<GameObject, Transform>(m, "GameObject")
-		.def_readwrite("debug",			&Layer::debug)
+		.def_readwrite("debug",			&GameObject::debug)
+		.def_readwrite("runLogic",		&GameObject::runLogic)
 		.def_readwrite("sprite",		&GameObject::sprite,		PY_REFFERENCE)
 		.def_readwrite("physics",		&GameObject::physics,		PY_REFFERENCE)
 		.def_readwrite("components",	&GameObject::components,	PY_REFFERENCE)
 		.def_property("parent",			&GameObject::GetParent, &GameObject::SetParent, PY_REFFERENCE)
 		.def_property("layer",			&GameObject::GetLayer,	&GameObject::SetLayer, PY_REFFERENCE)
+		.def("reloadPhysics",			&GameObject::ReloadPhysics)
 		.def("getRoot",					&GameObject::GetRoot,		PY_REFFERENCE)
 		.def("getScene",				&GameObject::GetScene,		PY_REFFERENCE)
 		.def("removeParent",			&GameObject::RemoveParent)

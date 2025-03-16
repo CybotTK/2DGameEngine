@@ -13,6 +13,7 @@ namespace ui {
 	void Prop(const std::string& name, T* value, const ui::Icon& icon = "");
 
 	void PropMask(const std::string& name, uint16_t* mask, const ui::Icon& icon = "");
+	void PropScript(const std::string& name, std::string* script);
 
 	void ObjectHeader(std::string* name, const std::string& className, const ui::Icon& icon = "");
 

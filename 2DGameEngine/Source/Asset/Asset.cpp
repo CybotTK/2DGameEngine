@@ -43,3 +43,8 @@ template<>
 AssetMap<AudioTrack>& AssetHandler<AudioTrack>::GetMap() {
 	return App::Get()->data.audios;
 }
+
+template<>
+AssetMap<PythonScript>& AssetHandler<PythonScript>::GetMap() {
+	return App::Get()->data.scripts;
+}

@@ -60,6 +60,8 @@ print(engine.KEY_A)  # Should print the key constant: InputKey::KEY_A
 	catch (const py::error_already_set& e) {
 		std::cerr << "Python error: " << e.what() << std::endl;
 	}
+
+	EvaluateAllScripts();
 }
 
 void App::NewProject() {
@@ -259,12 +261,25 @@ bool App::IsGameLogicEnabled() const {
 	return m_runGameLogic;
 }
 
+void App::EvaluateAllScripts() {
+	if (m_runGameLogic) {
+		for (auto it : data.scripts) {
+			it.second.asset->Run();
+		}
+	}
+}
+
 EditorUI* App::GetEditor() const {
 	return m_editorUI;
 }
 
 void App::EnableGameLogic() {
+	bool shouldEvaluate = !m_runGameLogic;
 	m_runGameLogic = true;
+
+	if (shouldEvaluate) {
+		EvaluateAllScripts();
+	}
 }
 
 void App::DisableGameLogic() {

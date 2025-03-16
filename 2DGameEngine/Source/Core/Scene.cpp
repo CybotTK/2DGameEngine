@@ -67,14 +67,15 @@ class MyComponent(engine.Component):
 
 		if input.active(engine.KEY_A):
 			print("KEY_A pressed!")
-			owner.rotation += 1
+			owner.rotation += 1 #it works but it doesnt show atm
+								#have to probably implement the rest for UI to work
 			print("New rotation:", owner.rotation)		
-		
+
 		if not self.tap:
 			self.tap = True
 			print("\t[MyComponent] Updated!")
 
-print("Add component to the Game")
+# Adding component
 object.components.append(MyComponent(object))
 )";
 

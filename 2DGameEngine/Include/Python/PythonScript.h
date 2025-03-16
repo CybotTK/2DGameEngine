@@ -1,0 +1,20 @@
+#ifndef PYTHON_SCRIPT_H
+#define PYTHON_SCRIPT_H
+
+#include <string>
+
+#include "Asset/Object.h"
+
+class PythonScript : public Object {
+public:
+	PythonScript();
+	virtual ~PythonScript();
+
+	virtual void DrawUI() override;
+
+	void Run();
+
+	std::string code;
+};
+
+#endif // !PYTHON_SCRIPT_H

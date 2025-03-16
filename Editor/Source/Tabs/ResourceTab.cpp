@@ -60,6 +60,13 @@ void ResourceTab::DrawUI()  {
 	if (ui::Button("Import...")) {
 		ImGui::OpenPopup("ImportPopup");
 	}
+	ui::SameLine();
+	if (ImGui::Button("New Script")) {
+		auto script = new PythonScript();
+		app->data.scripts.Add("Script " + std::to_string(app->data.scripts.size()), script);
+		editor->selected = script;
+	}
+
 	if (ImGui::BeginPopup("ImportPopup")) {
 		if (ImGui::MenuItem("Image...")) {	
 			auto results = dialogs::OpenFile(
@@ -92,6 +99,7 @@ void ResourceTab::DrawUI()  {
 		DrawMapUI("Scenes", app->data.scenes);
 		DrawMapUI("Images", app->data.images);
 		DrawMapUI("Audios", app->data.audios);
+		DrawMapUI("Script", app->data.scripts);
 
 		//DrawMapUI("Meshes", app->data.meshes);
 
