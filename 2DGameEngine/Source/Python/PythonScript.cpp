@@ -24,6 +24,18 @@ PythonScript::~PythonScript() {
 
 }
 
+void PythonScript::Save(File* file) {
+	Object::Save(file);
+
+	file->WriteStr(code);
+}
+
+void PythonScript::Load(File* file) {
+	Object::Load(file);
+
+	file->ReadStr(code);
+}
+
 void PythonScript::DrawUI() {
 	ui::ObjectHeader(&debug.name, "Python Script");
     

@@ -187,6 +187,7 @@
     <ClInclude Include="Include\Audio\AudioTrack.h" />
     <ClInclude Include="Include\Asset\Asset.h" />
     <ClInclude Include="Include\Core\Camera.h" />
+    <ClInclude Include="Include\Core\Component.h" />
     <ClInclude Include="Include\Core\GameObject.h" />
     <ClInclude Include="Include\Core\Layer.h" />
     <ClInclude Include="Include\Asset\Object.h" />
@@ -205,6 +206,7 @@
     <ClInclude Include="Include\Editor\ImGui\imstb_rectpack.h" />
     <ClInclude Include="Include\Editor\ImGui\imstb_textedit.h" />
     <ClInclude Include="Include\Editor\ImGui\imstb_truetype.h" />
+    <ClInclude Include="Include\Editor\ImGui\TextEditor.h" />
     <ClInclude Include="Include\Editor\Tabs\ViewportTab.h" />
     <ClInclude Include="Include\Editor\UI\Elements.h" />
     <ClInclude Include="Include\Editor\UI\Props.h" />
@@ -217,8 +219,8 @@
     <ClInclude Include="Include\Graphics\Texture.h" />
     <ClInclude Include="Include\Graphics\Textures\ImageTexture.h" />
     <ClInclude Include="Include\Python\PythonEnv.h" />
-    <ClInclude Include="Include\Python\PythonObj.h" />
     <ClInclude Include="Include\Python\PythonRegistry.h" />
+    <ClInclude Include="Include\Python\PythonScript.h" />
     <ClInclude Include="Include\System\Dialogs.h" />
     <ClInclude Include="Include\System\File.h" />
     <ClInclude Include="Include\System\FileUtils.h" />
@@ -231,6 +233,7 @@
     <ClCompile Include="Source\Audio\AudioTrack.cpp" />
     <ClCompile Include="Source\Asset\Asset.cpp" />
     <ClCompile Include="Source\Core\Camera.cpp" />
+    <ClCompile Include="Source\Core\Component.cpp" />
     <ClCompile Include="Source\Core\GameObject.cpp" />
     <ClCompile Include="Source\Core\Layer.cpp" />
     <ClCompile Include="Source\Asset\Object.cpp" />
@@ -247,9 +250,11 @@
     <ClCompile Include="Source\Editor\ImGui\imgui_impl_sdl2.cpp" />
     <ClCompile Include="Source\Editor\ImGui\imgui_tables.cpp" />
     <ClCompile Include="Source\Editor\ImGui\imgui_widgets.cpp" />
+    <ClCompile Include="Source\Editor\ImGui\TextEditor.cpp" />
     <ClCompile Include="Source\Editor\Tabs\ViewportTab.cpp" />
     <ClCompile Include="Source\Editor\UI\Elements.cpp" />
     <ClCompile Include="Source\Editor\UI\Props.cpp" />
+    <ClCompile Include="Source\Editor\UI\PropScript.cpp" />
     <ClCompile Include="Source\Editor\UI\PropsTemplated.cpp" />
     <ClCompile Include="Source\Engine.cpp" />
     <ClCompile Include="Source\Graphics\FrameBuffer.cpp" />
@@ -259,9 +264,9 @@
     <ClCompile Include="Source\Graphics\Texture.cpp" />
     <ClCompile Include="Source\Graphics\Textures\ImageTexture.cpp" />
     <ClCompile Include="Source\Python\PythonEnv.cpp" />
-    <ClCompile Include="Source\Python\PythonObj.cpp" />
     <ClCompile Include="Source\Python\PythonRegistry.cpp" />
     <ClCompile Include="Source\Python\PythonRegistryInputs.cpp" />
+    <ClCompile Include="Source\Python\PythonScript.cpp" />
     <ClCompile Include="Source\System\Dialogs.cpp" />
     <ClCompile Include="Source\System\File.cpp" />
     <ClCompile Include="Source\System\FileUtils.cpp" />

@@ -45,21 +45,11 @@ void Scene::AddDefaultObjects() {
 	box->rotation = 25.f;
 	box->runLogic = true;
 
-	box->constructionScript = R"(
-import engine
+	box->constructionScript = R"(import engine
 
 class MyComponent(engine.Component):
-	#def __init__(self, obj):
-	#	super().__init__(obj)
-	#	self.tap = False
-	#	print("\t[MyComponent] Constructor")
-
 	def start(self):
-		self.tap = False
-		print("\t[MyComponent] Started!")
-	
-	vec = engine.math.Vector2(1, 0)
-	print(vec)	
+		pass
 
 	def update(self):
 		owner = self.getOwner()
@@ -70,10 +60,6 @@ class MyComponent(engine.Component):
 			owner.rotation += 1 #it works but it doesnt show atm
 								#have to probably implement the rest for UI to work
 			print("New rotation:", owner.rotation)		
-
-		if not self.tap:
-			self.tap = True
-			print("\t[MyComponent] Updated!")
 
 # Adding component
 object.components.append(MyComponent(object))

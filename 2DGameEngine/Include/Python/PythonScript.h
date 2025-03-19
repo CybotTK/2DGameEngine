@@ -10,6 +10,9 @@ public:
 	PythonScript();
 	virtual ~PythonScript();
 
+	virtual void Save(File* file) override;
+	virtual void Load(File* file) override;
+
 	virtual void DrawUI() override;
 
 	void Run();

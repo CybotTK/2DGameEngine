@@ -33,6 +33,7 @@ App::~App() {
 	data.images.Reset();
 	data.meshes.Reset();
 	data.audios.Reset();
+	data.scripts.Reset();
 	data.scenes.Reset();
 
 	delete m_defaultPlane;
@@ -43,6 +44,8 @@ App::~App() {
 }
 
 void App::Initialize() {
+	EvaluateAllScripts();
+
 	if (!HasEditorUI()) {
 		m_window.SetTitle(projectName);
 	}
@@ -60,8 +63,6 @@ print(engine.KEY_A)  # Should print the key constant: InputKey::KEY_A
 	catch (const py::error_already_set& e) {
 		std::cerr << "Python error: " << e.what() << std::endl;
 	}
-
-	EvaluateAllScripts();
 }
 
 void App::NewProject() {
@@ -78,6 +79,7 @@ void App::ClearAll() {
 	data.images.Reset();
 	data.meshes.Reset();
 	data.audios.Reset();
+	data.scripts.Reset();
 	data.scenes.Reset();
 }
 
@@ -92,6 +94,7 @@ void App::Save(File* file, bool withEditor) {
 	data.meshes.Save(file);
 	data.audios.Save(file);
 	data.scenes.Save(file);
+	data.scripts.Save(file);
 }
 
 void App::Load(File* file, bool evaluateScript) {
@@ -121,13 +124,14 @@ void App::Load(File* file, bool evaluateScript) {
 	data.meshes.Load(file);
 	data.audios.Load(file);
 	data.scenes.Load(file);
+	data.scripts.Load(file);
 
 	// Initialization
 	{
 		// I think I need this for scripting
-		/*if (evaluateScript) {
+		if (evaluateScript) {
 			EvaluateAllScripts();
-		}*/
+		}
 
 		m_currentScene = project.mainScene.Get();
 		if (m_currentScene == nullptr && data.scenes.size()) {

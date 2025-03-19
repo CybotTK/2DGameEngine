@@ -73,7 +73,7 @@ void GameObject::Save(File* file) {
 }
 
 void GameObject::Load(File* file) {
-	assert(!m_initialized); // modify when python scripting
+	assert(!m_constructed && !m_initialized);
 	Object::Load(file);
 
 	// Transform save
@@ -193,8 +193,6 @@ std::vector<GameObject*> GameObject::GetChildren(bool recursive) {
 	return out;
 }
 
-#include <iostream>
-
 using namespace py::literals;
 
 void GameObject::Construct(Scene* scene) {
@@ -244,6 +242,13 @@ void GameObject::Update() {
 }
 
 void GameObject::Draw(Shader* shader, Mesh* mesh, GameObject* selection) {
+	/*if (this->debug.name == "Box") {
+		auto app = App::Get();
+		if (app->input.Active(InputKey::KEY_A)) {
+			this->rotation += 5;
+		}
+	}*/
+
 	shader->Set("transform", GetWorldMatrix()); 
 	shader->Set("sprite.color", sprite.color);
 

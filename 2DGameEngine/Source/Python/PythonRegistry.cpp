@@ -220,6 +220,9 @@ void PyRegisterEngineCode(py::module_& m) {
 		.def_readwrite("scale",		&Transform::scale);
 
 	py::class_<GameObject, Transform>(m, "GameObject")
+		.def_readwrite("position",		&Transform::position)  // Explicitly bind Transform properties
+		.def_readwrite("rotation",		&Transform::rotation)
+		.def_readwrite("scale",			&Transform::scale)
 		.def_readwrite("debug",			&GameObject::debug)
 		.def_readwrite("runLogic",		&GameObject::runLogic)
 		.def_readwrite("sprite",		&GameObject::sprite,		PY_REFFERENCE)

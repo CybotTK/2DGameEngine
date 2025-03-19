@@ -135,10 +135,16 @@
     <ClInclude Include="Include\Python\PythonEnv.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Include\Python\PythonObj.h">
+    <ClInclude Include="Include\Python\PythonRegistry.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Include\Python\PythonRegistry.h">
+    <ClInclude Include="Include\Core\Component.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\Python\PythonScript.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\Editor\ImGui\TextEditor.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -254,13 +260,22 @@
     <ClCompile Include="Source\Python\PythonEnv.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Python\PythonObj.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Source\Python\PythonRegistry.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Source\Python\PythonRegistryInputs.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Core\Component.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Python\PythonScript.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Editor\ImGui\TextEditor.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Editor\UI\PropScript.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
