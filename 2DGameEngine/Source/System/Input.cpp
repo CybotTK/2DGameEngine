@@ -3,26 +3,28 @@
 #include <SDL2/SDL.h>
 #include <glm/glm.hpp>
 
-Input::Input()
-{
+Input::Input() {
 	quit = false;
 	resized = false;
 	mouseMotion = { 0.f, 0.f };
 	mouseScrollY = 0.0f;
 }
 
-Input::~Input()
-{
+Input::~Input() {
 	sdlEvents.clear();
 }
 
-void Input::Update()
-{
+void Input::Update() {
 	resized = false;
 
 	sdlEvents.clear();
 	mouseMotion = { 0.f, 0.f };
 	mouseScrollY = 0.0f;
+
+	for (auto& [code, state] : inputStatus) {
+		state.pressed = false;
+		state.released = false;
+	}
 
 	SDL_Event event;
 	InputCode input;
@@ -37,16 +39,17 @@ void Input::Update()
 				quit = true;
 				break;
 			case SDL_WINDOWEVENT:
-				if (event.window.event == SDL_WINDOWEVENT_RESIZED)
-				{
+				if (event.window.event == SDL_WINDOWEVENT_RESIZED) {
 					resized = true;
 				}
 				break;
 			case SDL_KEYDOWN:
 				input = { InputType::Key, event.key.keysym.scancode };
-				inputStatus[input].pressed = true;
-				inputStatus[input].released = false;
+				if (!inputStatus[input].active) {
+					inputStatus[input].pressed = true;
+				}
 				inputStatus[input].active = true;
+				inputStatus[input].released = false;
 				break;
 			case SDL_KEYUP:
 				input = { InputType::Key, event.key.keysym.scancode };
@@ -61,7 +64,9 @@ void Input::Update()
 			case SDL_MOUSEBUTTONDOWN:
 				input = { InputType::Mouse };
 				input.mouseButton = event.button.button;
-				inputStatus[input].pressed = true;
+				if (!inputStatus[input].active) {
+					inputStatus[input].pressed = true;
+				}
 				inputStatus[input].released = false;
 				inputStatus[input].active = true;
 				break;
@@ -81,47 +86,38 @@ void Input::Update()
 	//TO DO SDL_DROPFILE
 }
 
-void Input::ForceQuit()
-{
+void Input::ForceQuit() {
 	quit = true;
 }
 
-void Input::RefuseQuitStatus()
-{
+void Input::RefuseQuitStatus() {
 	quit = false;
 }
 
-bool Input::GetQuitStatus()
-{
+bool Input::GetQuitStatus() {
 	return quit;
 }
 
-bool Input::HasResized()
-{
+bool Input::HasResized() {
 	return resized;
 }
 
-bool Input::Pressed(const InputCode& inputKey)
-{
+bool Input::Pressed(const InputCode& inputKey) {
 	return inputStatus[inputKey].pressed;
 }
 
-bool Input::Active(const InputCode& inputKey)
-{
+bool Input::Active(const InputCode& inputKey) {
 	return inputStatus[inputKey].active;
 }
 
-bool Input::Released(const InputCode& inputKey)
-{
+bool Input::Released(const InputCode& inputKey) {
 	return inputStatus[inputKey].released;
 }
 
-glm::vec2 Input::GetMouseMotion() const
-{
+glm::vec2 Input::GetMouseMotion() const {
 	return mouseMotion;
 }
 
-float Input::GetMouseScrollY() const
-{
+float Input::GetMouseScrollY() const {
 	return mouseScrollY;
 }
