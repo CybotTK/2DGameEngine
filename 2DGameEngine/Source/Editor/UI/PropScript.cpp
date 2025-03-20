@@ -2,7 +2,7 @@
 
 #include "Editor/ImGui/imgui.h"
 
-#define USE_TEXT_EDITOR 0 // TEXT EDITOR IS SUPER S**T I DON'T LIKE IT
+#define USE_TEXT_EDITOR 1 // TEXT EDITOR IS SUPER S**T I DON'T LIKE IT
 
 #if USE_TEXT_EDITOR
 #include "Editor/ImGui/TextEditor.h"

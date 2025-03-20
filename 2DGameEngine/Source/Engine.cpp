@@ -49,20 +49,6 @@ void App::Initialize() {
 	if (!HasEditorUI()) {
 		m_window.SetTitle(projectName);
 	}
-
-	//Python test:
-	try {
-		// Test the Python code by calling Python directly
-		py::exec(R"(
-import engine
-
-# Access constants
-print(engine.KEY_A)  # Should print the key constant: InputKey::KEY_A
-	)");
-	}
-	catch (const py::error_already_set& e) {
-		std::cerr << "Python error: " << e.what() << std::endl;
-	}
 }
 
 void App::NewProject() {

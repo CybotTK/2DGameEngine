@@ -57,9 +57,14 @@ class MyComponent(engine.Component):
 
 		if input.active(engine.KEY_A):
 			print("KEY_A pressed!")
-			owner.rotation += 1 #it works but it doesnt show atm
-								#have to probably implement the rest for UI to work
-			print("New rotation:", owner.rotation)		
+			owner.position.x -= 0.2 	
+
+		if input.active(engine.KEY_D):
+			print("KEY_D pressed!")
+			owner.position.x += 0.2 
+
+		if input.pressed(engine.KEY_SPACE):
+			owner.position.y += 0.2 
 
 # Adding component
 object.components.append(MyComponent(object))
